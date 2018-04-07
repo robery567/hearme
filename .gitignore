@@ -1,0 +1,8 @@
+/vendor/
+/.idea/
+.bash_logout
+.bash_profile
+.bashrc
+composer.lock
+/cache/
+/phpmyadmin/

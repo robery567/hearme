@@ -1,40 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>App "sandbox"</title>
-    <meta charset="utf-8"/>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Open Sans', sans-serif;
-        }
-        #header {
-            background-color: #f1f1f1;
-            border-bottom: 1px solid #ddd;
-            padding: 30px;
-            text-align: center;
-            color: #444;
-            font-size: 22px;
-        }
-        #content {
-            padding: 30px;
-            text-align: center;
-            font-size: 18px;
-        }
-    </style>
-</head>
-<body>
+<?php
+/*
+*
+* @Name : Architectus Framework
+* @Author: Robert Mihai Colca
+* @Version: 0.5 (DEV)
+*
+*/
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-<div id="header">
-    Your app "sandbox" is set up.
-</div>
+date_default_timezone_set('Europe/Bucharest');
 
-<div id="content">
-    SFTP into your app's web root directory to replace this file and
-    upload your own files.
-</div>
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../app/settings/database.php';
+require_once __DIR__ . '/../app/autoload.php';
 
-</body>
-</html>
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
+
+$app = new Silex\Application();
+$app['debug'] = true;
+
+$app->register(new Silex\Provider\DoctrineServiceProvider(), $connection);
+$app->register(new Silex\Provider\SessionServiceProvider());
+
+// Cache
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+    'twig.path' => __DIR__ . '/../app/views',
+    'twig.options' => array(
+        'cache' => __DIR__ . '/../cache',
+    ),
+));
+
+$app->register(new Silex\Provider\HttpCacheServiceProvider(), array(
+    'http_cache.cache_dir' => __DIR__ . '/../cache',
+));
+
+$app->extend('twig', function ($twig) {
+    $twig->addFunction(new \Twig_SimpleFunction('asset', function ($asset) {
+        return sprintf('http://' . $_SERVER['HTTP_HOST'] . '/assets/%s', ltrim($asset, '/'));
+    }));
+    $twig->addExtension(new Twig_Extensions_Extension_Text());
+    return $twig;
+});
+
+$lang = json_decode(file_get_contents(__DIR__ . '/../app/lang/ro.json'), true);
+$app['twig']->addGlobal('text', $lang);
+
+$urlMethodCall = (!empty($_POST)) ? 'post' : 'get';
+
+Component_Settings_Model::getInstance($app)->instantiatePage($urlMethodCall);
+
+
+//$app->error(function (\Exception $e, $code) use ($app) {
+//    switch ($code) {
+//        case 404:
+//            return $app['twig']->render('messages/404.html');
+//            $message = 'The requested page could not be found.';
+//            break;
+//        default:
+//            $message = 'We are sorry, but something went terribly wrong.';
+//    }
+//
+//    return new Response($message);
+//});
+
+$app->run();
