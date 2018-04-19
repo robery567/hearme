@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * Class Component_Settings_Model
+ */
 class Component_Settings_Model extends Prototype_Model {
     /**
      * @var Component_Settings_DataSource
@@ -70,6 +74,9 @@ class Component_Settings_Model extends Prototype_Model {
         return date("Y");
     }
 
+    /**
+     * @return array|null
+     */
     public function getUrlParts() {
         if (empty($_SERVER['PATH_INFO'])) {
             return null;
@@ -78,6 +85,9 @@ class Component_Settings_Model extends Prototype_Model {
         return explode('/', $_SERVER['PATH_INFO']);
     }
 
+    /**
+     * @return null|string
+     */
     public function getUrlAllParts() {
         if (empty($_SERVER['PATH_INFO'])) {
             return null;
@@ -86,6 +96,10 @@ class Component_Settings_Model extends Prototype_Model {
         return $_SERVER['PATH_INFO'];
     }
 
+    /**
+     * Instantiates the page with the specific method
+     * @param string $method GET/POST
+     */
     public function instantiatePage($method) {
         $app = $this->app;
 

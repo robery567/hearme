@@ -37,10 +37,15 @@ $app->register(new Silex\Provider\HttpCacheServiceProvider(), array(
 ));
 
 $app->extend('twig', function ($twig) {
+    /**
+     * @var Twig_ExtensionSet $twig
+     */
     $twig->addFunction(new \Twig_SimpleFunction('asset', function ($asset) {
         return sprintf('http://' . $_SERVER['HTTP_HOST'] . '/assets/%s', ltrim($asset, '/'));
     }));
+
     $twig->addExtension(new Twig_Extensions_Extension_Text());
+
     return $twig;
 });
 
