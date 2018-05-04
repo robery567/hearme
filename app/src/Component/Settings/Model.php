@@ -111,9 +111,33 @@ class Component_Settings_Model extends Prototype_Model {
             $action =  ($partsCount > 2) ? $urlParts[2] : $this->defaultAction;
 
             try {
-                $response = $this->app['twig']->render($component . '/' . $action . $this->twigExtension, array(
-                    'settings' => $this->getAllSettings(),
-                ));
+                $expectedControllerName = 'Component_' . ucfirst($component) . '_Controller';
+
+                if (!class_exists($expectedControllerName)) {
+                    $response = $this->app['twig']->render($this->defaultAction . $this->twigExtension, array(
+                        'settings' => $this->getAllSettings(),
+                    ));
+                } else {
+                    $Controller = new $expectedControllerName();
+
+                    $expectedActionName = strtolower($action) . 'Action';
+
+                    if (!method_exists($Controller, $expectedActionName)) {
+                        $Controller->$expectedActionName();
+                    } else {
+                        $defaultActionName = $this->defaultAction . 'Action';
+
+                        if (!method_exists($expectedControllerName, $this->defaultAction . 'Action')) {
+                            throw new Exception("No index action defined in controller");
+                        }
+
+                        $Controller->$defaultActionName();
+                    }
+                }
+
+                if (empty($response)) {
+                    throw new Exception("No response returned from controller");
+                }
             } catch (\Exception $e) {
                 return $this->app->redirect('/home');
             }
