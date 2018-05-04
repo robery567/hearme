@@ -21,7 +21,7 @@ function autoload($className) {
         $relativePathToFile = 'src/' . $fileName;
 
         if (file_exists($relativePathToFile)) {
-            require 'src/' . $fileName;
+            require $relativePathToFile;
         }
     }
 }
