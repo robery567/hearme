@@ -9,6 +9,7 @@ function autoload($className) {
     $className = ltrim($className, '\\');
     $fileName = '';
     $namespace = '';
+
     if ($lastNsPos = strrpos($className, '\\')) {
         $namespace = substr($className, 0, $lastNsPos);
         $className = substr($className, $lastNsPos + 1);
@@ -17,7 +18,11 @@ function autoload($className) {
     $fileName .= str_replace('_', DIRECTORY_SEPARATOR, $className) . '.php';
 
     if (strpos(strtolower($fileName), 'symfony') === false) {
-        require 'src/'.$fileName;
+        $relativePathToFile = 'src/' . $fileName;
+
+        if (file_exists($relativePathToFile)) {
+            require 'src/' . $fileName;
+        }
     }
 }
 
