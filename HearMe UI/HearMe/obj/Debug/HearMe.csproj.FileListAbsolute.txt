@@ -1,0 +1,10 @@
+C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\bin\Debug\HearMe.exe.config
+C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\bin\Debug\HearMe.exe
+C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\bin\Debug\HearMe.pdb
+C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\obj\Debug\HearMe.csprojResolveAssemblyReference.cache
+C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\obj\Debug\HearMe.HearMe.resources
+C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\obj\Debug\HearMe.Properties.Resources.resources
+C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\obj\Debug\HearMe.csproj.GenerateResource.cache
+C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\obj\Debug\HearMe.csproj.CoreCompileInputs.cache
+C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\obj\Debug\HearMe.exe
+C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\obj\Debug\HearMe.pdb
