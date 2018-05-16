@@ -32,7 +32,7 @@
             this.passwordLogin = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.forgotPassword = new System.Windows.Forms.LinkLabel();
             this.logIn = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -96,16 +96,17 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "Password:";
             // 
-            // linkLabel1
+            // forgotPassword
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel1.Location = new System.Drawing.Point(147, 337);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(145, 16);
-            this.linkLabel1.TabIndex = 8;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Forgot your password?";
+            this.forgotPassword.AutoSize = true;
+            this.forgotPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.forgotPassword.Location = new System.Drawing.Point(147, 337);
+            this.forgotPassword.Name = "forgotPassword";
+            this.forgotPassword.Size = new System.Drawing.Size(145, 16);
+            this.forgotPassword.TabIndex = 8;
+            this.forgotPassword.TabStop = true;
+            this.forgotPassword.Text = "Forgot your password?";
+            this.forgotPassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.forgotPassword_LinkClicked);
             // 
             // logIn
             // 
@@ -115,6 +116,7 @@
             this.logIn.TabIndex = 9;
             this.logIn.Text = "Log In";
             this.logIn.UseVisualStyleBackColor = true;
+            this.logIn.Click += new System.EventHandler(this.logIn_Click);
             // 
             // label3
             // 
@@ -238,6 +240,7 @@
             this.signUp.TabIndex = 23;
             this.signUp.Text = "Sign Up";
             this.signUp.UseVisualStyleBackColor = true;
+            this.signUp.Click += new System.EventHandler(this.signUp_Click);
             // 
             // label9
             // 
@@ -285,9 +288,9 @@
             // horizontalRuleMainForm
             // 
             this.horizontalRuleMainForm.Image = global::HearMe.Properties.Resources.verticalLine;
-            this.horizontalRuleMainForm.Location = new System.Drawing.Point(471, 74);
+            this.horizontalRuleMainForm.Location = new System.Drawing.Point(471, 75);
             this.horizontalRuleMainForm.Name = "horizontalRuleMainForm";
-            this.horizontalRuleMainForm.Size = new System.Drawing.Size(20, 510);
+            this.horizontalRuleMainForm.Size = new System.Drawing.Size(20, 499);
             this.horizontalRuleMainForm.TabIndex = 10;
             this.horizontalRuleMainForm.TabStop = false;
             // 
@@ -326,7 +329,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.horizontalRuleMainForm);
             this.Controls.Add(this.logIn);
-            this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.forgotPassword);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.passwordLogin);
@@ -351,7 +354,7 @@
         private System.Windows.Forms.TextBox passwordLogin;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel forgotPassword;
         private System.Windows.Forms.Button logIn;
         private System.Windows.Forms.PictureBox horizontalRuleMainForm;
         private System.Windows.Forms.Label label3;

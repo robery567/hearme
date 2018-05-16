@@ -8,3 +8,13 @@ C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\obj\Debug\HearMe.csproj.
 C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\obj\Debug\HearMe.csproj.CoreCompileInputs.cache
 C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\obj\Debug\HearMe.exe
 C:\Users\Damian-Teodor Beles\source\repos\HearMe\HearMe\obj\Debug\HearMe.pdb
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Debug\HearMe.exe.config
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Debug\HearMe.exe
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Debug\HearMe.pdb
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.csprojResolveAssemblyReference.cache
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.HearMe.resources
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.Properties.Resources.resources
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.csproj.GenerateResource.cache
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.csproj.CoreCompileInputs.cache
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.exe
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.pdb
