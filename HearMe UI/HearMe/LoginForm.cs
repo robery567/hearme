@@ -50,7 +50,7 @@ namespace HearMe
 
         private void logIn_Click(object sender, EventArgs e)
         {
-            if (System.Text.RegularExpressions.Regex.IsMatch(emailRegister.Text, @"^(([a-zA-Z0-9-.]+)(@[a-zA-Z0-9-]+)\.([a-z-]+))$"))
+            if (System.Text.RegularExpressions.Regex.IsMatch(emailLogin.Text, @"^(([a-zA-Z0-9-.]+)(@[a-zA-Z0-9-]+)\.([a-z-]+))$"))
             {
                 var values = new NameValueCollection();
                 values["type"] = "login";
