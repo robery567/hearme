@@ -96,8 +96,7 @@ namespace HearMe
                             else values["gender"] = "female";
 
                             string responseString = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
-                            if (responseString == "created")
-                                MessageBox.Show("The account was created successfully!", "New Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            if (responseString == "created") MessageBox.Show("The account was created successfully!", "New Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             else if (responseString == "existing") MessageBox.Show("The email " + emailRegister.Text + " already exists!", "Existing Account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             else MessageBox.Show("Error connecting to the server!", "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
