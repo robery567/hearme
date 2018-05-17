@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HearMeApi.cs" />
+    <Compile Include="JsonStatusCut.cs" />
     <Compile Include="LoggedinForm.cs">
       <SubType>Form</SubType>
     </Compile>
