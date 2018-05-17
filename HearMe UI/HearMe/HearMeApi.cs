@@ -12,9 +12,9 @@ namespace HearMe
 {
     class HearMeApi
     {
-        public string SendData(NameValueCollection values)
+        public string CallApi(NameValueCollection values)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://127.0.0.1/");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://sandbox.robertcolca.me/");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 

@@ -15,11 +15,5 @@ namespace HearMe
         public string Name { get => name; set => name = value; }
         public string Avatar { get => avatar; set => avatar = value; }
         public List<string> FriendsList { get => friendsList; set => friendsList = value; }
-
-        public override bool Equals(object obj) => base.Equals(obj);
-
-        public override int GetHashCode() => base.GetHashCode();
-
-        public override string ToString() => base.ToString();
     }
 }

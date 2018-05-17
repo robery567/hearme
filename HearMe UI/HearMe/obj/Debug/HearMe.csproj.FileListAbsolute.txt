@@ -18,3 +18,6 @@ E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.csproj.GenerateReso
 E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.csproj.CoreCompileInputs.cache
 E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.exe
 E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.pdb
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Debug\Newtonsoft.Json.dll
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Debug\Newtonsoft.Json.xml
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.csproj.CopyComplete
