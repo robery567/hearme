@@ -16,7 +16,7 @@ namespace HearMe
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new HearMe());
+            Application.Run(new LoginForm());
         }
     }
 }

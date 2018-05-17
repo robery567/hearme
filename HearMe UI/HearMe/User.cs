@@ -8,12 +8,9 @@ namespace HearMe
 {
     class User
     {
-        private string name;
-        private string avatar;
-        private List<string> friendsList;
-
-        public string Name { get => name; set => name = value; }
-        public string Avatar { get => avatar; set => avatar = value; }
-        public List<string> FriendsList { get => friendsList; set => friendsList = value; }
+        private string email { get; set; }
+        private string name { get; set; }
+        private string avatar { get; set; }
+        private List<string> friendsList { get; set; }
     }
 }
