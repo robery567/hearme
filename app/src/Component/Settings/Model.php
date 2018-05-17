@@ -82,7 +82,7 @@ class Component_Settings_Model extends Prototype_Model {
             return null;
         }
 
-        $returnUrlParts = substr($_SERVER['REQUEST_URI'], 1);
+        $returnUrlParts = $_SERVER['REQUEST_URI'];
 
         return explode('/', $returnUrlParts);
     }
