@@ -61,7 +61,7 @@ namespace HearMe
 
                 switch (responseString.ToString())
                 {
-                    case "nouser": MessageBox.Show("The email " + emailLogin.Text + " does not exist!", "Invalid User", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); break;
+                    case "notfound": MessageBox.Show("The email " + emailLogin.Text + " does not exist!", "Invalid User", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); break;
                     case "wrongpassword": MessageBox.Show("The password is wrong!", "Wrong password!", MessageBoxButtons.OK, MessageBoxIcon.Stop); break;
                     case "allgood":
                         this.Hide();
@@ -96,8 +96,8 @@ namespace HearMe
                             else values["gender"] = "female";
 
                             string responseString = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
-                            if (responseString == "created")
-                                MessageBox.Show("The account was created successfully!", "New Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            if (responseString == "created") MessageBox.Show("The account was created successfully!", "New Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            else if (responseString == "existing") MessageBox.Show("The email " + emailRegister.Text + " already exists!", "Existing Account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             else MessageBox.Show("Error connecting to the server!", "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else MessageBox.Show("You didn't select the gender!", "Gender not selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -117,7 +117,9 @@ namespace HearMe
                 values["type"] = "forgot";
                 values["email"] = emailLogin.Text;
 
-                string responseString = hearMe.CallApi(values);
+                string responseString = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
+                if (responseString == "emailsent") MessageBox.Show("The password was sent to " + emailLogin.Text + " email!", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else if (responseString == "notfound") MessageBox.Show("The email " + emailLogin.Text + " does not exist!", "Invalid User", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else MessageBox.Show("The email is invalid!", "Email Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
