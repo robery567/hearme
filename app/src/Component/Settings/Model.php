@@ -79,7 +79,7 @@ class Component_Settings_Model extends Prototype_Model {
      */
     public function getUrlParts() {
         if (empty($_SERVER['REQUEST_URI'])) {
-            return null;
+            return [];
         }
 
         $returnUrlParts = $_SERVER['REQUEST_URI'];
