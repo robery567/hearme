@@ -103,7 +103,11 @@ class Component_Settings_Model extends Prototype_Model {
     public function instantiatePage($method) {
         $app = $this->app;
 
-        die($this->getUrlAllParts());
+        var_dump($_SERVER['REQUEST_URI']);
+        var_dump($_SERVER['HTTP_HOST']);
+        var_dump($this->getUrlAllParts());
+        var_dump($this->getUrlParts());
+        exit;
 
         $this->app->$method($this->getUrlAllParts(), function () use ($app) {
             $urlParts = $this->getUrlParts();
