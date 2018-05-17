@@ -30,8 +30,9 @@ namespace HearMe
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
-                var result = streamReader.ReadToEnd();
-                return result.ToString();
+                var partialResult = streamReader.ReadToEnd();
+                JsonStatusCut result = JsonConvert.DeserializeObject<JsonStatusCut>(partialResult);
+                return result.message;
             }
         }
 

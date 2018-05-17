@@ -1,6 +1,6 @@
 ﻿namespace HearMe
 {
-    partial class HearMe
+    partial class LoginForm
     {
         /// <summary>
         /// Required designer variable.
@@ -304,7 +304,7 @@
             this.header.TabStop = false;
             this.header.MouseDown += new System.Windows.Forms.MouseEventHandler(this.header_MouseDown);
             // 
-            // HearMe
+            // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -336,7 +336,7 @@
             this.Controls.Add(this.emailLogin);
             this.Controls.Add(this.header);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "HearMe";
+            this.Name = "LoginForm";
             this.Text = "HearMe";
             ((System.ComponentModel.ISupportInitialize)(this.minimize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exit)).EndInit();

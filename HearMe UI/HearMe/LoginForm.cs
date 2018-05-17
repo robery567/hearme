@@ -16,7 +16,7 @@ using System.Windows.Forms;
 
 namespace HearMe
 {
-    public partial class HearMe : Form
+    public partial class LoginForm : Form
     {
         HearMeApi hearMe = new HearMeApi();
 
@@ -28,7 +28,7 @@ namespace HearMe
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        public HearMe()
+        public LoginForm()
         {
             InitializeComponent();
         }
@@ -41,17 +41,11 @@ namespace HearMe
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
-
         private void exit_MouseEnter(object sender, EventArgs e) => exit.Image = (Image)Resources.ResourceManager.GetObject("exit_hover");
-
         private void exit_MouseLeave(object sender, EventArgs e) => exit.Image = (Image)Resources.ResourceManager.GetObject("exit");
-
         private void exit_Click(object sender, EventArgs e) => Application.Exit();
-
         private void minimize_MouseEnter(object sender, EventArgs e) => minimize.Image = (Image)Resources.ResourceManager.GetObject("minimize_hover");
-
         private void minimize_MouseLeave(object sender, EventArgs e) => minimize.Image = (Image)Resources.ResourceManager.GetObject("minimize");
-
         private void minimize_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
 
         private void logIn_Click(object sender, EventArgs e)
@@ -69,7 +63,12 @@ namespace HearMe
                 {
                     case "nouser": MessageBox.Show("The email " + emailLogin.Text + " does not exist!", "Invalid User", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); break;
                     case "wrongpassword": MessageBox.Show("The password is wrong!", "Wrong password!", MessageBoxButtons.OK, MessageBoxIcon.Stop); break;
-                    case "allgood": break;
+                    case "allgood":
+                        this.Hide();
+                        var loggedinForm = new LoggedinForm(emailLogin.Text);
+                        loggedinForm.Closed += (s, args) => this.Close();
+                        loggedinForm.Show();
+                        break;
                     default: MessageBox.Show("It looks like there is a problem with the server!", "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Information); break;
                 }
             }
