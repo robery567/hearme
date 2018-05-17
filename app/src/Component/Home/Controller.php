@@ -8,6 +8,11 @@
 
 class Component_Home_Controller {
     public function indexAction() {
-        return 'sth';
+        return json_encode(
+            [
+                'status' => '300',
+                'message' => 'allgood'
+            ]
+        );
     }
 }
