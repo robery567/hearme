@@ -60,11 +60,11 @@ Component_Settings_Model::getInstance($app)->instantiatePage($urlMethodCall);
 $app->error(function (\Exception $e, $code) use ($app) {
     $response = [
         'status' => '500',
-        'message' => 'Ooops... perhaps you\'ve got into the wrong place, at the wrong moment :('
+        'response' => json_encode(['message' => 'Ooops... perhaps you\'ve got into the wrong place, at the wrong moment :('])
     ];
 
     if (!empty($_GET['exception'])) {
-        $response['message'] = 'The following exception has been thrown: ' . htmlspecialchars($_GET['exception'], HTML_ENTITIES);
+        $response['message'] = json_encode('The following exception has been thrown: ' . htmlspecialchars($_GET['exception'], HTML_ENTITIES));
     }
 
     return new Response(json_encode($response));
