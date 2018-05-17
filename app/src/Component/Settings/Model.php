@@ -131,7 +131,7 @@ class Component_Settings_Model extends Prototype_Model {
                             throw new Exception("No index action defined in controller");
                         }
 
-                        $Controller->$defaultActionName();
+                        $response = $Controller->$defaultActionName();
                     }
                 }
 
