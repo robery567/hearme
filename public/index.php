@@ -57,17 +57,17 @@ $urlMethodCall = (!empty($_POST)) ? 'post' : 'get';
 Component_Settings_Model::getInstance($app)->instantiatePage($urlMethodCall);
 
 
-//$app->error(function (\Exception $e, $code) use ($app) {
-//    switch ($code) {
-//        case 404:
-//            return $app['twig']->render('messages/404.html');
-//            $message = 'The requested page could not be found.';
-//            break;
-//        default:
-//            $message = 'We are sorry, but something went terribly wrong.';
-//    }
-//
-//    return new Response($message);
-//});
+$app->error(function (\Exception $e, $code) use ($app) {
+    $response = [
+        'status' => '500',
+        'message' => 'Ooops... perhaps you\'ve got into the wrong place, at the wrong moment :('
+    ];
+
+    if (!empty($_GET['exception'])) {
+        $response['message'] = 'The following exception has been thrown: ' . htmlspecialchars($_GET['exception'], HTML_ENTITIES);
+    }
+
+    return new Response(json_encode($response));
+});
 
 $app->run();

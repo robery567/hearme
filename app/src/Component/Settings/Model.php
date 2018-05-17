@@ -103,6 +103,8 @@ class Component_Settings_Model extends Prototype_Model {
     public function instantiatePage($method) {
         $app = $this->app;
 
+        die($this->getUrlAllParts());
+
         $this->app->$method($this->getUrlAllParts(), function () use ($app) {
             $urlParts = $this->getUrlParts();
 
