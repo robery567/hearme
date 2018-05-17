@@ -103,6 +103,7 @@ class Component_Settings_Model extends Prototype_Model {
     public function instantiatePage($method) {
         $app = $this->app;
 
+        var_dump($_SERVER['PATH_INFO']);
         var_dump($this->getUrlAllParts());
         var_dump($this->getUrlParts());
         exit;
