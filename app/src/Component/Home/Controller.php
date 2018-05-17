@@ -11,7 +11,7 @@ class Component_Home_Controller {
         return json_encode(
             [
                 'status' => '200',
-                'message' => json_encode('hello there, handsome :D')
+                'response' => json_encode(['message' => 'hello there, handsome :D'])
             ]
         );
     }
