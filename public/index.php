@@ -58,19 +58,16 @@ Component_Settings_Model::getInstance($app)->instantiatePage($urlMethodCall);
 
 
 $app->error(function (\Exception $e, $code) use ($app) {
-    switch ($code) {
-        case 404:
-            $message = 'The requested page could not be found.';
-            break;
-        default:
-            $message = 'We are sorry, but something went terribly wrong.';
-    }
+    $response = [
+        'status' => '500',
+        'message' => 'Ooops... perhaps you\'ve got into the wrong place, at the wrong moment :('
+    ];
 
     if (!empty($_GET['exception'])) {
-        $message = 'The following exception has been thrown: ' . htmlspecialchars($_GET['exception'], HTML_ENTITIES);
+        $response['message'] = 'The following exception has been thrown: ' . htmlspecialchars($_GET['exception'], HTML_ENTITIES);
     }
 
-    return new Response($message);
+    return new Response($response);
 });
 
 $app->run();
