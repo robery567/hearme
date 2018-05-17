@@ -14,7 +14,7 @@ namespace HearMe
     {
         public string CallApi(NameValueCollection values)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://sandbox.robertcolca.me/");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://sandbox.robertcolca.me/request");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
