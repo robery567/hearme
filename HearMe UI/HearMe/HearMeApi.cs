@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace HearMe
 {
@@ -14,25 +15,19 @@ namespace HearMe
     {
         public string CallApi(NameValueCollection values)
         {
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://sandbox.robertcolca.me/request");
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-
             string json = JsonConvert.SerializeObject(values);
 
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            WebRequest request = WebRequest.Create("http://sandbox.robertcolca.me/request");
+            request.Method = "GET";
+            using (WebResponse response = request.GetResponse())
             {
-                streamWriter.Write(json);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var partialResult = streamReader.ReadToEnd();
-                JsonStatusCut result = JsonConvert.DeserializeObject<JsonStatusCut>(partialResult);
-                return result.message;
+                using (Stream stream = response.GetResponseStream())
+                {
+                    var streamReader = new StreamReader(stream);
+                    var partialResult = streamReader.ReadToEnd();
+                    JsonStatusCut result = JsonConvert.DeserializeObject<JsonStatusCut>(partialResult);
+                    return result.message;
+                }
             }
         }
 
