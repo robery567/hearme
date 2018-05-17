@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace HearMe
 {
-    class JsonStatusCut
+    class Message
     {
-        public string status { get; set; }
-        public string response { get; set; }
+        public string message { get; set; }
     }
 }

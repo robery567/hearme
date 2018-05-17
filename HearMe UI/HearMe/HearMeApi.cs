@@ -26,7 +26,7 @@ namespace HearMe
                     var streamReader = new StreamReader(stream);
                     var partialResult = streamReader.ReadToEnd();
                     JsonStatusCut result = JsonConvert.DeserializeObject<JsonStatusCut>(partialResult);
-                    return result.message;
+                    return result.response;
                 }
             }
         }
