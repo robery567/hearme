@@ -59,10 +59,11 @@ namespace HearMe
             if (System.Text.RegularExpressions.Regex.IsMatch(emailRegister.Text, @"^(([a-zA-Z0-9-.]+)(@[a-zA-Z0-9-]+)\.([a-z-]+))$"))
             {
                 var values = new NameValueCollection();
+                values["type"] = "login";
                 values["email"] = emailLogin.Text;
                 values["password"] = passwordLogin.Text;
 
-                string responseString = hearMe.SendData(values);
+                string responseString = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
 
                 switch (responseString.ToString())
                 {
@@ -86,6 +87,7 @@ namespace HearMe
                         if (maleRegister.Checked || femaleRegister.Checked)
                         {
                             var values = new NameValueCollection();
+                            values["type"] = "register";
                             values["firstName"] = firstNameRegister.Text;
                             values["lastName"] = lastNameRegister.Text;
                             values["email"] = emailRegister.Text;
@@ -94,7 +96,10 @@ namespace HearMe
                                 values["gender"] = "male";
                             else values["gender"] = "female";
 
-                            string responseString = hearMe.SendData(values);
+                            string responseString = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
+                            if (responseString == "created")
+                                MessageBox.Show("The account was created successfully!", "New Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            else MessageBox.Show("Error connecting to the server!", "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else MessageBox.Show("You didn't select the gender!", "Gender not selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -110,9 +115,10 @@ namespace HearMe
             if (System.Text.RegularExpressions.Regex.IsMatch(emailRegister.Text, @"^(([a-zA-Z0-9-.]+)(@[a-zA-Z0-9-]+)\.([a-z-]+))$"))
             {
                 var values = new NameValueCollection();
+                values["type"] = "forgot";
                 values["email"] = emailLogin.Text;
 
-                string responseString = hearMe.SendData(values);
+                string responseString = hearMe.CallApi(values);
             }
             else MessageBox.Show("The email is invalid!", "Email Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
