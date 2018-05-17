@@ -78,22 +78,24 @@ class Component_Settings_Model extends Prototype_Model {
      * @return array|null
      */
     public function getUrlParts() {
-        if (empty($_SERVER['PATH_INFO'])) {
+        if (empty($_SERVER['REQUEST_URI'])) {
             return null;
         }
 
-        return explode('/', $_SERVER['PATH_INFO']);
+        $returnUrlParts = substr($_SERVER['REQUEST_URI'], 1);
+
+        return explode('/', $returnUrlParts);
     }
 
     /**
      * @return null|string
      */
     public function getUrlAllParts() {
-        if (empty($_SERVER['PATH_INFO'])) {
+        if (empty($_SERVER['REQUEST_URI'])) {
             return null;
         }
 
-        return $_SERVER['PATH_INFO'];
+        return $_SERVER['REQUEST_URI'];
     }
 
     /**
@@ -102,12 +104,6 @@ class Component_Settings_Model extends Prototype_Model {
      */
     public function instantiatePage($method) {
         $app = $this->app;
-
-        var_dump($_SERVER['REQUEST_URI']);
-        var_dump($_SERVER['HTTP_HOST']);
-        var_dump($this->getUrlAllParts());
-        var_dump($this->getUrlParts());
-        exit;
 
         $this->app->$method($this->getUrlAllParts(), function () use ($app) {
             $urlParts = $this->getUrlParts();
