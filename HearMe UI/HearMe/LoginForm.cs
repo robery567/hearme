@@ -53,6 +53,7 @@ namespace HearMe
             if (System.Text.RegularExpressions.Regex.IsMatch(emailLogin.Text, @"^(([a-zA-Z0-9-.]+)(@[a-zA-Z0-9-]+)\.([a-z-]+))$"))
             {
                 var values = new NameValueCollection();
+                values["status"] = "200";
                 values["type"] = "login";
                 values["email"] = emailLogin.Text;
                 values["password"] = passwordLogin.Text;
@@ -116,6 +117,7 @@ namespace HearMe
             if (System.Text.RegularExpressions.Regex.IsMatch(emailRegister.Text, @"^(([a-zA-Z0-9-.]+)(@[a-zA-Z0-9-]+)\.([a-z-]+))$"))
             {
                 var values = new NameValueCollection();
+                values["status"] = "200";
                 values["type"] = "forgot";
                 values["email"] = emailLogin.Text;
 
