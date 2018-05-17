@@ -131,7 +131,7 @@ class Component_Settings_Model extends Prototype_Model {
                             throw new Exception("No index action defined in controller");
                         }
 
-                        $Controller->$defaultActionName();
+                        $response = $Controller->$defaultActionName();
                     }
                 }
 
@@ -139,7 +139,7 @@ class Component_Settings_Model extends Prototype_Model {
                     throw new Exception("No response returned from controller");
                 }
             } catch (\Exception $e) {
-                return $this->app->redirect('/home');
+                return $this->app->redirect('/home?' . http_build_query(['exception' => $e->getMessage()]));
             }
 
             return $response;

@@ -20,9 +20,7 @@ function autoload($className) {
     if (strpos(strtolower($fileName), 'symfony') === false) {
         $relativePathToFile = 'src/' . $fileName;
 
-        if (file_exists($relativePathToFile)) {
-            require $relativePathToFile;
-        }
+        require $relativePathToFile;
     }
 }
 
