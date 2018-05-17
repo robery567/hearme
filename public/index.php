@@ -67,7 +67,7 @@ $app->error(function (\Exception $e, $code) use ($app) {
         $response['message'] = 'The following exception has been thrown: ' . htmlspecialchars($_GET['exception'], HTML_ENTITIES);
     }
 
-    return $response;
+    return new Response(json_encode($response));
 });
 
 $app->run();
