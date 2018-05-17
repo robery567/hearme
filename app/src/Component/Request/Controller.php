@@ -10,7 +10,7 @@ class Component_Request_Controller {
         return json_encode(
             [
                 'status' => '200',
-                'message' => 'allgood'
+                'message' => json_encode('allgood')
             ]
         );
     }
