@@ -6,8 +6,6 @@
  * Time: 22:52
  */
 
-namespace Architect;
-
 class Module_Request_DataSource extends Prototype_DataSource {
 
 }

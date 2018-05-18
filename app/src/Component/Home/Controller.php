@@ -6,9 +6,7 @@
  * Time: 11:36
  */
 
-namespace Architect;
-
-class Component_Home_Controller extends Prototype_Controller {
+class Component_Home_Controller {
     public function indexAction() {
         return json_encode(
             [

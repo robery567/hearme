@@ -3,14 +3,10 @@
 /**
  * Class Prototype_Model
  */
-
-namespace Architect;
-use Silex\Application;
-
 class Prototype_Model {
 
     /**
-     * @var Application
+     * @var Silex\Application
      */
     protected $app;
 
@@ -28,23 +24,23 @@ class Prototype_Model {
 
     /**
      * Prototype_Model constructor.
-     * @param Application $app
+     * @param Silex\Application $app
      */
-    public function __construct(Application $app) {
+    public function __construct($app) {
        $this->setUp($app);
     }
 
     /**
      * Custom constructor
-     * @param Application $app
+     * @param Silex\Application $app
      */
-    protected function setUp(Application $app) {
+    protected function setUp($app) {
         $this->app = $app;
     }
 
     /**
      * Get the instance of the class
-     * @param Application $app
+     * @param Silex\Application $app
      * @return mixed
      */
     final public static function getInstance($app) {
