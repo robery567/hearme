@@ -5,7 +5,6 @@
  */
 
 namespace Architect;
-use Architect;
 use Silex\Application;
 
 class Component_Settings_Model extends Prototype_Model {
@@ -125,7 +124,7 @@ class Component_Settings_Model extends Prototype_Model {
                         'settings' => $this->getAllSettings(),
                     ));
                 } else {
-                    $Controller = new 'Architect\\' . $expectedControllerName();
+                    $Controller = new $expectedControllerName();
 
                     $expectedActionName = strtolower($action) . 'Action';
 
