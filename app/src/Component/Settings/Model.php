@@ -120,7 +120,7 @@ class Component_Settings_Model extends Prototype_Model {
                         'settings' => $this->getAllSettings(),
                     ));
                 } else {
-                    $Controller = new $expectedControllerName();
+                    $Controller = new $expectedControllerName($this->app);
 
                     $expectedActionName = strtolower($action) . 'Action';
 

@@ -5,9 +5,9 @@
  * Date: 17/05/2018
  * Time: 12:20
  */
-class Component_Request_Controller {
+class Component_Request_Controller extends Prototype_Controller {
     public function indexAction() {
-        $Request = new Module_Request_Model();
+        $Request = new Module_Request_Model($this->app);
 
         if (!empty($_POST['request'])) {
             $decodedRequest = json_decode($_POST['request'], true);

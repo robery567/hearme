@@ -6,15 +6,15 @@
  * Time: 22:52
  */
 
-class Module_Request_Model {
+class Module_Request_Model extends Prototype_Model {
     /** @var Module_Request_DataSource */
     protected $DataSource;
 
     /**
      * @param Module_Request_DataSource $DataSource
      */
-    public function setUp($DataSource = null) {
-        $this->DataSource = (null === $DataSource) ? new Module_Request_DataSource() : $DataSource;
+    public function setUp($app, $DataSource = null) {
+        $this->DataSource = (null === $DataSource) ? new Module_Request_DataSource($app) : $DataSource;
     }
 
 
