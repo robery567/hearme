@@ -3,18 +3,18 @@
 /**
  * Class Prototype_DataSource
  */
+
+namespace Architect;
+use Silex\Application;
+
 class Prototype_DataSource {
     protected $db;
 
     /**
      * Prototype_DataSource constructor.
+     * @param Application $app
      */
-    public function __construct() {
-        $App = new Silex\Application();
-        $this->db = $App['db'];
-    }
-
-    public function setUp() {
-
+    public function __construct(Application $app) {
+        $this->db = $app['db'];
     }
 }

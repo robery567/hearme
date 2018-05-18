@@ -6,15 +6,19 @@
  * Time: 22:52
  */
 
-class Module_Request_Model {
+namespace Architect;
+use Silex\Application;
+
+class Module_Request_Model extends Prototype_Model {
     /** @var Module_Request_DataSource */
     protected $DataSource;
 
     /**
-     * @param Module_Request_DataSource $DataSource
+     * @param Application $app
      */
-    public function setUp($DataSource = null) {
-        $this->DataSource = (null === $DataSource) ? new Module_Request_DataSource() : $DataSource;
+    public function setUp(Application $app)
+    {
+        $this->DataSource = new Module_Request_DataSource($app);
     }
 
 

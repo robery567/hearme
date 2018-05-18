@@ -3,6 +3,10 @@
 /**
  * Class Component_Settings_Model
  */
+
+namespace Architect;
+use Silex\Application;
+
 class Component_Settings_Model extends Prototype_Model {
     /**
      * @var Component_Settings_DataSource
@@ -10,7 +14,7 @@ class Component_Settings_Model extends Prototype_Model {
     protected $DataSource;
 
     /**
-     * @var Silex\Application
+     * @var Application
      */
     protected $app;
     protected $twigExtension = '.twig';
@@ -30,7 +34,7 @@ class Component_Settings_Model extends Prototype_Model {
     /**
      * @param $app
      */
-    protected function setUp($app) {
+    protected function setUp(Application $app) {
         $this->DataSource = new Component_Settings_DataSource($app);
         $this->app = $app;
     }
@@ -130,15 +134,15 @@ class Component_Settings_Model extends Prototype_Model {
                         $defaultActionName = $this->defaultAction . 'Action';
 
                         if (!method_exists($expectedControllerName, $this->defaultAction . 'Action')) {
-                            throw new Exception("No index action defined in controller");
+                            throw new \Exception("No index action defined in controller");
                         }
 
-                        $response = $Controller->$defaultActionName();
+                        $response = $Controller->$defaultActionName($app);
                     }
                 }
 
                 if (empty($response)) {
-                    throw new Exception("No response returned from controller");
+                    throw new \Exception("No response returned from controller");
                 }
             } catch (\Exception $e) {
                 return $this->app->redirect('/home?' . http_build_query(['exception' => $e->getMessage()]));

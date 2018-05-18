@@ -21,6 +21,10 @@ ini_set('display_errors', 'On');
 $app = new Silex\Application();
 $app['debug'] = true;
 
+$app['resolver'] = function ($app) {
+    return new \Architect\ControllerResolver($app, $app['logger']);
+};
+
 $app->register(new Silex\Provider\DoctrineServiceProvider(), $connection);
 $app->register(new Silex\Provider\SessionServiceProvider());
 
@@ -54,7 +58,7 @@ $app['twig']->addGlobal('text', $lang);
 
 $urlMethodCall = (!empty($_POST)) ? 'post' : 'get';
 
-Component_Settings_Model::getInstance($app)->instantiatePage($urlMethodCall);
+Architect\Component_Settings_Model::getInstance($app)->instantiatePage($urlMethodCall);
 
 
 $app->error(function (\Exception $e, $code) use ($app) {
