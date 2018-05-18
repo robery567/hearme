@@ -22,7 +22,7 @@ $app = new Silex\Application();
 $app['debug'] = true;
 
 $app['resolver'] = function ($app) {
-    return new \Architect\Base_ControllerResolver($app, $app['logger']);
+    return new \Architect\ControllerResolver($app, $app['logger']);
 };
 
 $app->register(new Silex\Provider\DoctrineServiceProvider(), $connection);

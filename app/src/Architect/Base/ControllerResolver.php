@@ -10,7 +10,7 @@ namespace Architect;
 
 use Silex\ControllerResolver as BaseControllerResolver;
 
-class Base_ControllerResolver extends BaseControllerResolver {
+class ControllerResolver extends BaseControllerResolver {
     protected function instantiateController($class) {
         return new $class($this->app);
     }
