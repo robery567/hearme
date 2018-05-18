@@ -8,17 +8,13 @@ class Prototype_DataSource {
 
     /**
      * Prototype_DataSource constructor.
-     * @param Silex\Application $app
      */
-    public function __construct($app) {
-        $this->setUp($app);
+    public function __construct() {
+        $App = new Silex\Application();
+        $this->db = $App['db'];
     }
 
-    /**
-     * @param Silex\Application $app
-     */
-    public function setUp($app) {
-        $this->db = $app['db'];
-    }
+    public function setUp() {
 
+    }
 }

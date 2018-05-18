@@ -7,6 +7,14 @@
  */
 class Component_Request_Controller {
     public function indexAction() {
+        $Request = new Module_Request_Model();
+
+        if (!empty($_POST['request'])) {
+            $decodedRequest = json_decode($_POST['request'], true);
+
+            $Request->interpretReceivedRequest($decodedRequest);
+        }
+
         return json_encode(
             [
                 'status' => '200',
