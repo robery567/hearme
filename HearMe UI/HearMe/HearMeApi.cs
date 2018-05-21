@@ -13,24 +13,31 @@ namespace HearMe
 {
     class HearMeApi
     {
-        public string CallApi(NameValueCollection values)
+        public string CallApi(Dictionary<string, string> values)
         {
-            string json = JsonConvert.SerializeObject(values);
-
             WebRequest request = WebRequest.Create("http://sandbox.robertcolca.me/request");
-            request.Method = "GET";
-            using (WebResponse response = request.GetResponse())
+            request.Method = "POST";
+            byte[] json = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(values));
+            request.ContentType = "application/json";
+            request.ContentLength = json.Length;
+
+            using (Stream dataStream = request.GetRequestStream())
             {
-                using (Stream stream = response.GetResponseStream())
+                dataStream.Write(json, 0, json.Length);
+                using (WebResponse response = request.GetResponse())
                 {
-                    var streamReader = new StreamReader(stream);
-                    var partialResult = streamReader.ReadToEnd();
-                    JsonStatusCut result = JsonConvert.DeserializeObject<JsonStatusCut>(partialResult);
-                    return result.response;
+                    using (Stream responseStream = response.GetResponseStream())
+                    {
+                        using (StreamReader reader = new StreamReader(responseStream))
+                        {
+                            string responseFromServer = reader.ReadToEnd();
+                            MessageBox.Show(responseFromServer);
+                            JsonStatusCut result = JsonConvert.DeserializeObject<JsonStatusCut>(responseFromServer);
+                            return result.response;
+                        }
+                    }
                 }
             }
         }
-
-
     }
 }

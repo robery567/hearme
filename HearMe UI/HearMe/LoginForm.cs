@@ -31,6 +31,11 @@ namespace HearMe
         public LoginForm()
         {
             InitializeComponent();
+            var loggedinForm = new LoggedinForm(emailLogin.Text);
+            loggedinForm.StartPosition = FormStartPosition.Manual;
+            loggedinForm.Location = this.Location;
+            loggedinForm.Closed += (s, args) => this.Close();
+            loggedinForm.Show();
         }
 
         private void header_MouseDown(object sender, MouseEventArgs e)
@@ -52,13 +57,14 @@ namespace HearMe
         {
             if (System.Text.RegularExpressions.Regex.IsMatch(emailLogin.Text, @"^(([a-zA-Z0-9-.]+)(@[a-zA-Z0-9-]+)\.([a-z-]+))$"))
             {
-                var values = new NameValueCollection();
+                var values = new Dictionary<string, string>();
                 values["status"] = "200";
                 values["type"] = "login";
                 values["email"] = emailLogin.Text;
                 values["password"] = passwordLogin.Text;
 
                 Message response = JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values));
+                values.Clear();
 
                 switch (response.message)
                 {
@@ -72,10 +78,9 @@ namespace HearMe
                         loggedinForm.Closed += (s, args) => this.Close();
                         loggedinForm.Show();
                         break;
-                    default: MessageBox.Show("It looks like there is a problem with the server!", "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Information); break;
                 }
             }
-            else MessageBox.Show("The email is invalid!", "Email Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else MessageBox.Show("The email is invalid!", "Invalid Email", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void signUp_Click(object sender, EventArgs e)
@@ -86,26 +91,31 @@ namespace HearMe
                 {
                     if (System.Text.RegularExpressions.Regex.IsMatch(emailRegister.Text, @"^(([a-zA-Z0-9-.]+)(@[a-zA-Z0-9-]+)\.([a-z-]+))$"))
                     {
-                        if (maleRegister.Checked || femaleRegister.Checked)
+                        if (passwordRegister.Text.Length >= 6)
                         {
-                            var values = new NameValueCollection();
-                            values["type"] = "register";
-                            values["firstName"] = firstNameRegister.Text;
-                            values["lastName"] = lastNameRegister.Text;
-                            values["email"] = emailRegister.Text;
-                            values["password"] = passwordRegister.Text;
-                            if (maleRegister.Checked)
-                                values["gender"] = "male";
-                            else values["gender"] = "female";
+                            if (maleRegister.Checked || femaleRegister.Checked)
+                            {
+                                var values = new Dictionary<string, string>();
+                                values["type"] = "register";
+                                values["firstName"] = firstNameRegister.Text;
+                                values["lastName"] = lastNameRegister.Text;
+                                values["email"] = emailRegister.Text;
+                                values["password"] = passwordRegister.Text;
+                                if (maleRegister.Checked)
+                                    values["gender"] = "male";
+                                else values["gender"] = "female";
 
-                            string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
-                            if (response == "created") MessageBox.Show("The account was created successfully!", "New Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            else if (response == "existing") MessageBox.Show("The email " + emailRegister.Text + " already exists!", "Existing Account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            else MessageBox.Show("Error connecting to the server!", "Oops!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
+                                values.Clear();
+
+                                if (response == "created") MessageBox.Show("The account was created successfully!", "New Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                else if (response == "existing") MessageBox.Show("The email " + emailRegister.Text + " already exists!", "Existing Account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                            else MessageBox.Show("You didn't select the gender!", "Gender not selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        else MessageBox.Show("You didn't select the gender!", "Gender not selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        else MessageBox.Show("The password must be longer than 5 characters!", "Invalid Password", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    else MessageBox.Show("The email is invalid!", "Email Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else MessageBox.Show("The email is invalid!", "Invalid Email", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else MessageBox.Show("The Last Name should contain only letters and '-'!", "Last Name Invalid", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -116,12 +126,14 @@ namespace HearMe
         {
             if (System.Text.RegularExpressions.Regex.IsMatch(emailRegister.Text, @"^(([a-zA-Z0-9-.]+)(@[a-zA-Z0-9-]+)\.([a-z-]+))$"))
             {
-                var values = new NameValueCollection();
+                var values = new Dictionary<string, string>();
                 values["status"] = "200";
                 values["type"] = "forgot";
                 values["email"] = emailLogin.Text;
 
                 string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
+                values.Clear();
+
                 if (response == "emailsent") MessageBox.Show("The password was sent to " + emailLogin.Text + " email!", "Email Sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else if (response == "notfound") MessageBox.Show("The email " + emailLogin.Text + " does not exist!", "Invalid User", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
