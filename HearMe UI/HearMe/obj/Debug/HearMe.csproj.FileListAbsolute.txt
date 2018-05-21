@@ -22,3 +22,5 @@ E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Debug\Newtonsoft.Json.xml
 E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.csproj.CopyComplete
 E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.LoggedinForm.resources
 E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Debug\HearMe.LoginForm.resources
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Debug\NAudio.dll
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Debug\NAudio.xml
