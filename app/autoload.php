@@ -20,6 +20,10 @@ function autoload($className) {
     if (strpos(strtolower($fileName), 'symfony') === false) {
         $relativePathToFile = 'src/' . $fileName;
 
+        if (!file_exists($relativePathToFile)) {
+            throw new Exception("Component not found");
+        }
+
         require $relativePathToFile;
     }
 }
