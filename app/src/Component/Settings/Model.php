@@ -108,8 +108,6 @@ class Component_Settings_Model extends Prototype_Model {
         $this->app->$method($this->getUrlAllParts(), function () use ($app) {
             $urlParts = $this->getUrlParts();
 
-            var_dump($urlParts);
-            die();
             $component =  empty($urlParts[0]) ? $urlParts[0] : $this->defaultComponent;
             $action =  empty($urlParts[1]) ? $urlParts[1] : $this->defaultAction;
 
