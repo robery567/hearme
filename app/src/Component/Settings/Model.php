@@ -112,6 +112,10 @@ class Component_Settings_Model extends Prototype_Model {
             $component =  ($partsCount > 1) ? $urlParts[1] : $this->defaultComponent;
             $action =  ($partsCount > 2) ? $urlParts[2] : $this->defaultAction;
 
+            var_dump($action);
+            var_dump($component);
+            var_dump($urlParts);
+            die();
             try {
                 $expectedControllerName = 'Component_' . ucfirst($component) . '_Controller';
 

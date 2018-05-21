@@ -11,6 +11,7 @@ class Module_Request_Model extends Prototype_Model {
     protected $DataSource;
 
     /**
+     * @param Silex\Application $app
      * @param Module_Request_DataSource $DataSource
      */
     public function setUp($app, $DataSource = null) {
