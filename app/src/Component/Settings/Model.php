@@ -108,8 +108,8 @@ class Component_Settings_Model extends Prototype_Model {
         $this->app->$method($this->getUrlAllParts(), function () use ($app) {
             $urlParts = $this->getUrlParts();
 
-            $component =  empty($urlParts[0]) ? $urlParts[0] : $this->defaultComponent;
-            $action =  empty($urlParts[1]) ? $urlParts[1] : $this->defaultAction;
+            $component =  !empty($urlParts[0]) ? $urlParts[0] : $this->defaultComponent;
+            $action =  !empty($urlParts[1]) ? $urlParts[1] : $this->defaultAction;
 
             try {
                 $expectedControllerName = 'Component_' . ucfirst($component) . '_Controller';
