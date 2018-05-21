@@ -20,7 +20,7 @@ function autoload($className) {
     if (strpos(strtolower($fileName), 'symfony') === false) {
         $relativePathToFile = 'src/' . $fileName;
 
-        if (stream_resolve_include_path($relativePathToFile) === true) {
+        if (stream_resolve_include_path($relativePathToFile) === false) {
             throw new Exception("Component not found");
         }
 
