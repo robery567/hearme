@@ -144,7 +144,7 @@ class Module_Tree_Printer_Model {
             $this->dataToRender .= '<div class="left">' .
                 ($node->haveChild(Module_Node_Model::POSITION_LEFT) ?
                     $node->getChild(Module_Node_Model::POSITION_LEFT)->getId() : '<span class="glyphicon glyphicon-remove"></span>') .
-                '<</div>
+                '</div>
                 <div class="right">>' .
                 ($node->haveChild(Module_Node_Model::POSITION_RIGHT) ?
                     $node->getChild(Module_Node_Model::POSITION_RIGHT)->getId() : '<span class="glyphicon glyphicon-remove"></span>') .
