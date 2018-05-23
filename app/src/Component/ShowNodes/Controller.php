@@ -14,35 +14,11 @@ class Component_ShowNodes_Controller extends Prototype_Controller {
      * @throws Exception
      */
     public function indexAction() {
-        $nodes = [
-            10, 85, 15,
-            70, 20, 60, 30,
-            50, 65, 80, 90,
-            40, 5, 55
-        ];
+        $Database = new Module_Database_Model();
+        $Database->setName('hearme');
+        $Database->load();
 
-        $Tree = new Module_Tree_Model();
-
-        foreach ($nodes as $id) {
-            $Node = new Module_Node_Model($id, [
-                'username' => 'tester',
-                'email' => 'user@test.com',
-                'gender' => 'male'
-            ]);
-
-            $Tree->insert($Node);
-        }
-
-        $removeNode = [
-            30,
-            70,
-            60,
-            15,
-        ];
-
-        foreach ($removeNode as $id) {
-            $Tree->remove($Tree->find($id));
-        }
+        $Tree = $Database->getDatabaseData();
 
         $Printer = new Module_Tree_Printer_Model();
 
