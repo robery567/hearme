@@ -17,9 +17,9 @@ class Component_ShowNodes_Controller extends Prototype_Controller {
         $Database = new Module_Database_Model();
         $Database->setName('hearme');
         $Database->setColumns(['username', 'email', 'gender']);
-        $Database->load();
+        //$Database->load();
 
-        $Tree = $Database->getDatabaseData();
+        //$Tree = $Database->getDatabaseData();
 
         $User = new Module_User_Model();
 
@@ -27,6 +27,6 @@ class Component_ShowNodes_Controller extends Prototype_Controller {
 
         $Printer = new Module_Tree_Printer_Model();
 
-        return $Printer->render($Tree);
+        //return $Printer->render($Tree);
     }
 }
