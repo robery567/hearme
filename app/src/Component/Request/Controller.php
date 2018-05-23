@@ -16,11 +16,11 @@ class Component_Request_Controller extends Prototype_Controller {
         if (!empty($_POST['request']) || !empty($_GET['request'])) {
             $decodedRequest = [];
             if (!empty($_POST['request'])) {
-                $decodedRequest = json_decode($_POST['request'], true);
+                $decodedRequest = json_decode(urldecode($_POST['request']), true);
             }
 
             if (!empty($_GET['request'])) {
-                $decodedRequest = json_decode($_GET['request'], true);
+                $decodedRequest = json_decode(urldecode($_GET['request']), true);
             }
 
             $interpretedRequest = $Request->interpretReceivedRequest($decodedRequest);
