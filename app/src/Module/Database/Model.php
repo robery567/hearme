@@ -34,6 +34,11 @@ class Module_Database_Model {
     protected $databaseColumns = ['id'];
 
     /**
+     * @var string The full path of the database to load
+     */
+    protected $fileToLoad = '';
+
+    /**
      * Sets the database name to be loaded
      * @param string $name
      * @throws Exception
@@ -79,6 +84,13 @@ class Module_Database_Model {
     }
 
     /**
+     * @param $fileToLoad
+     */
+    public function setDatabaseFileToLoad($fileToLoad) {
+        $this->fileToLoad = $fileToLoad;
+    }
+
+    /**
      * Get the database data
      * @return Module_Tree_Model|null
      */
@@ -96,20 +108,11 @@ class Module_Database_Model {
      * @throws Exception
      */
     public function load() {
-        $fileToLoad = $_SERVER['DOCUMENT_ROOT'] . $this->databasePath . $this->databaseName . '.' . $this->databaseExtension;
+        $this->setDatabaseFileToLoad($_SERVER['DOCUMENT_ROOT'] . $this->databasePath . $this->databaseName . '.' . $this->databaseExtension);
 
         $Tree = new Module_Tree_Model();
 
-        // if the database file doesn't exist, we create a blank one
-        if (!file_exists($fileToLoad)) {
-            file_put_contents($fileToLoad, json_encode([]));
-
-            $this->databaseData = $Tree;
-
-            return $Tree;
-        }
-
-        $databaseData = file_get_contents($fileToLoad);
+        $databaseData = $this->readDatabase();
 
         if (($databaseData = json_decode($databaseData, true)) === null) {
             throw new Exception('The database file is corrupted');
@@ -126,6 +129,40 @@ class Module_Database_Model {
         $this->databaseData = $Tree;
 
         return $Tree;
+    }
+
+    /**
+     * Insert given data into the database
+     * @param $data
+     * @return bool
+     * @throws Exception
+     */
+    public function insert($data) {
+        if (!is_array($data)) {
+            throw new Exception('Invalid data to insert into the database');
+        }
+
+        if (!$this->validateColumns($data)) {
+            return false;
+        }
+
+        $dataToInsert = [];
+
+        foreach ($this->databaseColumns as $column) {
+            if ($column === 'id') {
+                $dataToInsert['id'] = $this->getLastId() + 1;
+                continue;
+            }
+
+            if (empty($data[$column])) {
+                $dataToInsert[$column] = 'null';
+                continue;
+            }
+
+            $dataToInsert[$column] = $data[$column];
+        }
+
+        return true;
     }
 
     /**
@@ -150,5 +187,50 @@ class Module_Database_Model {
         }
 
         return $userData;
+    }
+
+    /**
+     * Reads the database file
+     * @return bool|string
+     */
+    private function readDatabase() {
+        // if the database file doesn't exist, we create a blank one
+        if (!file_exists($this->fileToLoad)) {
+            file_put_contents($this->fileToLoad, json_encode([]));
+        }
+
+        return file_get_contents($this->fileToLoad);
+    }
+
+    /**
+     * Validate if the set of columns are valid
+     * @param $columns
+     * @return bool
+     */
+    private function validateColumns($columns) {
+        foreach ($columns as $column) {
+            if (!in_array($column, $this->databaseColumns)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Gets the last entry id
+     * @throws Exception
+     * return int
+     */
+    private function getLastId() {
+        $databaseData = $this->readDatabase();
+
+        if (($databaseData = json_decode($databaseData, true)) === null) {
+            throw new Exception('The database file is corrupted');
+        }
+
+        $lastEntry = end($databaseData);
+
+        return $lastEntry['id'];
     }
 }
