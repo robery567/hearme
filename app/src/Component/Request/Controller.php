@@ -12,7 +12,8 @@ class Component_Request_Controller extends Prototype_Controller {
      */
     public function indexAction() {
         $Request = new Module_Request_Model($this->app);
-
+        $_POST['request'] = file_get_contents('php://input');
+        
         if (!empty($_POST['request']) || !empty($_GET['request'])) {
             $decodedRequest = [];
             if (!empty($_POST['request'])) {
