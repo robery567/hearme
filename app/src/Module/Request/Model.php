@@ -71,6 +71,8 @@ class Module_Request_Model extends Prototype_Model {
                 ];
             }
 
+            unset($userData['password']);
+
             return [
                 'status' => '200',
                 'message' => $userData
