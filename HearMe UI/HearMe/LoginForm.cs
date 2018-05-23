@@ -31,11 +31,11 @@ namespace HearMe
         public LoginForm()
         {
             InitializeComponent();
-            var loggedinForm = new LoggedinForm(emailLogin.Text);
+            /*var loggedinForm = new LoggedinForm(emailLogin.Text);
             loggedinForm.StartPosition = FormStartPosition.Manual;
             loggedinForm.Location = this.Location;
             loggedinForm.Closed += (s, args) => this.Close();
-            loggedinForm.Show();
+            loggedinForm.Show();*/
         }
 
         private void header_MouseDown(object sender, MouseEventArgs e)
@@ -55,7 +55,7 @@ namespace HearMe
 
         private void logIn_Click(object sender, EventArgs e)
         {
-            if (System.Text.RegularExpressions.Regex.IsMatch(emailLogin.Text, @"^(([a-zA-Z0-9-.]+)(@[a-zA-Z0-9-]+)\.([a-z-]+))$"))
+            if (System.Text.RegularExpressions.Regex.IsMatch(emailLogin.Text, @"^(([a-zA-Z0-9-_.]+)(@[a-zA-Z0-9-]+)\.([a-z-]+))$"))
             {
                 var values = new Dictionary<string, string>();
                 values["status"] = "200";
@@ -68,9 +68,8 @@ namespace HearMe
 
                 switch (response.message)
                 {
-                    case "notfound": MessageBox.Show("The email " + emailLogin.Text + " does not exist!", "Invalid User", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); break;
-                    case "wrongpassword": MessageBox.Show("The password is wrong!", "Wrong password!", MessageBoxButtons.OK, MessageBoxIcon.Stop); break;
-                    case "allgood":
+                    case "INVALID_CREDENTIALS": MessageBox.Show("The password / email is wrong!", "INVALID_CREDENTIALS", MessageBoxButtons.OK, MessageBoxIcon.Stop); break;
+                    case "OK":
                         this.Hide();
                         var loggedinForm = new LoggedinForm(emailLogin.Text);
                         loggedinForm.StartPosition = FormStartPosition.Manual;
@@ -108,8 +107,8 @@ namespace HearMe
                                 string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
                                 values.Clear();
 
-                                if (response == "created") MessageBox.Show("The account was created successfully!", "New Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                else if (response == "existing") MessageBox.Show("The email " + emailRegister.Text + " already exists!", "Existing Account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                if (response == "OK") MessageBox.Show("The account was created successfully!", "New Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                else if (response == "EXIST") MessageBox.Show("The email " + emailRegister.Text + " already exists!", "Existing Account", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                             else MessageBox.Show("You didn't select the gender!", "Gender not selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
