@@ -23,6 +23,8 @@ class Component_ShowNodes_Controller extends Prototype_Controller {
 
         $Printer = new Module_Tree_Printer_Model();
 
+        $Database->insert(['email' => 'merge@merge.com']);
+
         return $Printer->render($Tree);
     }
 }
