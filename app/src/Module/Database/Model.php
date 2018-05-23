@@ -118,8 +118,6 @@ class Module_Database_Model {
         foreach ($databaseData as $user) {
             $userData = $this->generateUserData($user);
 
-            var_dump($userData);
-            exit;
             $Node = new Module_Node_Model($user['id'], $userData);
 
             $Tree->insert($Node);
@@ -148,9 +146,7 @@ class Module_Database_Model {
                 throw new Exception('The database columns are corrupted');
             }
 
-            $userData[] = [
-                $column => $user[$column]
-            ];
+            $userData[$column] =  $user[$column];
         }
 
         return $userData;
