@@ -72,7 +72,7 @@ class Module_Database_Model {
      * @throws Exception
      */
     public function load() {
-        $fileToLoad = $this->databasePath . $this->databaseName . '.' . $this->databaseExtension;
+        $fileToLoad = $_SERVER['DOCUMENT_ROOT'] . $this->databasePath . $this->databaseName . '.' . $this->databaseExtension;
 
         $Tree = new Module_Tree_Model();
 
