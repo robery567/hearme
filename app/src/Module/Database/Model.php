@@ -143,7 +143,7 @@ class Module_Database_Model {
             }
 
             if (empty($user[(string)$column])) {
-                throw new Exception('The database columns are corrupted ' . $column);
+                throw new Exception('The database columns are corrupted');
             }
 
             $userData[$column] =  $user[$column];
