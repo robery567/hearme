@@ -11,7 +11,7 @@ class Module_User_Model {
     protected $DataSource;
 
     /** @var Module_Tree_Model */
-    protected $Database;
+    protected $Tree;
 
     /**
      * Module_User_Model constructor.
@@ -22,7 +22,7 @@ class Module_User_Model {
         $this->DataSource->setName('hearme_db');
         $this->DataSource->setColumns(['username', 'email', 'password', 'first_name', 'last_name', 'gender', 'avatar', 'online', 'friends']);
 
-        $this->Database = $this->DataSource->load();
+        $this->Tree = $this->DataSource->load();
     }
 
     /**
@@ -33,7 +33,7 @@ class Module_User_Model {
      * @throws Exception
      */
     public function checkAuthenticationCredentials($email, $password) {
-        if (null !== $this->Database->find([$email, $password], null, ['email', 'password'])) {
+        if (null !== $this->Tree->find([$email, $password], null, ['email', 'password'])) {
             return true;
         }
 
@@ -48,7 +48,7 @@ class Module_User_Model {
      * @throws Exception
      */
     public function getUserBy($keyName, $keyVal) {
-        $userData = $this->Database->find($keyName, null, $keyVal);
+        $userData = $this->Tree->find($keyName, null, $keyVal);
 
         if (null === $userData) {
             return null;
@@ -61,14 +61,17 @@ class Module_User_Model {
      * Inserts the given user into the database
      * @param $userData
      * @return bool
+     * @throws Exception
      */
     public function insertUser($userData) {
-        if (!isset($userData['first_name'], $userData['last_name'], $userData['first_name'], $userData['password'], $userData['gender'])) {
+        if (!isset($userData['email'], $userData['first_name'], $userData['last_name'], $userData['first_name'], $userData['password'], $userData['gender'])) {
             return false;
         }
 
+        if (null !== $this->Tree->find('email', null, $userData['email'])) {
+            return false;
+        }
 
-
-        return true;
+        return $this->DataSource->insert($userData);
     }
 }
