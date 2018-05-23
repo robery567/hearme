@@ -24,7 +24,12 @@ class Component_ShowNodes_Controller extends Prototype_Controller {
         $Tree = new Module_Tree_Model();
 
         foreach ($nodes as $id) {
-            $Node = new Module_Node_Model($id, $id);
+            $Node = new Module_Node_Model($id, [
+                'username' => 'tester',
+                'email' => 'user@test.com',
+                'gender' => 'male'
+            ]);
+
             $Tree->insert($Node);
         }
 

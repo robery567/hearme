@@ -14,7 +14,7 @@ class Module_Node_Model extends Module_Node_Abstract_Model {
     /**
      * Parent of the node
      *
-     * @var Node
+     * @var Module_Node_Model
      */
     protected $parent = null;
 

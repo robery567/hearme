@@ -137,8 +137,17 @@ class Module_Tree_Printer_Model {
                         </div>';
         }
 
-        $this->dataToRender .= '<div class="top">#' . $node->getId() . ' (' . $node->__toString() . ')</div>
-                <div class="bottom">';
+        $this->dataToRender .= '<div class="top">#' . $node->getId() . ' (';
+
+        $userData = $node->getValue();
+
+        $this->dataToRender .= ')</div><div class="bottom">';
+
+        $this->dataToRender .= " <ul> 
+                                    <li><strong>Username:</strong> {$userData['username']}</li>
+                                    <li><strong>Email:</strong> {$userData['email']}</li>
+                                    <li><strong>Username:</strong> {$userData['gender']}</li>
+                                 </ul>";
 
         if (!$node->isLeaf()) {
             $this->dataToRender .= '<div class="left">' .
