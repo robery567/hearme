@@ -141,6 +141,9 @@ class Module_Database_Model {
             }
 
             if (empty($user[$column])) {
+                var_dump($this->databaseColumns);
+                var_dump($user);
+                exit;
                 throw new Exception('The database columns are corrupted');
             }
 
