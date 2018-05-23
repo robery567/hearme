@@ -1,0 +1,14 @@
+[
+  {
+    "id":1,
+    "username":"robery567",
+    "email":"robery_office@yahoo.ro",
+    "password":"aaaaa",
+    "first_name": "Robert",
+    "last_name": "Colca",
+    "gender":"male",
+    "avatar": "aa.wav",
+    "online": false,
+    "friends": [2,3]
+  }
+]
