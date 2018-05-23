@@ -220,13 +220,29 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
                 return $node;
             }
 
-            return $node->isLeaf() ? null : $this->find($keyVal, $node->getChild(1), $searchByKey);
+            if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_LEFT)) {
+                return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_LEFT), $searchByKey);
+            }
+
+            if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_RIGHT)) {
+                return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey);
+            }
+
+            return null;
         } else {
             if (!empty($node->getValue()[$searchByKey]) && $node->getValue()[$searchByKey] === $keyVal) {
                 return $node;
             }
 
-            return $node->isLeaf() ? null : $this->find($keyVal, $node->getChild(1), $searchByKey);
+            if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_LEFT)) {
+                return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_LEFT), $searchByKey);
+            }
+
+            if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_RIGHT)) {
+                return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey);
+            }
+
+            return null;
         }
     }
 
