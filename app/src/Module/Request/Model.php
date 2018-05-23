@@ -49,7 +49,7 @@ class Module_Request_Model extends Prototype_Model {
             }
 
             return [
-                'status' => '500',
+                'status' => '200',
                 'message' => 'OK'
             ];
         }
@@ -72,7 +72,7 @@ class Module_Request_Model extends Prototype_Model {
             }
 
             return [
-                'status' => '500',
+                'status' => '200',
                 'message' => $userData
             ];
         }
