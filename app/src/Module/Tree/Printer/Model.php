@@ -30,8 +30,8 @@ class Module_Tree_Printer_Model {
                         .node {
                             border: 1px solid #0f0;
                             border-radius: 50px;
-                            height: 90px;
-                            width: 90px;
+                            height: 210px;
+                            width: 200px;
                             padding: 10px;
                             text-align: center;
                         }
@@ -137,11 +137,11 @@ class Module_Tree_Printer_Model {
                         </div>';
         }
 
-        $this->dataToRender .= '<div class="top">#' . $node->getId() . ' (';
+        $this->dataToRender .= '<div class="top">#' . $node->getId();
 
         $userData = $node->getValue();
 
-        $this->dataToRender .= ')</div><div class="bottom">';
+        $this->dataToRender .= '</div><div class="bottom">';
 
         $this->dataToRender .= " <ul> 
                                     <li><strong>Username:</strong> {$userData['username']}</li>
