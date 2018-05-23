@@ -162,6 +162,13 @@ class Module_Database_Model {
             $dataToInsert[$column] = $data[$column];
         }
 
+        $dataToInsert = json_encode($dataToInsert, true);
+        $dbData = json_decode($this->readDatabase(), true);
+
+        array_push($dbData, $dataToInsert);
+
+        $this->writeToDatabase($dbData);
+
         return true;
     }
 
@@ -196,10 +203,18 @@ class Module_Database_Model {
     private function readDatabase() {
         // if the database file doesn't exist, we create a blank one
         if (!file_exists($this->fileToLoad)) {
-            file_put_contents($this->fileToLoad, json_encode([]));
+            $this->writeToDatabase(json_encode([]));
         }
 
         return file_get_contents($this->fileToLoad);
+    }
+
+    /**
+     * Write to database file
+     * @param $data
+     */
+    private function writeToDatabase($data) {
+        file_put_contents($this->fileToLoad, $data);
     }
 
     /**
