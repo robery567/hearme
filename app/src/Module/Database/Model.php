@@ -167,7 +167,7 @@ class Module_Database_Model {
 
         array_push($dbData, $dataToInsert);
 
-        $this->writeToDatabase(json_encode($dbData));
+        $this->writeToDatabase(utf8_encode(json_encode($dbData)));
 
         return true;
     }
