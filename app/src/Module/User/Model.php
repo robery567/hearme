@@ -48,7 +48,7 @@ class Module_User_Model {
      * @throws Exception
      */
     public function getUserBy($keyName, $keyVal) {
-        $userData = $this->Tree->find($keyName, null, $keyVal);
+        $userData = $this->Tree->find($keyVal, null, $keyName);
 
         if (null === $userData) {
             return null;
