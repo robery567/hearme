@@ -26,6 +26,7 @@ class Module_User_Model {
      * @param $email
      * @param $password
      * @return bool
+     * @throws Exception
      */
     public function checkAuthenticationCredentials($email, $password) {
         if (null !== $this->DataSource->find($email, null, 'email')) {

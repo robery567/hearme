@@ -184,11 +184,16 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
      * @param Module_Node_Model|null $node
      * @param string $searchByKey
      * @return false|Module_Node_Model
+     * @throws Exception
      */
     public function find($keyVal, Module_Node_Model $node = null, $searchByKey = 'id') {
         // Initialize if first iteration
         if (null === $node) {
             $node = $this->root;
+        }
+
+        if ((is_array($keyVal) && !is_array($searchByKey)) || (is_array($searchByKey) && !is_array($keyVal))) {
+            throw new Exception('Both search parameters should be arrays');
         }
 
         if ($searchByKey === 'id') {
@@ -200,6 +205,21 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
 
             // Else if it's a nil, return false, else recursion
             return $node->isLeaf() ? false : $this->find($keyVal, $node->getChild($position), $searchByKey);
+        } else if (is_array($keyVal) && is_array($searchByKey)) {
+            $found = true;
+
+            foreach($searchByKey as $keyId => $keyName) {
+                if (empty($node->getValue()[$searchByKey]) || $node->getValue()[$keyName] !== $keyVal[$keyId]) {
+                    $found = false;
+                    break;
+                }
+            }
+
+            if ($found === true) {
+                return $node;
+            }
+
+            return $node->isLeaf() ? null : $this->find($keyVal, $node->getChild(1), $searchByKey);
         } else {
             if (!empty($node->getValue()[$searchByKey]) && $node->getValue()[$searchByKey] === $keyVal) {
                 return $node;
