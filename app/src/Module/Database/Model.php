@@ -60,7 +60,7 @@ class Module_Database_Model {
             throw new Exception('Invalid columns format');
         }
 
-        $this->databaseColumns[] = $columns;
+        array_push($this->databaseColumns, $columns);
     }
 
     /**
