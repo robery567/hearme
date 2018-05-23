@@ -143,6 +143,7 @@ class Module_Database_Model {
         }
 
         if (!$this->validateColumns($data)) {
+            echo 'here';
             return false;
         }
 
