@@ -14,6 +14,7 @@ class Component_Request_Controller extends Prototype_Controller {
         $Request = new Module_Request_Model($this->app);
 
         if (!empty($_POST['request']) || !empty($_GET['request'])) {
+            $decodedRequest = [];
             if (!empty($_POST['request'])) {
                 $decodedRequest = json_decode($_POST['request'], true);
             }
