@@ -118,6 +118,8 @@ class Module_Database_Model {
         foreach ($databaseData as $user) {
             $userData = $this->generateUserData($user);
 
+            var_dump($userData);
+            exit;
             $Node = new Module_Node_Model($user['id'], $userData);
 
             $Tree->insert($Node);
@@ -143,9 +145,6 @@ class Module_Database_Model {
             }
 
             if (empty($user[(string)$column])) {
-                var_dump($this->databaseColumns);
-                var_dump($user);
-                exit;
                 throw new Exception('The database columns are corrupted');
             }
 
