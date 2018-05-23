@@ -29,6 +29,11 @@ class Module_Database_Model {
     protected $databaseExtension = 'json';
 
     /**
+     * @var array The database columns
+     */
+    protected $databaseColumns = ['id'];
+
+    /**
      * Sets the database name to be loaded
      * @param string $name
      * @throws Exception
@@ -39,6 +44,23 @@ class Module_Database_Model {
         }
 
         $this->databaseName = $name;
+    }
+
+    /**
+     * Set the columns names
+     * @param $columns
+     * @throws Exception
+     */
+    public function setColumns($columns) {
+        if (empty($columns)) {
+            throw new Exception('No column specified');
+        }
+
+        if (!is_array($columns)) {
+            throw new Exception('Invalid columns format');
+        }
+
+        $this->databaseColumns[] = $columns;
     }
 
     /**
@@ -91,15 +113,10 @@ class Module_Database_Model {
             throw new Exception('The database file is corrupted');
         }
 
-        /**
-         * @TODO: Dinamically set the user columns to be loaded (Too hurried now...)
-         */
         foreach ($databaseData as $user) {
-            $Node = new Module_Node_Model($user['id'], [
-                'username' => $user['username'],
-                'email' => $user['email'],
-                'gender' => $user['gender']
-            ]);
+            $userData = $this->generateUserData($user);
+
+            $Node = new Module_Node_Model($user['id'], $userData);
 
             $Tree->insert($Node);
         }
@@ -107,5 +124,31 @@ class Module_Database_Model {
         $this->databaseData = $Tree;
 
         return $Tree;
+    }
+
+    /**
+     * Gets the user data array
+     * @param array $user
+     * @return array
+     * @throws Exception
+     */
+    private function generateUserData($user) {
+        $userData = [];
+
+        foreach ($this->databaseColumns as $column) {
+            if ($column === 'id') {
+                continue;
+            }
+
+            if (empty($user[$column])) {
+                throw new Exception('The database columns are corrupted');
+            }
+
+            $userData[] = [
+                $column => $user[$column]
+            ];
+        }
+
+        return $userData;
     }
 }
