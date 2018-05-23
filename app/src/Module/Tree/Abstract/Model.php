@@ -180,9 +180,9 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
      * Find a node by id.
      * Recursive operation, the optional $node should not be given
      *
-     * @param int $keyVal
+     * @param int|string|array $keyVal
      * @param Module_Node_Model|null $node
-     * @param string $searchByKey
+     * @param string|array $searchByKey
      * @return false|Module_Node_Model
      * @throws Exception
      */
