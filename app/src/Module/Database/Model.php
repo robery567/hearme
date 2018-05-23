@@ -162,12 +162,12 @@ class Module_Database_Model {
             $dataToInsert[$column] = $data[$column];
         }
 
-        $dataToInsert = json_encode($dataToInsert);
+        $dataToInsert = json_encode($dataToInsert, JSON_UNESCAPED_SLASHES);
         $dbData = json_decode($this->readDatabase(), true);
 
         array_push($dbData, $dataToInsert);
 
-        $this->writeToDatabase(utf8_encode(json_encode($dbData)));
+        $this->writeToDatabase(json_encode($dbData));
 
         return true;
     }
