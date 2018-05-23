@@ -6,13 +6,24 @@
  * Time: 12:20
  */
 class Component_Request_Controller extends Prototype_Controller {
+    /**
+     * @return string
+     * @throws Exception
+     */
     public function indexAction() {
         $Request = new Module_Request_Model($this->app);
 
         if (!empty($_POST['request'])) {
             $decodedRequest = json_decode($_POST['request'], true);
 
-            $Request->interpretReceivedRequest($decodedRequest);
+            $interpretedRequest = $Request->interpretReceivedRequest($decodedRequest);
+
+            return json_encode(
+                [
+                    'status' => ($interpretedRequest['status'] !== '200') ? '500' : '200',
+                    'response' => json_encode(['message' => $interpretedRequest['message']])
+                ]
+            );
         }
 
         return json_encode(

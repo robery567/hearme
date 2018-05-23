@@ -7,26 +7,56 @@
  */
 
 class Module_Request_Model extends Prototype_Model {
-    /** @var Module_Database_Model */
-    protected $DataSource;
+    /** @var Module_User_Model */
+    protected $User;
 
     /**
      * @param Silex\Application $app
-     * @param Module_Database_Model $DataSource
+     * @param Module_User_Model $User
      * @throws Exception
      */
-    public function setUp($app, $DataSource = null) {
-        $this->DataSource = new Module_Database_Model();
-        $this->DataSource->setName('hearme_db');
-        $this->DataSource->setColumns(['username', 'email', 'password']);
-        $this->DataSource->load();
+    public function setUp($app, $User = null) {
+        $this->User = (null === $User) ? new Module_Database_Model() : $User;
     }
 
 
     /**
      * @param array $request The received request
+     * @return array
+     * @throws Exception
      */
     public function interpretReceivedRequest($request) {
+        if (empty($request['type'])) {
+            return [
+                'status' => '500',
+                'message' => 'INVALID_REQUEST'
+            ];
+        }
 
+        if ($request['type'] === 'login') {
+            if (empty($request['username']) || empty($request['password'])) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_CREDENTIALS'
+                ];
+            }
+
+            if ($this->User->checkAuthenticationCredentials($request['username'], md5($request['password'])) === false) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_CREDENTIALS'
+                ];
+            }
+
+            return [
+                'status' => '500',
+                'message' => 'OK'
+            ];
+        }
+
+        return [
+            'status' => '500',
+            'message' => 'INVALID_REQUEST'
+        ];
     }
 }
