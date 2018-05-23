@@ -142,8 +142,7 @@ class Module_Database_Model {
             throw new Exception('Invalid data to insert into the database');
         }
 
-        if (!$this->validateColumns($data)) {
-            echo 'here';
+        if (!$this->validateColumns(array_keys($data))) {
             return false;
         }
 
