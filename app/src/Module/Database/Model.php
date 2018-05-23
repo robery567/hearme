@@ -60,7 +60,9 @@ class Module_Database_Model {
             throw new Exception('Invalid columns format');
         }
 
-        array_push($this->databaseColumns, $columns);
+        foreach ($columns as $column) {
+            $this->databaseColumns[] = $column;
+        }
     }
 
     /**
