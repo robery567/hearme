@@ -37,7 +37,7 @@ class Module_Request_Model extends Prototype_Model {
             if (empty($request['username']) || empty($request['password'])) {
                 return [
                     'status' => '500',
-                    'message' => 'INVALID_CREDENTIALS'
+                    'message' => 'EMPTY_FIELDS'
                 ];
             }
 
