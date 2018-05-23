@@ -79,6 +79,27 @@ class Module_Request_Model extends Prototype_Model {
             ];
         }
 
+        if ($request['type'] === 'register') {
+            if (!isset($request['email'], $request['first_name'], $request['last_name'], $request['first_name'], $request['password'], $request['gender'])) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            if ($this->User->insertUser($request) === false) {
+                return [
+                    'status' => '500',
+                    'message' => 'EXIST'
+                ];
+            }
+
+            return [
+                'status' => '200',
+                'message' => 'OK'
+            ];
+        }
+
         return [
             'status' => '500',
             'message' => 'INVALID_REQUEST'
