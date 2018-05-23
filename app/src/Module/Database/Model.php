@@ -80,6 +80,8 @@ class Module_Database_Model {
         if (!file_exists($fileToLoad)) {
             file_put_contents($fileToLoad, json_encode([]));
 
+            $this->databaseData = $Tree;
+
             return $Tree;
         }
 
@@ -101,6 +103,8 @@ class Module_Database_Model {
 
             $Tree->insert($Node);
         }
+
+        $this->databaseData = $Tree;
 
         return $Tree;
     }
