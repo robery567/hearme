@@ -31,7 +31,7 @@ class Module_Tree_Printer_Model {
                             border: 1px solid #0f0;
                             border-radius: 50px;
                             height: 210px;
-                            width: 200px;
+                            width: auto;
                             padding: 10px;
                             text-align: center;
                         }
