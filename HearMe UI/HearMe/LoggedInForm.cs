@@ -1,4 +1,5 @@
 ﻿using HearMe.Properties;
+using NAudio.Wave;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace HearMe
         public static extern bool ReleaseCapture();
         
         User user = new User();
-        Thread t;
+        Thread friendListUpdate;
 
         public LoggedinForm(string email)
         {
@@ -50,8 +51,8 @@ namespace HearMe
 
             string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
             */
-            t = new Thread(() => populateFriendList());
-            t.Start();
+            friendListUpdate = new Thread(() => populateFriendList());
+            friendListUpdate.Start();
         }
 
         private void header_MouseDown(object sender, MouseEventArgs e)
@@ -73,7 +74,7 @@ namespace HearMe
 
             string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));*/
             sound.StopSound();
-            t.Abort();
+            friendListUpdate.Abort();
             Close();
         }
         private void minimize_MouseEnter(object sender, EventArgs e) => minimize.Image = (Image)Resources.ResourceManager.GetObject("minimize_hover");
@@ -127,7 +128,8 @@ namespace HearMe
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
-            sound.PlaySound(new Uri("http://up.b-zone.ro/usher.mp3"), pictureBox3);
+            sound.PlaySound(new Uri("http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav"), pictureBox3);
         }
+        
     }
 }

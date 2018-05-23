@@ -18,7 +18,7 @@ namespace HearMe
             WebRequest request = WebRequest.Create("http://sandbox.robertcolca.me/request");
             request.Method = "POST";
             byte[] json = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(values));
-            request.ContentType = "application/json";
+            request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = json.Length;
 
             using (Stream dataStream = request.GetRequestStream())

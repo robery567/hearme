@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -18,13 +19,8 @@ namespace HearMe
     {
         private WaveOutEvent outputDevice;
         private AudioFileReader audioFile;
-
-        [DllImport("winmm.dll")]
-        private static extern uint mciSendString(
-            string command,
-            StringBuilder returnValue,
-            int returnLength,
-            IntPtr winHandle);
+        private WaveIn waveSource = null;
+        private WaveFileWriter waveFile = null;
 
         public double GetSoundLength()
         {
@@ -45,7 +41,6 @@ namespace HearMe
         private void AvatarModifiy(PictureBox avatar)
         {
             double endOfSongDividedBy18 = GetSoundLength() / 18.0;
-            MessageBox.Show(endOfSongDividedBy18 + " " + GetSoundLength());
             for (int i = 0; i <= 17; i++)
             {
                 avatar.Image = (Image)Resources.ResourceManager.GetObject("avatar" + i);
@@ -85,5 +80,42 @@ namespace HearMe
         }
 
         public void StopSound() => outputDevice?.Stop();
+
+        public void StartRecording()
+        {
+            waveSource = new WaveIn();
+            waveSource.WaveFormat = new WaveFormat(44100, 1);
+
+            waveSource.DataAvailable += new EventHandler<WaveInEventArgs>(waveSource_DataAvailable);
+            waveSource.RecordingStopped += new EventHandler<StoppedEventArgs>(waveSource_RecordingStopped);
+
+            waveFile = new WaveFileWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DateTime.Now.ToString("MMddyyyyhmm") + ".mp3"), waveSource.WaveFormat);
+
+            waveSource.StartRecording();
+        } 
+
+        void waveSource_RecordingStopped(object sender, StoppedEventArgs e)
+        {
+            if (waveSource != null)
+            {
+                waveSource.Dispose();
+                waveSource = null;
+            }
+
+            if (waveFile != null)
+            {
+                waveFile.Dispose();
+                waveFile = null;
+            }
+        }
+
+        void waveSource_DataAvailable(object sender, WaveInEventArgs e)
+        {
+            if (waveFile != null)
+            {
+                waveFile.Write(e.Buffer, 0, e.BytesRecorded);
+                waveFile.Flush();
+            }
+        }
     }
 }
