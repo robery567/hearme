@@ -8,7 +8,7 @@
     "last_name": "Colca",
     "gender":"male",
     "avatar": "aa.wav",
-    "online": false,
+    "online": "false",
     "friends": [2,3]
   }
 ]
