@@ -16,7 +16,7 @@ class Module_Database_Model {
     /**
      * @var string The database path
      */
-    protected $databasePath = '/app/db/';
+    protected $databasePath = __DIR__ . '/app/db/';
 
     /**
      * @var Module_Tree_Model|null The database data Tree
