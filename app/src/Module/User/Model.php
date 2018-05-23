@@ -68,7 +68,7 @@ class Module_User_Model {
             return false;
         }
 
-        if (null !== $this->Tree->find('email', null, $userData['email'])) {
+        if (null !== $this->Tree->find($userData['email'], null, 'email')) {
             return false;
         }
 
