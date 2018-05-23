@@ -75,7 +75,7 @@ class Module_Request_Model extends Prototype_Model {
 
             return [
                 'status' => '200',
-                 $userData
+                'message' => $userData
             ];
         }
 

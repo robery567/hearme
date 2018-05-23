@@ -27,7 +27,7 @@ class Component_Request_Controller extends Prototype_Controller {
             return json_encode(
                 [
                     'status' => ($interpretedRequest['status'] !== '200') ? '500' : '200',
-                    'response' => json_encode(['message' => $interpretedRequest['message']])
+                    'response' => json_encode(is_array($interpretedRequest['message']) ? $interpretedRequest : ['message' => $interpretedRequest['message']])
                 ]
             );
         }
