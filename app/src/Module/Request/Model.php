@@ -16,7 +16,7 @@ class Module_Request_Model extends Prototype_Model {
      * @throws Exception
      */
     public function setUp($app, $User = null) {
-        $this->User = (null === $User) ? new Module_Database_Model() : $User;
+        $this->User = (null === $User) ? new Module_User_Model() : $User;
     }
 
 
