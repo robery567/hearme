@@ -34,14 +34,14 @@ class Module_Request_Model extends Prototype_Model {
         }
 
         if ($request['type'] === 'login') {
-            if (empty($request['username']) || empty($request['password'])) {
+            if (empty($request['email']) || empty($request['password'])) {
                 return [
                     'status' => '500',
                     'message' => 'EMPTY_FIELDS'
                 ];
             }
 
-            if ($this->User->checkAuthenticationCredentials($request['username'], md5($request['password'])) === false) {
+            if ($this->User->checkAuthenticationCredentials($request['email'], md5($request['password'])) === false) {
                 return [
                     'status' => '500',
                     'message' => 'INVALID_CREDENTIALS'
