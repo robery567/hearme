@@ -16,7 +16,7 @@ class Module_Database_Model {
     /**
      * @var string The database path
      */
-    protected $databasePath = __DIR__ . '/app/db/';
+    protected $databasePath = '/app/db/';
 
     /**
      * @var Module_Tree_Model|null The database data Tree
@@ -72,7 +72,7 @@ class Module_Database_Model {
      * @throws Exception
      */
     public function load() {
-        $fileToLoad = $this->databasePath . $this->databaseName . '.' . $this->databaseExtension;
+        $fileToLoad = $_SERVER['DOCUMENT_ROOT'] . $this->databasePath . $this->databaseName . '.' . $this->databaseExtension;
 
         $Tree = new Module_Tree_Model();
 
