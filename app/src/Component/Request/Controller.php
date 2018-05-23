@@ -12,15 +12,14 @@ class Component_Request_Controller extends Prototype_Controller {
      */
     public function indexAction() {
         $Request = new Module_Request_Model($this->app);
-        
-        if (!empty($_POST['request']) || !empty($_GET['request'])) {
-            $decodedRequest = [];
-            if (!empty($_POST['request'])) {
-                $decodedRequest = json_decode(urldecode($_POST['request']), true);
-            }
 
-            if (!empty($_GET['request'])) {
-                $decodedRequest = json_decode(urldecode($_GET['request']), true);
+        $receivedRequest = file_get_contents("php://input");
+
+        if (!empty($receivedRequest) || !empty($receivedRequest)) {
+            $decodedRequest = [];
+
+            if (!empty($receivedRequest)) {
+                $decodedRequest = json_decode(urldecode($receivedRequest), true);
             }
 
             $interpretedRequest = $Request->interpretReceivedRequest($decodedRequest);
