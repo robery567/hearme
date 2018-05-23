@@ -7,15 +7,19 @@
  */
 
 class Module_Request_Model extends Prototype_Model {
-    /** @var Module_Request_DataSource */
+    /** @var Module_Database_Model */
     protected $DataSource;
 
     /**
      * @param Silex\Application $app
-     * @param Module_Request_DataSource $DataSource
+     * @param Module_Database_Model $DataSource
+     * @throws Exception
      */
     public function setUp($app, $DataSource = null) {
-        $this->DataSource = (null === $DataSource) ? new Module_Request_DataSource($app) : $DataSource;
+        $this->DataSource = new Module_Database_Model();
+        $this->DataSource->setName('hearme_db');
+        $this->DataSource->setColumns(['username', 'email', 'password']);
+        $this->DataSource->load();
     }
 
 

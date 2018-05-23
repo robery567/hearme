@@ -180,24 +180,33 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
      * Find a node by id.
      * Recursive operation, the optional $node should not be given
      *
-     * @param int $id
+     * @param int $keyVal
      * @param Module_Node_Model|null $node
+     * @param string $searchByKey
      * @return false|Module_Node_Model
      */
-    public function find($id, Module_Node_Model $node = null) {
+    public function find($keyVal, Module_Node_Model $node = null, $searchByKey = 'id') {
         // Initialize if first iteration
         if (null === $node) {
             $node = $this->root;
         }
 
-        // If the id is equal, it's our match !
-        $position = $this->compare($node->getId(), $id);
-        if (0 === $position) {
-            return $node;
-        }
+        if ($searchByKey === 'id') {
+            // If the id is equal, it's our match !
+            $position = $this->compare($node->getId(), $keyVal);
+            if (0 === $position) {
+                return $node;
+            }
 
-        // Else if it's a nil, return false, else recursion
-        return $node->isLeaf() ? false : $this->find($id, $node->getChild($position));
+            // Else if it's a nil, return false, else recursion
+            return $node->isLeaf() ? false : $this->find($keyVal, $node->getChild($position), $searchByKey);
+        } else {
+            if (!empty($node->getValue()[$searchByKey]) && $node->getValue()[$searchByKey] === $keyVal) {
+                return $node;
+            }
+
+            return $node->isLeaf() ? null : $this->find($keyVal, $node->getChild(1), $searchByKey);
+        }
     }
 
     /**
