@@ -23,7 +23,7 @@ class Component_ShowNodes_Controller extends Prototype_Controller {
 
         $User = new Module_User_Model();
 
-        var_dump($User->checkAuthenticationCredentials('robery_office2@yahoo.ro', 'aaaa'));
+        var_dump($User->checkAuthenticationCredentials('robery_office2@yahoo.ro', 'aaaaa'));
 
         $Printer = new Module_Tree_Printer_Model();
 
