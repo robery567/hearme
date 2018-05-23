@@ -146,7 +146,7 @@ class Module_Tree_Printer_Model {
         $this->dataToRender .= " <ul> 
                                     <li><strong>Username:</strong> {$userData['username']}</li>
                                     <li><strong>Email:</strong> {$userData['email']}</li>
-                                    <li><strong>Username:</strong> {$userData['gender']}</li>
+                                    <li><strong>Gender:</strong> {$userData['gender']}</li>
                                  </ul>";
 
         if (!$node->isLeaf()) {
