@@ -73,7 +73,6 @@ class Module_Database_Model {
      */
     public function load() {
         $fileToLoad = $this->databasePath . $this->databaseName . '.' . $this->databaseExtension;
-        die($fileToLoad);
 
         $Tree = new Module_Tree_Model();
 
