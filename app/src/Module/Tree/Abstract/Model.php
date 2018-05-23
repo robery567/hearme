@@ -209,7 +209,7 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
             $found = true;
 
             foreach($searchByKey as $keyId => $keyName) {
-                if (empty($node->getValue()[$searchByKey]) || $node->getValue()[$keyName] !== $keyVal[$keyId]) {
+                if (empty($node->getValue()[$keyName]) || $node->getValue()[$keyName] !== $keyVal[$keyId]) {
                     $found = false;
                     break;
                 }
