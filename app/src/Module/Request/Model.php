@@ -54,6 +54,29 @@ class Module_Request_Model extends Prototype_Model {
             ];
         }
 
+        if ($request['type'] === 'user') {
+            if (empty($request['email'])){
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            $userData = $this->User->getUserBy('email', $request['email']);
+
+            if (null === $userData) {
+                return [
+                    'status' => '500',
+                    'message' => 'NOT_FOUND'
+                ];
+            }
+
+            return [
+                'status' => '500',
+                'message' => $userData
+            ];
+        }
+
         return [
             'status' => '500',
             'message' => 'INVALID_REQUEST'

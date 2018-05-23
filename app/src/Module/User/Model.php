@@ -35,4 +35,21 @@ class Module_User_Model {
 
         return false;
     }
+
+    /**
+     * Gets the user's data by a given key
+     * @param $keyName
+     * @param $keyVal
+     * @return false|Module_Node_Model
+     * @throws Exception
+     */
+    public function getUserBy($keyName, $keyVal) {
+        $userData = $this->DataSource->find($keyName, null, $keyVal);
+
+        if (null === $userData) {
+            return null;
+        }
+
+        return $userData->getValue();
+    }
 }
