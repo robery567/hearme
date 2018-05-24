@@ -87,14 +87,15 @@ class Module_Request_Model extends Prototype_Model {
                 ];
             }
 
-            if ($this->User->insertUser($request) === false) {
+            $insertResponse = $this->User->insertUser($request);
+            if ($insertResponse === false) {
                 return [
                     'status' => '500',
                     'message' => 'EXIST'
                 ];
             }
 
-            if ($this->User->insertUser($request) === -1) {
+            if ($insertResponse === -1) {
                 return [
                     'status' => '500',
                     'message' => 'EMPTY_FIELDS'
