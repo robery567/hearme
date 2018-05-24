@@ -188,17 +188,37 @@ class Module_Database_Model {
                 throw new Exception('The database columns are corrupted');
             }
 
-            $userData[$column] =  $user[$column];
+            $userData[$column] = $user[$column];
         }
 
         return $userData;
     }
 
     /**
+     * @param $entryData
+     * @return bool
+     */
+    public function update($entryData) {
+        if (empty($entryData['id'])) {
+            return false;
+        }
+
+        $databaseData = $this->readDatabase();
+
+        if (empty($databaseData[$entryData['id']+1])) {
+            return false;
+        }
+
+        $databaseData[$entryData['id']] = $entryData;
+
+        return true;
+    }
+
+    /**
      * Reads the database file
      * @return bool|string
      */
-    private function readDatabase() {
+    public function readDatabase() {
         // if the database file doesn't exist, we create a blank one
         if (!file_exists($this->fileToLoad)) {
             $this->writeToDatabase(json_encode([]));

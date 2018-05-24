@@ -108,6 +108,27 @@ class Module_Request_Model extends Prototype_Model {
             ];
         }
 
+        if ($request['type'] === 'addfriend') {
+            if (!isset($request['origin_email'], $request['friend_email'])) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            if ($this->User->addFriend($request['origin_email'], $request['friend_email']) === false) {
+                return [
+                    'status' => '500',
+                    'message' => 'ADD_ERROR'
+                ];
+            }
+
+            return [
+                'status' => '200',
+                'message' => 'OK'
+            ];
+        }
+
         return [
             'status' => '500',
             'message' => 'INVALID_REQUEST'

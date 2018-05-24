@@ -73,8 +73,36 @@ class Module_User_Model {
         }
 
         $userData['password'] = md5($userData['password']);
-        $userData['friends'] = [0];
+        $userData['friends'] = ['0'];
 
         return $this->DataSource->insert($userData);
+    }
+
+    /**
+     * @param $originEmail
+     * @param $friendEmail
+     * @return bool
+     * @throws Exception
+     */
+    public function addFriend($originEmail, $friendEmail) {
+        $friendData = $this->Tree->find($friendEmail, null, 'email');
+
+        if (null === $friendData) {
+            return false;
+        }
+
+        $userData = $this->Tree->find($originEmail, null, 'email');
+
+        if (empty($userData)) {
+            return false;
+        }
+
+        if (empty((int)$userData['friends'][0])) {
+            $userData['friends'][0] = $friendEmail;
+        } else {
+            $userData['friends'][] = $friendEmail;
+        }
+
+        return $this->DataSource->update($userData);
     }
 }
