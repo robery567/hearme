@@ -203,7 +203,7 @@ class Module_Database_Model {
             return false;
         }
 
-        $databaseData = $this->readDatabase();
+        $databaseData = json_decode($this->readDatabase());
 
         if (empty($databaseData[$entryData['id']+1])) {
             return false;
@@ -211,6 +211,10 @@ class Module_Database_Model {
 
         var_dump($databaseData[$entryData['id']]);
         $databaseData[$entryData['id']] = $entryData;
+
+        $databaseData = json_encode($databaseData);
+
+        $this->writeToDatabase(stripslashes($databaseData));
 
         return true;
     }
