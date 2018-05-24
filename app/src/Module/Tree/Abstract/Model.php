@@ -208,8 +208,6 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
         } else if (is_array($keyVal) && is_array($searchByKey)) {
             $found = true;
 
-            echo $node->getValue()['email'] . '<br>';
-
             foreach($searchByKey as $keyId => $keyName) {
                 if (empty($node->getValue()[$keyName]) || $node->getValue()[$keyName] !== $keyVal[$keyId]) {
                     $found = false;
@@ -220,16 +218,12 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
                 return $node;
             }
 
-            while (!empty($this->infixeList())) {
-                if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_RIGHT)) {
-                    return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey);
-                }
+            if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_LEFT)) {
+                $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_LEFT), $searchByKey);
+            }
 
-                if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_LEFT)) {
-                    return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_LEFT), $searchByKey);
-                }
-
-                $this->remove($node);
+            if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_RIGHT)) {
+                $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey);
             }
 
             return null;
