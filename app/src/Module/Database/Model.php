@@ -200,12 +200,14 @@ class Module_Database_Model {
      */
     public function update($entryData) {
         if (empty($entryData['id'])) {
+            echo 'NO_ID';
             return false;
         }
 
         $databaseData = $this->readDatabase();
 
         if (empty($databaseData[$entryData['id']+1])) {
+            echo 'INVALID_ENTRY_ID';
             return false;
         }
 
