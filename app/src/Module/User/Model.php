@@ -65,7 +65,7 @@ class Module_User_Model {
      */
     public function insertUser($userData) {
         if (!isset($userData['email'], $userData['first_name'], $userData['last_name'], $userData['first_name'], $userData['password'], $userData['gender'])) {
-            return false;
+            return -1;
         }
 
         if (null !== $this->Tree->find($userData['email'], null, 'email')) {
