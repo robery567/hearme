@@ -221,8 +221,9 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
             }
 
             if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_RIGHT)) {
-                if ($this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey))
+                if (null !== ($node = $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey))) {
                     return $node;
+                }
             }
 
             if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_LEFT)) {
