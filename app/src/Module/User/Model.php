@@ -92,6 +92,7 @@ class Module_User_Model {
         }
 
         $userData = $this->Tree->find($originEmail, null, 'email');
+        $userData = $userData->getValue();
 
         if (empty($userData)) {
             return false;
