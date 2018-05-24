@@ -84,7 +84,7 @@
     "gender":"male",
     "avatar":"null",
     "online":"null",
-    "friends":[]
+    "friends":[1]
   },
   {
     "id":6,
@@ -96,6 +96,6 @@
     "gender":"male",
     "avatar":"null",
     "online":"null",
-    "friends":[]
+    "friends":[1]
   }
 ]
