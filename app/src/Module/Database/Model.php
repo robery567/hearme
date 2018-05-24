@@ -143,12 +143,6 @@ class Module_Database_Model {
         }
 
         if ($this->validateColumns(array_keys($data)) === false) {
-            echo 'RECEIVED KEYS:';
-            var_dump(array_keys($data));
-
-            echo '<br> ALLOWED KEYS:';
-            var_dump($this->databaseColumns);
-            exit;
             return false;
         }
 
@@ -228,6 +222,10 @@ class Module_Database_Model {
      */
     private function validateColumns($columns) {
         foreach ($columns as $column) {
+            if ($column === 'type') {
+                continue;
+            }
+
             if (!in_array($column, $this->databaseColumns)) {
                 return false;
             }
