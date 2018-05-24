@@ -221,8 +221,6 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
             }
 
             while (!empty($this->infixeList())) {
-                $this->remove($node);
-
                 if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_RIGHT)) {
                     return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey);
                 }
@@ -230,6 +228,8 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
                 if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_LEFT)) {
                     return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_LEFT), $searchByKey);
                 }
+
+                $this->remove($node);
             }
 
             return null;
