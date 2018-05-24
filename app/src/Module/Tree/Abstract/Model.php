@@ -222,14 +222,20 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
 
             if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_LEFT)) {
                 $foundData = $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_LEFT), $searchByKey);
-                $this->remove($node);
+
+                if ($node->getValue()['id'] !== 1) {
+                    $this->remove($node);
+                }
 
                 return $foundData;
             }
 
             if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_RIGHT)) {
                 $foundData = $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey);
-                $this->remove($node);
+
+                if ($node->getValue()['id'] !== 1) {
+                    $this->remove($node);
+                }
 
                 return $foundData;
             }
