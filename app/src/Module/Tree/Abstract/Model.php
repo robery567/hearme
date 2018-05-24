@@ -208,6 +208,8 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
         } else if (is_array($keyVal) && is_array($searchByKey)) {
             $found = true;
 
+            echo $node->getValue()['email'] . '<br>';
+
             foreach($searchByKey as $keyId => $keyName) {
                 if (empty($node->getValue()[$keyName]) || $node->getValue()[$keyName] !== $keyVal[$keyId]) {
                     $found = false;
