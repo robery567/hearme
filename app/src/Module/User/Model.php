@@ -73,7 +73,7 @@ class Module_User_Model {
         }
 
         $userData['password'] = md5($userData['password']);
-        $userData['friends'] = [];
+        $userData['friends'] = [0];
 
         return $this->DataSource->insert($userData);
     }
