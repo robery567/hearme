@@ -92,9 +92,9 @@ class Module_User_Model {
             return false;
         }
 
-        $userData = $this->Tree->find($originEmail, null, 'email');
-        $userData = $userData->getValue();
-        var_dump($userData);
+        $foundUser = $this->Tree->find($originEmail, null, 'email');
+        $userData = $foundUser->getValue();
+        $userData['id'] = $foundUser->getId();
 
         if (empty($userData)) {
             return false;
