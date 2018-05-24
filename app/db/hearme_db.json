@@ -15,6 +15,21 @@
     ]
   },
   {
+    "id":7,
+    "username":"robery567",
+    "email":"robery_office22@yahoo.ro",
+    "password":"095b2626c9b6bad0eb89019ea6091bd9",
+    "first_name":"Robert",
+    "last_name":"Colca",
+    "gender":"male",
+    "avatar":"aa.wav",
+    "online":"false",
+    "friends":[
+      2,
+      3
+    ]
+  },
+  {
     "id":2,
     "username":"robery567",
     "email":"robery_office5@yahoo.ro",
