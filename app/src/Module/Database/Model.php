@@ -209,7 +209,6 @@ class Module_Database_Model {
             return false;
         }
 
-        var_dump($databaseData[$entryData['id']]);
         $databaseData[$entryData['id']] = $entryData;
 
         $databaseData = json_encode($databaseData);
