@@ -37,6 +37,9 @@ class Module_User_Model {
             return true;
         }
 
+        var_dump($email);
+        var_dump($password);
+        exit;
         return false;
     }
 
