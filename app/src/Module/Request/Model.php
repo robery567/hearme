@@ -116,10 +116,19 @@ class Module_Request_Model extends Prototype_Model {
                 ];
             }
 
-            if ($this->User->addFriend($request['origin_email'], $request['friend_email']) === false) {
+            $addFriendResponse = $this->User->addFriend($request['origin_email'], $request['friend_email']);
+
+            if ($addFriendResponse === false) {
                 return [
                     'status' => '500',
                     'message' => 'ADD_ERROR'
+                ];
+            }
+
+            if ($addFriendResponse === -1) {
+                return [
+                    'status' => '500',
+                    'message' => 'ALREADY_FRIEND'
                 ];
             }
 

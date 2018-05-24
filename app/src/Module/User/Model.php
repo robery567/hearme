@@ -94,6 +94,13 @@ class Module_User_Model {
 
         $foundUser = $this->Tree->find($originEmail, null, 'email');
         $userData = $foundUser->getValue();
+
+        foreach ($userData['friends'] as $friend) {
+            if ($friend === $friendEmail) {
+                return -1;
+            }
+        }
+
         $userData['id'] = $foundUser->getId();
 
         if (empty($userData)) {
