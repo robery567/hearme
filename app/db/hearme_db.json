@@ -9,10 +9,7 @@
     "gender":"male",
     "avatar":"aa.wav",
     "online":"false",
-    "friends":[
-      2,
-      3
-    ]
+    "friends":["0"]
   },
   {
     "id":1,
@@ -24,10 +21,7 @@
     "gender":"male",
     "avatar":"aa.wav",
     "online":"false",
-    "friends":[
-      2,
-      3
-    ]
+    "friends":["0"]
   },
   {
     "id":2,
@@ -39,10 +33,7 @@
     "gender":"male",
     "avatar":"aa.wav",
     "online":"false",
-    "friends":[
-      2,
-      3
-    ]
+    "friends":["0"]
   },
   {
     "id":3,
@@ -54,10 +45,7 @@
     "gender":"male",
     "avatar":"aa.wav",
     "online":"false",
-    "friends":[
-      2,
-      3
-    ]
+    "friends":["0"]
   },
   {
     "id":4,
@@ -69,10 +57,7 @@
     "gender":"male",
     "avatar":"aa.wav",
     "online":"false",
-    "friends":[
-      2,
-      3
-    ]
+    "friends":["0"]
   },
   {
     "id":5,
@@ -84,7 +69,7 @@
     "gender":"male",
     "avatar":"null",
     "online":"null",
-    "friends":[1]
+    "friends":["0"]
   },
   {
     "id":6,
@@ -96,6 +81,6 @@
     "gender":"male",
     "avatar":"null",
     "online":"null",
-    "friends":[1]
+    "friends":["0"]
   }
 ]
