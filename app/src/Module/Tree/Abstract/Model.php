@@ -218,12 +218,20 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
                 return $node;
             }
 
+            $node = $this->find(1);
+
             if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_LEFT)) {
-                $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_LEFT), $searchByKey);
+                $foundData = $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_LEFT), $searchByKey);
+                $this->remove($node);
+
+                return $foundData;
             }
 
             if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_RIGHT)) {
-                $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey);
+                $foundData = $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey);
+                $this->remove($node);
+
+                return $foundData;
             }
 
             return null;
