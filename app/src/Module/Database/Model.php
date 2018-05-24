@@ -142,7 +142,13 @@ class Module_Database_Model {
             throw new Exception('Invalid data to insert into the database');
         }
 
-        if (!$this->validateColumns(array_keys($data))) {
+        if ($this->validateColumns(array_keys($data)) === false) {
+            echo 'RECEIVED KEYS:';
+            var_dump(array_keys($data));
+
+            echo '<br> ALLOWED KEYS:';
+            var_dump($this->databaseColumns);
+            exit;
             return false;
         }
 
