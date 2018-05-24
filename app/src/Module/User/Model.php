@@ -79,6 +79,7 @@ class Module_User_Model {
     }
 
     /**
+     * Add an email to the friends list of the user
      * @param $originEmail
      * @param $friendEmail
      * @return bool
@@ -88,6 +89,7 @@ class Module_User_Model {
         $friendData = $this->Tree->find($friendEmail, null, 'email');
 
         if (null === $friendData) {
+            echo 'FRIEND_NOT_FOUND';
             return false;
         }
 
@@ -95,6 +97,7 @@ class Module_User_Model {
         $userData = $userData->getValue();
 
         if (empty($userData)) {
+            echo 'USER_NOT_FOUND';
             return false;
         }
 
