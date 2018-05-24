@@ -75,5 +75,5 @@ interface Module_Tree_Interface_TreeInterface {
      *
      * @return mixed
      */
-    function infixeList();
+    function infixList();
 }
