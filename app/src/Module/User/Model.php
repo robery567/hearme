@@ -27,8 +27,8 @@ class Module_User_Model {
 
     /**
      * Checks if the given user credentials are valid
-     * @param $email
-     * @param $password
+     * @param string $email
+     * @param string $password
      * @return bool
      * @throws Exception
      */
@@ -42,8 +42,8 @@ class Module_User_Model {
 
     /**
      * Gets the user's data by a given key
-     * @param $keyName
-     * @param $keyVal
+     * @param string $keyName
+     * @param string $keyVal
      * @return false|Module_Node_Model
      * @throws Exception
      */
@@ -59,7 +59,7 @@ class Module_User_Model {
 
     /**
      * Inserts the given user into the database
-     * @param $userData
+     * @param array $userData
      * @return bool
      * @throws Exception
      */
@@ -80,8 +80,8 @@ class Module_User_Model {
 
     /**
      * Add an email to the friends list of the user
-     * @param $originEmail
-     * @param $friendEmail
+     * @param string $originEmail
+     * @param string $friendEmail
      * @return bool
      * @throws Exception
      */
@@ -95,6 +95,10 @@ class Module_User_Model {
         $foundUser = $this->Tree->find($originEmail, null, 'email');
         $userData = $foundUser->getValue();
 
+        if (empty($userData)) {
+            return false;
+        }
+
         foreach ($userData['friends'] as $friend) {
             if ($friend === $friendEmail) {
                 return -1;
@@ -103,10 +107,6 @@ class Module_User_Model {
 
         $userData['id'] = $foundUser->getId();
 
-        if (empty($userData)) {
-            return false;
-        }
-
         if (empty((int)$userData['friends'][0])) {
             $userData['friends'][0] = $friendEmail;
         } else {
@@ -114,5 +114,42 @@ class Module_User_Model {
         }
 
         return $this->DataSource->update($userData);
+    }
+
+    /**
+     * Search for a friend in the list of someone's friends (Partial/exact search)
+     * @param string $originEmail
+     * @param string $friendEmail
+     * @param string $searchType partial/exact
+     * @return bool|array
+     * @throws Exception
+     */
+    public function searchFriend($originEmail, $friendEmail, $searchType = 'partial') {
+        $foundUser = $this->Tree->find($originEmail, null, 'email');
+        $userData = $foundUser->getValue();
+
+        if (empty($userData)) {
+            return [];
+        }
+
+        $friendsToReturn = [];
+
+        if ($searchType === 'exact') {
+            foreach ($userData['friends'] as $friend) {
+                if ($searchType === 'exact') {
+                    if ($friend === $friendEmail) {
+                        return $friendEmail;
+                    }
+                }
+
+                if ($searchType === 'partial') {
+                    if (empty(strstr($friend, $friendEmail))) {
+                        $friendsToReturn[] = $friend;
+                    }
+                }
+            }
+        }
+
+        return $friendsToReturn;
     }
 }

@@ -138,6 +138,24 @@ class Module_Request_Model extends Prototype_Model {
             ];
         }
 
+
+        if ($_REQUEST['type'] === 'searchfriend') {
+            if (!isset($request['origin_email'], $request['friend_email'])) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            $searchFriendsResponse = $this->User->searchFriend($request['origin_email'], $request['friend_email']);
+
+            return [
+                'status' => '200',
+                'message' => json_encode($searchFriendsResponse)
+            ];
+
+        }
+
         return [
             'status' => '500',
             'message' => 'INVALID_REQUEST'
