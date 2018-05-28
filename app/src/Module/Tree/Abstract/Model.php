@@ -205,42 +205,8 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
 
             // Else if it's a nil, return false, else recursion
             return $node->isLeaf() ? false : $this->find($keyVal, $node->getChild($position), $searchByKey);
-        } else if (is_array($keyVal) && is_array($searchByKey)) {
-            $found = true;
-
-            foreach($searchByKey as $keyId => $keyName) {
-                if (empty($node->getValue()[$keyName]) || $node->getValue()[$keyName] !== $keyVal[$keyId]) {
-                    $found = false;
-                }
-            }
-
-            if ($found === true) {
-                return $node;
-            }
-
-            if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_LEFT)) {
-                return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_LEFT), $searchByKey);
-            }
-
-            if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_RIGHT)) {
-                return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey);
-            }
-
-            return null;
         } else {
-            if (!empty($node->getValue()[$searchByKey]) && $node->getValue()[$searchByKey] === $keyVal) {
-                return $node;
-            }
-
-            if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_LEFT)) {
-                return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_LEFT), $searchByKey);
-            }
-
-            if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_RIGHT)) {
-                return $this->find($keyVal, $node->getChild(Module_Node_Model::POSITION_RIGHT), $searchByKey);
-            }
-
-            return null;
+            return $this->search($searchByKey, $keyVal);
         }
     }
 
@@ -412,6 +378,32 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
         return $this->deleteSort($node->setColor(Module_Node_Model::COLOR_BLACK));
     }
 
+    public function search($keyName, $keyVal) {
+        $nodes = $this->infixList();
+
+        foreach ($nodes as $node) {
+            if (is_array($keyVal) && is_array($keyName)) {
+                $found = true;
+
+                foreach ($keyName as $keyId => $name) {
+                    if (empty($node->getValue()[$name]) || $node->getValue()[$name] !== $keyVal[$keyId]) {
+                        $found = false;
+                    }
+                }
+
+                if ($found === true) {
+                    return $node;
+                }
+            } else {
+                if (!empty($node->getValue()[$keyName]) && $node->getValue()[$keyName] === $keyVal) {
+                    return $node;
+                }
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Get nodes with id between min and max (inclusive)
      *
@@ -454,7 +446,7 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
      * @param Module_Node_Model|null $node
      * @return array|Module_Node_Model[]
      */
-    public function infixeList(Module_Node_Model $node = null) {
+    public function infixList(Module_Node_Model $node = null) {
         if (null === $node) {
             $node = $this->root;
         }
@@ -462,13 +454,13 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
         $out = [];
 
         if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_LEFT)) {
-            $out = array_merge($out, $this->infixeList($node->getChild(Module_Node_Model::POSITION_LEFT)));
+            $out = array_merge($out, $this->infixList($node->getChild(Module_Node_Model::POSITION_LEFT)));
         }
 
         $out[] = $node;
 
         if (null !== $node && $node->haveChild(Module_Node_Model::POSITION_RIGHT)) {
-            $out = array_merge($out, $this->infixeList($node->getChild(Module_Node_Model::POSITION_RIGHT)));
+            $out = array_merge($out, $this->infixList($node->getChild(Module_Node_Model::POSITION_RIGHT)));
         }
 
         return $out;

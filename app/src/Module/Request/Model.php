@@ -75,7 +75,7 @@ class Module_Request_Model extends Prototype_Model {
 
             return [
                 'status' => '200',
-                'message' => $userData
+                'message' => json_encode($userData)
             ];
         }
 
@@ -87,10 +87,18 @@ class Module_Request_Model extends Prototype_Model {
                 ];
             }
 
-            if ($this->User->insertUser($request) === false) {
+            $insertResponse = $this->User->insertUser($request);
+            if ($insertResponse === false) {
                 return [
                     'status' => '500',
                     'message' => 'EXIST'
+                ];
+            }
+
+            if ($insertResponse === -1) {
+                return [
+                    'status' => '500',
+                    'message' => 'EMPTY_FIELDS'
                 ];
             }
 
@@ -98,6 +106,54 @@ class Module_Request_Model extends Prototype_Model {
                 'status' => '200',
                 'message' => 'OK'
             ];
+        }
+
+        if ($request['type'] === 'addfriend') {
+            if (!isset($request['origin_email'], $request['friend_email'])) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            $addFriendResponse = $this->User->addFriend($request['origin_email'], $request['friend_email']);
+
+            if ($addFriendResponse === false) {
+                return [
+                    'status' => '500',
+                    'message' => 'ADD_ERROR'
+                ];
+            }
+
+            if ($addFriendResponse === -1) {
+                return [
+                    'status' => '500',
+                    'message' => 'ALREADY_FRIEND'
+                ];
+            }
+
+            return [
+                'status' => '200',
+                'message' => 'OK'
+            ];
+        }
+
+
+        if ($_REQUEST['type'] === 'searchfriend') {
+            if (!isset($request['origin_email'], $request['friend_email'])) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            $searchFriendsResponse = $this->User->searchFriend($request['origin_email'], $request['friend_email']);
+
+            return [
+                'status' => '200',
+                'message' => json_encode($searchFriendsResponse)
+            ];
+
         }
 
         return [

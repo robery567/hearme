@@ -142,7 +142,7 @@ class Module_Database_Model {
             throw new Exception('Invalid data to insert into the database');
         }
 
-        if (!$this->validateColumns(array_keys($data))) {
+        if ($this->validateColumns(array_keys($data)) === false) {
             return false;
         }
 
@@ -188,17 +188,41 @@ class Module_Database_Model {
                 throw new Exception('The database columns are corrupted');
             }
 
-            $userData[$column] =  $user[$column];
+            $userData[$column] = $user[$column];
         }
 
         return $userData;
     }
 
     /**
+     * @param $entryData
+     * @return bool
+     */
+    public function update($entryData) {
+        if (empty($entryData['id'])) {
+            return false;
+        }
+
+        $databaseData = json_decode($this->readDatabase());
+
+        if (empty($databaseData[$entryData['id']+1])) {
+            return false;
+        }
+
+        $databaseData[$entryData['id']] = $entryData;
+
+        $databaseData = json_encode($databaseData);
+
+        $this->writeToDatabase(stripslashes($databaseData));
+
+        return true;
+    }
+
+    /**
      * Reads the database file
      * @return bool|string
      */
-    private function readDatabase() {
+    public function readDatabase() {
         // if the database file doesn't exist, we create a blank one
         if (!file_exists($this->fileToLoad)) {
             $this->writeToDatabase(json_encode([]));
@@ -222,6 +246,10 @@ class Module_Database_Model {
      */
     private function validateColumns($columns) {
         foreach ($columns as $column) {
+            if ($column === 'type') {
+                continue;
+            }
+
             if (!in_array($column, $this->databaseColumns)) {
                 return false;
             }
