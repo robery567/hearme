@@ -43,31 +43,6 @@ namespace HearMe
             user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
             values.Clear();
             nameLabel.Text = user.first_name + " " + user.last_name;
-
-            LinkedList friends = new LinkedList();
-            Friend actual = new Friend();
-            actual.name.Text = "Boss de Boss";
-            actual.email.Text = "bossdeboss@gmail.com";
-            actual.email.Location = new Point(50, 33);
-            actual.name.Location = new Point(48, 8);
-            actual.avatar.Location = new Point(5, 5);
-            friends.Append(actual);
-
-            Friend actual2 = new Friend();
-            actual2.name.Text = "Boss de Boss 2";
-            actual2.email.Text = "bossdeboss2@gmail.com";
-            actual2.email.Location = new Point(50, 83);
-            actual2.name.Location = new Point(48, 58);
-            actual2.avatar.Location = new Point(5, 55);
-            friends.Append(actual2);
-
-            Node curr = friends.head;
-            while (curr.Next != null)
-            {
-                curr = curr.Next;
-                curr.Value.avatar.Parent = curr.Value.email.Parent = curr.Value.name.Parent = friendPanel;
-            }
-
             /*
             var values = new Dictionary<string, string>();
             values["status"] = "200";
@@ -108,12 +83,13 @@ namespace HearMe
 
         private void populateFriendList()
         {
+            LinkedList friends = new LinkedList();
             while (true)
             {
                 //friendList.Controls.Clear();
                 /*foreach(string friend in user.friendsList)
                 {
-                    User thisOne = new User();
+                    User friend_user = new User();
 
                     var values = new Dictionary<string, string>();
                     values["status"] = "200";
@@ -122,7 +98,21 @@ namespace HearMe
 
                     User response = JsonConvert.DeserializeObject<User>(hearMe.CallApi(values));
                     values.Clear();
+                    
+                    Friend actual = new Friend();
+                    actual.name.Text = friend_user.first_name + " " + friend_user.last_name;
+                    actual.email.Text = friend_user.email;
+                    actual.email.Location = new Point(50, 33);
+                    actual.name.Location = new Point(48, 8);
+                    actual.avatar.Location = new Point(5, 5);
+                    friends.Append(actual);
                 }*/
+                Node curr = friends.head;
+                while (curr.Next != null)
+                {
+                    curr = curr.Next;
+                    curr.Value.avatar.Parent = curr.Value.email.Parent = curr.Value.name.Parent = friendPanel;
+                }
                 Thread.Sleep(1000);
             }
         }
