@@ -52,8 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Friend.cs" />
     <Compile Include="HearMeApi.cs" />
     <Compile Include="JsonStatusCut.cs" />
+    <Compile Include="LinkedList.cs" />
     <Compile Include="LoggedinForm.cs">
       <SubType>Form</SubType>
     </Compile>

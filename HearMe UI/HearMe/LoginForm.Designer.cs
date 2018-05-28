@@ -65,6 +65,7 @@
             this.emailLogin.Name = "emailLogin";
             this.emailLogin.Size = new System.Drawing.Size(186, 20);
             this.emailLogin.TabIndex = 4;
+            this.emailLogin.Text = "robery_office2@yahoo.ro";
             // 
             // passwordLogin
             // 
@@ -73,6 +74,7 @@
             this.passwordLogin.PasswordChar = '*';
             this.passwordLogin.Size = new System.Drawing.Size(186, 20);
             this.passwordLogin.TabIndex = 5;
+            this.passwordLogin.Text = "parola123";
             // 
             // label1
             // 

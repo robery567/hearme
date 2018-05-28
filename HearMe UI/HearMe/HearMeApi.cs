@@ -33,6 +33,7 @@ namespace HearMe
                             string responseFromServer = reader.ReadToEnd();
                             MessageBox.Show(responseFromServer);
                             JsonStatusCut result = JsonConvert.DeserializeObject<JsonStatusCut>(responseFromServer);
+                            //MessageBox.Show(result.response);
                             return result.response;
                         }
                     }

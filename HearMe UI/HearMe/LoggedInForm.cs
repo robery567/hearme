@@ -35,15 +35,40 @@ namespace HearMe
         public LoggedinForm(string email)
         {
             InitializeComponent();
-            /*
             var values = new Dictionary<string, string>();
             values["status"] = "200";
             values["type"] = "user";
             values["email"] = email;
 
-            User response = JsonConvert.DeserializeObject<User>(hearMe.CallApi(values));
+            user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
             values.Clear();
+            nameLabel.Text = user.first_name + " " + user.last_name;
 
+            LinkedList friends = new LinkedList();
+            Friend actual = new Friend();
+            actual.name.Text = "Boss de Boss";
+            actual.email.Text = "bossdeboss@gmail.com";
+            actual.email.Location = new Point(50, 33);
+            actual.name.Location = new Point(48, 8);
+            actual.avatar.Location = new Point(5, 5);
+            friends.Append(actual);
+
+            Friend actual2 = new Friend();
+            actual2.name.Text = "Boss de Boss 2";
+            actual2.email.Text = "bossdeboss2@gmail.com";
+            actual2.email.Location = new Point(50, 83);
+            actual2.name.Location = new Point(48, 58);
+            actual2.avatar.Location = new Point(5, 55);
+            friends.Append(actual2);
+
+            Node curr = friends.head;
+            while (curr.Next != null)
+            {
+                curr = curr.Next;
+                curr.Value.avatar.Parent = curr.Value.email.Parent = curr.Value.name.Parent = friendPanel;
+            }
+
+            /*
             var values = new Dictionary<string, string>();
             values["status"] = "200";
             values["type"] = "online";
@@ -110,26 +135,21 @@ namespace HearMe
                 var values = new Dictionary<string, string>();
                 values["status"] = "200";
                 values["type"] = "addfriend";
-                values["email"] = user.email;
-                values["friendEmail"] = friendEmail;
+                values["origin_email"] = user.email;
+                values["friend_email"] = friendEmail;
 
-                string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
+                string response = JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message;
                 values.Clear();
 
-                if (response == "friendadded") MessageBox.Show("The account " + friendEmail + " was added successfully as your friend!", "Friend Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                else if (response == "notfound") MessageBox.Show("The account " + friendEmail + " does not exist!", "Invalid User", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                if (response == "OK") MessageBox.Show("The account " + friendEmail + " was added successfully as your friend!", "Friend Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else if (response == "ADD_ERROR") MessageBox.Show("The account " + friendEmail + " does not exist!", "Invalid User", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                else if (response == "ALREADY_FRIEND") MessageBox.Show("The account " + friendEmail + " is already in your friend list!", "Already Friends", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void avatar_Click(object sender, EventArgs e)
         {
-            sound.PlaySound(new Uri("https://ia802508.us.archive.org/5/items/testmp3testfile/mpthreetest.mp3"), avatar);
+            sound.PlaySound(new Uri(user.avatar), avatar);
         }
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-            sound.PlaySound(new Uri("http://www.music.helsinki.fi/tmt/opetus/uusmedia/esim/a2002011001-e02.wav"), pictureBox3);
-        }
-        
     }
 }

@@ -36,19 +36,14 @@
             this.minimize = new System.Windows.Forms.PictureBox();
             this.exit = new System.Windows.Forms.PictureBox();
             this.header = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.friendList = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.nameLabel = new System.Windows.Forms.Label();
+            this.friendPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.avatar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.minimize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.exit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.header)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            this.friendList.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBox1
@@ -131,56 +126,23 @@
             this.header.TabStop = false;
             this.header.MouseDown += new System.Windows.Forms.MouseEventHandler(this.header_MouseDown);
             // 
-            // pictureBox3
+            // nameLabel
             // 
-            this.pictureBox3.Image = global::HearMe.Properties.Resources.avatar0;
-            this.pictureBox3.Location = new System.Drawing.Point(7, 13);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(40, 40);
-            this.pictureBox3.TabIndex = 35;
-            this.pictureBox3.TabStop = false;
-            this.pictureBox3.Click += new System.EventHandler(this.pictureBox3_Click);
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameLabel.Location = new System.Drawing.Point(64, 34);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(61, 24);
+            this.nameLabel.TabIndex = 35;
+            this.nameLabel.Text = "Name";
             // 
-            // label1
+            // friendPanel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(53, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(163, 20);
-            this.label1.TabIndex = 36;
-            this.label1.Text = "Damian-Teodor Beles";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(54, 40);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(127, 13);
-            this.label2.TabIndex = 37;
-            this.label2.Text = "damian.beles@gmail.com";
-            // 
-            // friendList
-            // 
-            this.friendList.AutoScroll = true;
-            this.friendList.Controls.Add(this.label3);
-            this.friendList.Controls.Add(this.label2);
-            this.friendList.Controls.Add(this.label1);
-            this.friendList.Controls.Add(this.pictureBox3);
-            this.friendList.Location = new System.Drawing.Point(688, 112);
-            this.friendList.Name = "friendList";
-            this.friendList.Size = new System.Drawing.Size(272, 417);
-            this.friendList.TabIndex = 29;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.Lime;
-            this.label3.Location = new System.Drawing.Point(181, 40);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 13);
-            this.label3.TabIndex = 35;
-            this.label3.Text = "ONLINE";
+            this.friendPanel.AutoScroll = true;
+            this.friendPanel.Location = new System.Drawing.Point(688, 112);
+            this.friendPanel.Name = "friendPanel";
+            this.friendPanel.Size = new System.Drawing.Size(272, 417);
+            this.friendPanel.TabIndex = 29;
             // 
             // LoggedinForm
             // 
@@ -188,12 +150,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(960, 575);
+            this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.avatar);
             this.Controls.Add(this.addFriend);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.friendList);
+            this.Controls.Add(this.friendPanel);
             this.Controls.Add(this.minimize);
             this.Controls.Add(this.exit);
             this.Controls.Add(this.header);
@@ -206,9 +169,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.minimize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.header)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            this.friendList.ResumeLayout(false);
-            this.friendList.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -224,10 +184,7 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button addFriend;
         private System.Windows.Forms.PictureBox avatar;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Panel friendList;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label nameLabel;
+        private System.Windows.Forms.Panel friendPanel;
     }
 }

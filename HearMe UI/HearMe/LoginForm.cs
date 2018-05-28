@@ -96,15 +96,15 @@ namespace HearMe
                             {
                                 var values = new Dictionary<string, string>();
                                 values["type"] = "register";
-                                values["firstName"] = firstNameRegister.Text;
-                                values["lastName"] = lastNameRegister.Text;
+                                values["first_name"] = firstNameRegister.Text;
+                                values["last_name"] = lastNameRegister.Text;
                                 values["email"] = emailRegister.Text;
                                 values["password"] = passwordRegister.Text;
                                 if (maleRegister.Checked)
                                     values["gender"] = "male";
                                 else values["gender"] = "female";
 
-                                string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
+                                string response = JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message;
                                 values.Clear();
 
                                 if (response == "OK") MessageBox.Show("The account was created successfully!", "New Account Registered", MessageBoxButtons.OK, MessageBoxIcon.Information);
