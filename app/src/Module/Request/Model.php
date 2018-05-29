@@ -139,7 +139,7 @@ class Module_Request_Model extends Prototype_Model {
         }
 
 
-        if ($_REQUEST['type'] === 'searchfriend') {
+        if ($request['type'] === 'searchfriend') {
             if (!isset($request['origin_email'], $request['friend_email'])) {
                 return [
                     'status' => '500',
