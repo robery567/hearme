@@ -209,7 +209,7 @@ class Module_Database_Model {
             return false;
         }
 
-        $databaseData[$entryData['id']] = $entryData;
+        $databaseData[$entryData['id']+1] = $entryData;
 
         $databaseData = json_encode($databaseData);
 
