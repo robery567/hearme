@@ -9,7 +9,7 @@
     "gender":"male",
     "avatar":"aa.wav",
     "online":"false",
-    "friends":["0"]
+    "friends":["damad2@gmail.com"]
   },
   {
     "id":1,
@@ -81,6 +81,6 @@
     "gender":"male",
     "avatar":"null",
     "online":"null",
-    "friends":["0"]
+    "friends":["robery_office2@yahoo.ro"]
   }
 ]
