@@ -199,8 +199,6 @@ class Module_Database_Model {
      * @return bool
      */
     public function update($entryData) {
-        var_dump($entryData);
-        die();
         if (empty($entryData['id'])) {
             return false;
         }
