@@ -20,7 +20,7 @@ namespace HearMe
     class LinkedList
     {
         public Node head;
-        public Node current;//This will have latest node
+        public Node current;
         public int Count;
 
         public LinkedList()

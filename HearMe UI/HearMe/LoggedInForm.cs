@@ -30,11 +30,13 @@ namespace HearMe
         public static extern bool ReleaseCapture();
         
         User user = new User();
+        string email = "";
         Thread friendListUpdate;
 
-        public LoggedinForm(string email)
+        public LoggedinForm(string Email)
         {
             InitializeComponent();
+            email = Email;
             var values = new Dictionary<string, string>();
             values["status"] = "200";
             values["type"] = "user";
@@ -83,36 +85,99 @@ namespace HearMe
 
         private void populateFriendList()
         {
-            LinkedList friends = new LinkedList();
+            LinkedList friends;
             while (true)
             {
-                //friendList.Controls.Clear();
-                /*foreach(string friend in user.friendsList)
+                if (user.friends[0] != "0")
                 {
-                    User friend_user = new User();
+                    if (friendSearchCriteria.Text == "")
+                    {
+                        int i = 0;
+                        friends = new LinkedList();
+                        foreach (string friend in user.friends)
+                        {
+                            User friend_user = new User();
+                            
+                            var values = new Dictionary<string, string>();
+                            values["status"] = "200";
+                            values["type"] = "user";
+                            values["email"] = friend;
 
-                    var values = new Dictionary<string, string>();
-                    values["status"] = "200";
-                    values["type"] = "user";
-                    values["email"] = friend;
+                            friend_user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
+                            values.Clear();
 
-                    User response = JsonConvert.DeserializeObject<User>(hearMe.CallApi(values));
-                    values.Clear();
-                    
-                    Friend actual = new Friend();
-                    actual.name.Text = friend_user.first_name + " " + friend_user.last_name;
-                    actual.email.Text = friend_user.email;
-                    actual.email.Location = new Point(50, 33);
-                    actual.name.Location = new Point(48, 8);
-                    actual.avatar.Location = new Point(5, 5);
-                    friends.Append(actual);
-                }*/
-                Node curr = friends.head;
-                while (curr.Next != null)
-                {
-                    curr = curr.Next;
-                    curr.Value.avatar.Parent = curr.Value.email.Parent = curr.Value.name.Parent = friendPanel;
+                            Friend actual = new Friend();
+                            actual.name.Text = friend_user.first_name + " " + friend_user.last_name;
+                            actual.email.Text = friend_user.email;
+                            actual.email.Location = new Point(50, 33 + i);
+                            actual.name.Location = new Point(48, 8 + i);
+                            actual.avatar.Location = new Point(5, 5 + i);
+                            friends.Append(actual);
+
+                            i += 45;
+                        }
+
+                        friendPanel.Invoke((MethodInvoker)delegate
+                        {
+                            friendPanel.Controls.Clear();
+                            Node curr = friends.head;
+                            while (curr.Next != null)
+                            {
+                                curr = curr.Next;
+                                curr.Value.avatar.Parent = curr.Value.email.Parent = curr.Value.name.Parent = friendPanel;
+                            }
+                        });
+                    }
+
+                    else
+                    {
+                        var values = new Dictionary<string, string>();
+                        values["status"] = "200";
+                        values["type"] = "searchfriend";
+                        values["origin_email"] = email;
+                        values["friend_email"] = friendSearchCriteria.Text;
+
+                        List<string> friendsAfterCriteria = JsonConvert.DeserializeObject<List<string>>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message); ;
+                        values.Clear();
+
+                        int i = 0;
+                        friends = new LinkedList();
+                        foreach (string friend in friendsAfterCriteria)
+                        {
+                            User friend_user = new User();
+
+                            values = new Dictionary<string, string>();
+                            values["status"] = "200";
+                            values["type"] = "user";
+                            values["email"] = friend;
+
+                            friend_user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
+                            values.Clear();
+
+                            Friend actual = new Friend();
+                            actual.name.Text = friend_user.first_name + " " + friend_user.last_name;
+                            actual.email.Text = friend_user.email;
+                            actual.email.Location = new Point(50, 33 + i);
+                            actual.name.Location = new Point(48, 8 + i);
+                            actual.avatar.Location = new Point(5, 5 + i);
+                            friends.Append(actual);
+
+                            i += 45;
+                        }
+
+                        friendPanel.Invoke((MethodInvoker)delegate
+                        {
+                            friendPanel.Controls.Clear();
+                            Node curr = friends.head;
+                            while (curr.Next != null)
+                            {
+                                curr = curr.Next;
+                                curr.Value.avatar.Parent = curr.Value.email.Parent = curr.Value.name.Parent = friendPanel;
+                            }
+                        });
+                    }
                 }
+
                 Thread.Sleep(1000);
             }
         }
@@ -131,7 +196,18 @@ namespace HearMe
                 string response = JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message;
                 values.Clear();
 
-                if (response == "OK") MessageBox.Show("The account " + friendEmail + " was added successfully as your friend!", "Friend Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (response == "OK")
+                {
+                    MessageBox.Show("The account " + friendEmail + " was added successfully as your friend!", "Friend Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    values = new Dictionary<string, string>();
+                    values["status"] = "200";
+                    values["type"] = "user";
+                    values["email"] = email;
+
+                    user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
+                    values.Clear();
+                }
                 else if (response == "ADD_ERROR") MessageBox.Show("The account " + friendEmail + " does not exist!", "Invalid User", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 else if (response == "ALREADY_FRIEND") MessageBox.Show("The account " + friendEmail + " is already in your friend list!", "Already Friends", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

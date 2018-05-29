@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.friendSearchCriteria = new System.Windows.Forms.TextBox();
             this.addFriend = new System.Windows.Forms.Button();
             this.avatar = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -46,12 +46,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.header)).BeginInit();
             this.SuspendLayout();
             // 
-            // textBox1
+            // friendSearchCriteria
             // 
-            this.textBox1.Location = new System.Drawing.Point(714, 81);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(234, 20);
-            this.textBox1.TabIndex = 30;
+            this.friendSearchCriteria.Location = new System.Drawing.Point(714, 81);
+            this.friendSearchCriteria.Name = "friendSearchCriteria";
+            this.friendSearchCriteria.Size = new System.Drawing.Size(234, 20);
+            this.friendSearchCriteria.TabIndex = 30;
             // 
             // addFriend
             // 
@@ -155,7 +155,7 @@
             this.Controls.Add(this.addFriend);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.friendSearchCriteria);
             this.Controls.Add(this.friendPanel);
             this.Controls.Add(this.minimize);
             this.Controls.Add(this.exit);
@@ -179,7 +179,7 @@
         private System.Windows.Forms.PictureBox header;
         private System.Windows.Forms.PictureBox exit;
         private System.Windows.Forms.PictureBox minimize;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox friendSearchCriteria;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button addFriend;
