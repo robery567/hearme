@@ -104,7 +104,7 @@ class Module_User_Model {
 
         $userData['id'] = $foundUser->getId();
 
-        if (empty((int)$userData['friends'][0])) {
+        if (empty($userData['friends'][0])) {
             $userData['friends'][0] = $friendEmail;
         } else {
             $userData['friends'][] = $friendEmail;

@@ -153,7 +153,6 @@ class Module_Request_Model extends Prototype_Model {
                 'status' => '200',
                 'message' => json_encode($searchFriendsResponse)
             ];
-
         }
 
         return [
