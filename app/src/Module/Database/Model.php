@@ -53,7 +53,7 @@ class Module_Database_Model {
 
     /**
      * Set the columns names
-     * @param $columns
+     * @param array $columns
      * @throws Exception
      */
     public function setColumns($columns) {
@@ -133,7 +133,7 @@ class Module_Database_Model {
 
     /**
      * Insert given data into the database
-     * @param $data
+     * @param array $data
      * @return bool
      * @throws Exception
      */
@@ -195,7 +195,7 @@ class Module_Database_Model {
     }
 
     /**
-     * @param $entryData
+     * @param array $entryData
      * @return bool
      * @throws Exception
      */
@@ -243,7 +243,7 @@ class Module_Database_Model {
 
     /**
      * Validate if the set of columns are valid
-     * @param $columns
+     * @param array $columns
      * @return bool
      */
     private function validateColumns($columns) {
@@ -262,7 +262,7 @@ class Module_Database_Model {
 
     /**
      * Gets the database key of a user
-     * @param $id
+     * @param int $id
      * @return int|string
      * @throws Exception
      */
@@ -281,7 +281,7 @@ class Module_Database_Model {
     /**
      * Gets the last entry id
      * @throws Exception
-     * return int
+     * @return int
      */
     private function getLastId() {
         $databaseData = $this->readDatabase();
