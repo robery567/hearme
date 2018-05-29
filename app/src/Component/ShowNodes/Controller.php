@@ -16,7 +16,7 @@ class Component_ShowNodes_Controller extends Prototype_Controller {
     public function indexAction() {
         $Database = new Module_Database_Model();
         $Database->setName('hearme_db');
-        $Database->setColumns(['username', 'email', 'gender']);
+        $Database->setColumns(['username', 'email', 'gender', 'friends']);
         $Database->load();
 
         $Tree = $Database->getDatabaseData();
