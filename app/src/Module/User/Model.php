@@ -136,7 +136,7 @@ class Module_User_Model {
                 return $friendEmail;
             }
 
-            if ($searchType === 'partial' && empty(strstr($friend, $friendEmail))) {
+            if ($searchType === 'partial' && !empty(strstr($friend, $friendEmail))) {
                 $friendsToReturn[] = $friend;
             }
         }
