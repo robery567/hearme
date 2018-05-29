@@ -205,6 +205,8 @@ class Module_Database_Model {
 
         $databaseData = json_decode($this->readDatabase());
 
+        var_dump($databaseData);
+
         if (empty($databaseData[$entryData['id']])) {
             return false;
         }
