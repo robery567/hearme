@@ -26,7 +26,6 @@ class Module_Request_Model extends Prototype_Model {
      * @throws Exception
      */
     public function interpretReceivedRequest($request) {
-        echo $_POST['status'];
         if (empty($request['type'])) {
             return [
                 'status' => '500',
