@@ -208,7 +208,7 @@ namespace HearMe
             string userFile = getWav.FileName;
 
             System.Net.WebClient Client = new System.Net.WebClient();
-            Client.Headers.Add("Content-Type", "binary/octet-stream");
+            Client.Headers.Add("Content-Type", "audio/wav");
 
             byte[] result = Client.UploadFile("http://sandbox.robertcolca.me/request.php?type=upload_avatar&user=" + user.email, "POST", userFile);
 
