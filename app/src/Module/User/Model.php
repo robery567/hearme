@@ -71,6 +71,7 @@ class Module_User_Model {
 
         $userData['password'] = md5($userData['password']);
         $userData['friends'] = ['0'];
+        $userData['avatar'] = 'http://sandbox.robertcolca.me/sounds/noavatar.mp3';
 
         return $this->DataSource->insert($userData);
     }

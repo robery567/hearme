@@ -7,7 +7,7 @@
     "first_name":"Robert",
     "last_name":"Colca",
     "gender":"male",
-    "avatar":"aa.wav",
+    "avatar":"http://sandbox.robertcolca.me/sounds/noavatar.mp3",
     "online":"false",
     "friends":["damad2@gmail.com"]
   },
@@ -19,7 +19,7 @@
     "first_name":"Robert",
     "last_name":"Colca",
     "gender":"male",
-    "avatar":"aa.wav",
+    "avatar":"http://sandbox.robertcolca.me/sounds/noavatar.mp3",
     "online":"false",
     "friends":["0"]
   },
@@ -31,7 +31,7 @@
     "first_name":"Robert",
     "last_name":"Colca",
     "gender":"male",
-    "avatar":"aa.wav",
+    "avatar":"http://sandbox.robertcolca.me/sounds/noavatar.mp3",
     "online":"false",
     "friends":["0"]
   },
@@ -43,7 +43,7 @@
     "first_name":"Robert",
     "last_name":"Colca",
     "gender":"male",
-    "avatar":"aa.wav",
+    "avatar":"http://sandbox.robertcolca.me/sounds/noavatar.mp3",
     "online":"false",
     "friends":["0"]
   },
@@ -55,7 +55,7 @@
     "first_name":"Robert",
     "last_name":"Colca",
     "gender":"male",
-    "avatar":"aa.wav",
+    "avatar":"http://sandbox.robertcolca.me/sounds/noavatar.mp3",
     "online":"false",
     "friends":["0"]
   },
@@ -67,7 +67,7 @@
     "first_name":"Bossanceanu",
     "last_name":"Bossanceanu",
     "gender":"male",
-    "avatar":"null",
+    "avatar":"http://sandbox.robertcolca.me/sounds/noavatar.mp3",
     "online":"null",
     "friends":["0"]
   },
@@ -79,7 +79,7 @@
     "first_name":"Bossanceanu",
     "last_name":"Bossanceanu",
     "gender":"male",
-    "avatar":"null",
+    "avatar":"http://sandbox.robertcolca.me/sounds/noavatar.mp3",
     "online":"null",
     "friends":["robery_office2@yahoo.ro"]
   }
