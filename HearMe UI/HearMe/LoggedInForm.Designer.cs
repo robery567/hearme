@@ -38,6 +38,7 @@
             this.header = new System.Windows.Forms.PictureBox();
             this.nameLabel = new System.Windows.Forms.Label();
             this.friendPanel = new System.Windows.Forms.Panel();
+            this.changeAvatar = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.avatar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -144,12 +145,23 @@
             this.friendPanel.Size = new System.Drawing.Size(272, 417);
             this.friendPanel.TabIndex = 29;
             // 
+            // changeAvatar
+            // 
+            this.changeAvatar.AutoSize = true;
+            this.changeAvatar.Location = new System.Drawing.Point(65, 18);
+            this.changeAvatar.Name = "changeAvatar";
+            this.changeAvatar.Size = new System.Drawing.Size(98, 13);
+            this.changeAvatar.TabIndex = 36;
+            this.changeAvatar.Text = "CHANGE AVATAR";
+            this.changeAvatar.Click += new System.EventHandler(this.changeAvatar_Click);
+            // 
             // LoggedinForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(960, 575);
+            this.Controls.Add(this.changeAvatar);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.avatar);
             this.Controls.Add(this.addFriend);
@@ -186,5 +198,6 @@
         private System.Windows.Forms.PictureBox avatar;
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Panel friendPanel;
+        private System.Windows.Forms.Label changeAvatar;
     }
 }

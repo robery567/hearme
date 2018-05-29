@@ -53,6 +53,7 @@ namespace HearMe
 
             string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
             */
+            popFriendList(user.friends);
             friendListUpdate = new Thread(() => populateFriendList());
             friendListUpdate.Start();
         }
@@ -83,53 +84,66 @@ namespace HearMe
         private void minimize_MouseLeave(object sender, EventArgs e) => minimize.Image = (Image)Resources.ResourceManager.GetObject("minimize");
         private void minimize_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
 
+        private void popFriendList(List<string> friendsList)
+        {
+            int i = 0;
+            LinkedList friends = new LinkedList();
+            foreach (string friend in friendsList)
+            {
+                User friend_user = new User();
+
+                var values = new Dictionary<string, string>();
+                values["status"] = "200";
+                values["type"] = "user";
+                values["email"] = friend;
+
+                friend_user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
+                values.Clear();
+
+                Friend actual = new Friend();
+                EventHandler handler = (s, e) => sound.PlaySound(new Uri(friend_user.avatar), actual.avatar);
+                actual.avatar.Click += handler;
+                actual.name.Text = friend_user.first_name + " " + friend_user.last_name;
+                actual.email.Text = friend_user.email;
+                actual.email.Location = new Point(50, 33 + i);
+                actual.name.Location = new Point(48, 8 + i);
+                actual.avatar.Location = new Point(5, 5 + i);
+                friends.Append(actual);
+
+                i += 45;
+            }
+
+            void popFriend()
+            {
+                friendPanel.Controls.Clear();
+                Node curr = friends.head;
+                while (curr.Next != null)
+                {
+                    curr = curr.Next;
+                    curr.Value.avatar.Parent = curr.Value.email.Parent = curr.Value.name.Parent = friendPanel;
+                }
+            }
+
+            if (friendPanel.InvokeRequired)
+            {
+                friendPanel.Invoke((MethodInvoker)delegate
+                {
+                    popFriend();
+                });
+            }
+            else
+            {
+                popFriend();
+            }
+        }
+
         private void populateFriendList()
         {
-            LinkedList friends;
             while (true)
             {
                 if (user.friends[0] != "0")
                 {
-                    if (friendSearchCriteria.Text == "")
-                    {
-                        int i = 0;
-                        friends = new LinkedList();
-                        foreach (string friend in user.friends)
-                        {
-                            User friend_user = new User();
-                            
-                            var values = new Dictionary<string, string>();
-                            values["status"] = "200";
-                            values["type"] = "user";
-                            values["email"] = friend;
-
-                            friend_user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
-                            values.Clear();
-
-                            Friend actual = new Friend();
-                            actual.name.Text = friend_user.first_name + " " + friend_user.last_name;
-                            actual.email.Text = friend_user.email;
-                            actual.email.Location = new Point(50, 33 + i);
-                            actual.name.Location = new Point(48, 8 + i);
-                            actual.avatar.Location = new Point(5, 5 + i);
-                            friends.Append(actual);
-
-                            i += 45;
-                        }
-
-                        friendPanel.Invoke((MethodInvoker)delegate
-                        {
-                            friendPanel.Controls.Clear();
-                            Node curr = friends.head;
-                            while (curr.Next != null)
-                            {
-                                curr = curr.Next;
-                                curr.Value.avatar.Parent = curr.Value.email.Parent = curr.Value.name.Parent = friendPanel;
-                            }
-                        });
-                    }
-
-                    else
+                    if (friendSearchCriteria.Text != "")
                     {
                         var values = new Dictionary<string, string>();
                         values["status"] = "200";
@@ -140,41 +154,7 @@ namespace HearMe
                         List<string> friendsAfterCriteria = JsonConvert.DeserializeObject<List<string>>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message); ;
                         values.Clear();
 
-                        int i = 0;
-                        friends = new LinkedList();
-                        foreach (string friend in friendsAfterCriteria)
-                        {
-                            User friend_user = new User();
-
-                            values = new Dictionary<string, string>();
-                            values["status"] = "200";
-                            values["type"] = "user";
-                            values["email"] = friend;
-
-                            friend_user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
-                            values.Clear();
-
-                            Friend actual = new Friend();
-                            actual.name.Text = friend_user.first_name + " " + friend_user.last_name;
-                            actual.email.Text = friend_user.email;
-                            actual.email.Location = new Point(50, 33 + i);
-                            actual.name.Location = new Point(48, 8 + i);
-                            actual.avatar.Location = new Point(5, 5 + i);
-                            friends.Append(actual);
-
-                            i += 45;
-                        }
-
-                        friendPanel.Invoke((MethodInvoker)delegate
-                        {
-                            friendPanel.Controls.Clear();
-                            Node curr = friends.head;
-                            while (curr.Next != null)
-                            {
-                                curr = curr.Next;
-                                curr.Value.avatar.Parent = curr.Value.email.Parent = curr.Value.name.Parent = friendPanel;
-                            }
-                        });
+                        popFriendList(friendsAfterCriteria);
                     }
                 }
 
@@ -207,6 +187,8 @@ namespace HearMe
 
                     user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
                     values.Clear();
+
+                    popFriendList(user.friends);
                 }
                 else if (response == "ADD_ERROR") MessageBox.Show("The account " + friendEmail + " does not exist!", "Invalid User", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 else if (response == "ALREADY_FRIEND") MessageBox.Show("The account " + friendEmail + " is already in your friend list!", "Already Friends", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -216,6 +198,16 @@ namespace HearMe
         private void avatar_Click(object sender, EventArgs e)
         {
             sound.PlaySound(new Uri(user.avatar), avatar);
+        }
+
+        private void changeAvatar_Click(object sender, EventArgs e)
+        {
+            System.Net.WebClient Client = new System.Net.WebClient();
+            Client.Headers.Add("Content-Type", "binary/octet-stream");
+
+            byte[] result = Client.UploadFile("http://your_server/upload.php", "POST", "C:\test.jpg");
+        
+            string response = Encoding.UTF8.GetString(result, 0, result.Length);
         }
     }
 }
