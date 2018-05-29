@@ -57,7 +57,7 @@ namespace HearMe
             var httpClient = new HttpClient();
             httpClient.GetByteArrayAsync(url).ContinueWith(data => {
                 string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                string localFilename = DateTime.Now.ToString("MMddyyyyhmmssfff") + ".mp3";
+                string localFilename = DateTime.Now.ToString("MMddyyyyhmmssfff") + ".wav";
                 string fileName = Path.Combine(documentsPath, localFilename);
                 File.WriteAllBytes(fileName, data.Result);
                 
@@ -91,7 +91,7 @@ namespace HearMe
             waveSource.DataAvailable += new EventHandler<WaveInEventArgs>(waveSource_DataAvailable);
             waveSource.RecordingStopped += new EventHandler<StoppedEventArgs>(waveSource_RecordingStopped);
 
-            waveFile = new WaveFileWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DateTime.Now.ToString("MMddyyyyhmmssfff") + ".mp3"), waveSource.WaveFormat);
+            waveFile = new WaveFileWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DateTime.Now.ToString("MMddyyyyhmmssfff") + ".wav"), waveSource.WaveFormat);
 
             waveSource.StartRecording();
         } 

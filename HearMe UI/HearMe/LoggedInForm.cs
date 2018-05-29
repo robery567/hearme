@@ -202,12 +202,36 @@ namespace HearMe
 
         private void changeAvatar_Click(object sender, EventArgs e)
         {
+            OpenFileDialog getWav = new OpenFileDialog();
+            getWav.Filter = "Wave Files (.wav)|*.wav";
+            getWav.ShowDialog();
+            string userFile = getWav.FileName;
+
             System.Net.WebClient Client = new System.Net.WebClient();
             Client.Headers.Add("Content-Type", "binary/octet-stream");
 
-            byte[] result = Client.UploadFile("http://your_server/upload.php", "POST", "C:\test.jpg");
-        
+            byte[] result = Client.UploadFile("http://sandbox.robertcolca.me/request.php?type=upload_avatar&user=" + user.email, "POST", userFile);
+
             string response = Encoding.UTF8.GetString(result, 0, result.Length);
+            MessageBox.Show(response);
+
+            var values = new Dictionary<string, string>();
+            values["status"] = "200";
+            values["type"] = "user";
+            values["email"] = email;
+
+            user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
+            values.Clear();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            sound.StartRecording();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            sound.WaveSource.StopRecording();
         }
     }
 }
