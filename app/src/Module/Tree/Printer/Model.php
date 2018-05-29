@@ -147,10 +147,12 @@ class Module_Tree_Printer_Model {
                                     <li><strong>Username:</strong> {$userData['username']}</li>
                                     <li><strong>Email:</strong> {$userData['email']}</li>
                                     <li><strong>Gender:</strong> {$userData['gender']}</li>
-                                    <li><strong>Friends:</strong>";
+                                    <li><strong>Friends:</strong> <br/>";
 
-        var_dump(json_decode($userData['friends']));
-        $this->dataToRender .= $userData['friends'];
+        foreach ($userData['friends'] as $friend) {
+            $this->dataToRender .= $friend . '<br/>';
+        }
+
 
         $this->dataToRender .= '</li>
                                  </ul>';
