@@ -270,8 +270,7 @@ class Module_Database_Model {
         $databaseData = json_decode($this->readDatabase());
 
         foreach ($databaseData as $key => $user) {
-            var_dump($user);
-            if ($user['id'] === $id) {
+            if ($user->id === $id) {
                 return $key;
             }
         }
