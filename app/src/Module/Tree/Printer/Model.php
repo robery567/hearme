@@ -147,7 +147,12 @@ class Module_Tree_Printer_Model {
                                     <li><strong>Username:</strong> {$userData['username']}</li>
                                     <li><strong>Email:</strong> {$userData['email']}</li>
                                     <li><strong>Gender:</strong> {$userData['gender']}</li>
-                                 </ul>";
+                                    <li><strong>Friends:</strong>";
+
+        $this->dataToRender .= $userData['friends'];
+
+        $this->dataToRender .= '</li>
+                                 </ul>';
 
         if (!$node->isLeaf()) {
             $this->dataToRender .= '<div class="left">' .
