@@ -199,14 +199,13 @@ class Module_Database_Model {
      * @return bool
      */
     public function update($entryData) {
+        var_dump($entryData);
+        die();
         if (empty($entryData['id'])) {
             return false;
         }
 
         $databaseData = json_decode($this->readDatabase());
-
-        var_dump($databaseData);
-        die();
 
         if (empty($databaseData[$entryData['id']])) {
             return false;
