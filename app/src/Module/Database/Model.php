@@ -197,6 +197,7 @@ class Module_Database_Model {
     /**
      * @param $entryData
      * @return bool
+     * @throws Exception
      */
     public function update($entryData) {
         if (empty($entryData['id'])) {
@@ -204,17 +205,15 @@ class Module_Database_Model {
         }
 
         $databaseData = json_decode($this->readDatabase());
+        $userKey = $this->getEntryPosition($entryData['id']);
 
-        if (empty($databaseData[$entryData['id']])) {
+        if (empty($databaseData[$userKey])) {
             return false;
         }
 
-        $databaseData[$entryData['id']] = $entryData;
+        $databaseData[$userKey] = $entryData;
 
         $databaseData = json_encode($databaseData);
-
-        // DEBUG
-        var_dump($databaseData);
 
         $this->writeToDatabase(stripslashes($databaseData));
 
@@ -259,6 +258,24 @@ class Module_Database_Model {
         }
 
         return true;
+    }
+
+    /**
+     * Gets the database key of a user
+     * @param $id
+     * @return int|string
+     * @throws Exception
+     */
+    private function getEntryPosition($id) {
+        $databaseData = json_decode($this->readDatabase());
+
+        foreach ($databaseData as $key => $user) {
+            if ($user['id'] === $id) {
+                return $key;
+            }
+        }
+
+        return $this->getLastId()+1;
     }
 
     /**
