@@ -205,13 +205,16 @@ class Module_Database_Model {
 
         $databaseData = json_decode($this->readDatabase());
 
-        if (empty($databaseData[$entryData['id']+1])) {
+        if (empty($databaseData[$entryData['id']])) {
             return false;
         }
 
-        $databaseData[$entryData['id']+1] = $entryData;
+        $databaseData[$entryData['id']] = $entryData;
 
         $databaseData = json_encode($databaseData);
+
+        // DEBUG
+        var_dump($databaseData);
 
         $this->writeToDatabase(stripslashes($databaseData));
 
