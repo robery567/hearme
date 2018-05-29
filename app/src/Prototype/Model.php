@@ -44,7 +44,7 @@ class Prototype_Model {
      * @return mixed
      */
     final public static function getInstance($app) {
-        $calledClass = get_called_class();
+        $calledClass = static::class;
 
         if (!isset(self::$instances[$calledClass])) {
             self::$instances[$calledClass] = new $calledClass($app);

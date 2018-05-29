@@ -6,12 +6,12 @@ interface Module_Tree_Interface_TreeInterface {
      *
      * @param Module_Node_Model|null $node
      */
-    function __construct(Module_Node_Model $node = null);
+    public function __construct(Module_Node_Model $node = null);
 
     /**
      * @return Module_Node_Model
      */
-    function getRoot();
+    public function getRoot();
 
     /**
      * Insert a node a perform rotations if needed
@@ -19,7 +19,7 @@ interface Module_Tree_Interface_TreeInterface {
      * @param Module_Node_Model $node
      * @return $this
      */
-    function insert(Module_Node_Model $node);
+    public function insert(Module_Node_Model $node);
 
     /**
      * Remove the node from the tree.
@@ -28,7 +28,7 @@ interface Module_Tree_Interface_TreeInterface {
      * @param Module_Node_Model $node
      * @return $this
      */
-    function remove(Module_Node_Model $node);
+    public function remove(Module_Node_Model $node);
 
     /**
      * Find the node with the given id
@@ -36,7 +36,7 @@ interface Module_Tree_Interface_TreeInterface {
      * @param mixed $id
      * @return mixed
      */
-    function find($id);
+    public function find($id);
 
     /**
      * Find the predecessor (left) or successor (right).
@@ -46,19 +46,19 @@ interface Module_Tree_Interface_TreeInterface {
      * @param int $position
      * @return Module_Node_Model
      */
-    function findRelative(Module_Node_Model $node, $position);
+    public function findRelative(Module_Node_Model $node, $position);
 
     /**
      * @param Module_Node_Model $node
      * @return Module_Node_Model|null
      */
-    function findPredecessor(Module_Node_Model $node);
+    public function findPredecessor(Module_Node_Model $node);
 
     /**
      * @param Module_Node_Model $node
      * @return Module_Node_Model|null
      */
-    function findSuccessor(Module_Node_Model $node);
+    public function findSuccessor(Module_Node_Model $node);
 
     /**
      * Min and max, can be anything but basically an int, as the ids
@@ -68,12 +68,12 @@ interface Module_Tree_Interface_TreeInterface {
      * @param mixed $max
      * @return array|Module_Node_Model[]
      */
-    function enumerate($min, $max);
+    public function enumerate($min, $max);
 
     /**
      * Return all Nodes in infixe ordered list.
      *
      * @return mixed
      */
-    function infixList();
+    public function infixList();
 }

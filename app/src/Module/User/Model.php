@@ -7,6 +7,7 @@
  */
 
 class Module_User_Model {
+
     /** @var Module_Database_Model */
     protected $DataSource;
 
@@ -33,11 +34,7 @@ class Module_User_Model {
      * @throws Exception
      */
     public function checkAuthenticationCredentials($email, $password) {
-        if (null !== $this->Tree->find([$email, $password], null, ['email', 'password'])) {
-            return true;
-        }
-
-        return false;
+        return null !== $this->Tree->find([$email, $password], null, ['email', 'password']);
     }
 
     /**
@@ -134,19 +131,13 @@ class Module_User_Model {
 
         $friendsToReturn = [];
 
-        if ($searchType === 'exact') {
-            foreach ($userData['friends'] as $friend) {
-                if ($searchType === 'exact') {
-                    if ($friend === $friendEmail) {
-                        return $friendEmail;
-                    }
-                }
+        foreach ($userData['friends'] as $friend) {
+            if ($searchType === 'exact' && $friend === $friendEmail) {
+                return $friendEmail;
+            }
 
-                if ($searchType === 'partial') {
-                    if (empty(strstr($friend, $friendEmail))) {
-                        $friendsToReturn[] = $friend;
-                    }
-                }
+            if ($searchType === 'partial' && empty(strstr($friend, $friendEmail))) {
+                $friendsToReturn[] = $friend;
             }
         }
 

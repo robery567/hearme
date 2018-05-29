@@ -64,15 +64,12 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
      * @return $this
      */
     protected function insertSort(Module_Node_Model $node) {
-
         if (null === $node->getParent()) {
             $node->setColor(Module_Node_Model::COLOR_BLACK);
             return $this;
         }
 
-        if (!Module_Node_Model::COLOR_RED === $node->getParent()->getColor()
-            && Module_Node_Model::COLOR_RED === $node->getColor()
-        ) {
+        if (Module_Node_Model::COLOR_RED === $node->getColor() && !Module_Node_Model::COLOR_RED === $node->getParent()->getColor()) {
             return $this;
         }
 
@@ -86,39 +83,36 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
                 $this->rotate($node->getParent(), -$node->getPosition());
 
                 return $this->insertSort($parent);
-            } else {
-                $uncle->setColor(Module_Node_Model::COLOR_BLACK);
-                $node->getParent()->setColor(Module_Node_Model::COLOR_BLACK);
-
-                if (null !== $grandParent) {
-                    $grandParent->setColor(Module_Node_Model::COLOR_RED);
-                }
-
-                return $this->insertSort($grandParent);
             }
-            // Second case, both parent and grand parent are on the same side
-            // Rotate the parent to grand parent place
-        } else {
-            // If uncle and parent are red, set both black
-            if (null !== $uncle && Module_Node_Model::COLOR_RED === $uncle->getColor()
-                && Module_Node_Model::COLOR_RED === $node->getParent()->getColor()
-            ) {
-                $uncle->setColor(Module_Node_Model::COLOR_BLACK);
-                $node->getParent()->setColor(Module_Node_Model::COLOR_BLACK);
-                $grandParent->setColor(Module_Node_Model::COLOR_RED);
 
-                return $this->insertSort($grandParent);
-                // Else if we have a grand parent (so the same direction as parent)
-            } elseif (null !== $grandParent) {
-                $node->getParent()->setColor(Module_Node_Model::COLOR_BLACK);
-                $grandParent->setColor(Module_Node_Model::COLOR_RED);
-                $this->rotate($grandParent, -$node->getPosition());
+            $uncle->setColor(Module_Node_Model::COLOR_BLACK);
+            $node->getParent()->setColor(Module_Node_Model::COLOR_BLACK);
 
-                return $this->insertSort($grandParent);
+            if (null !== $grandParent) {
+                $grandParent->setColor(Module_Node_Model::COLOR_RED);
             }
+
+            return $this->insertSort($grandParent);
         }
 
-        // Elsewhere obviously there is no problem
+        // If uncle and parent are red, set both black
+        if (null !== $uncle && Module_Node_Model::COLOR_RED === $uncle->getColor() && Module_Node_Model::COLOR_RED === $node->getParent()->getColor()) {
+            $uncle->setColor(Module_Node_Model::COLOR_BLACK);
+            $node->getParent()->setColor(Module_Node_Model::COLOR_BLACK);
+            $grandParent->setColor(Module_Node_Model::COLOR_RED);
+
+            return $this->insertSort($grandParent);
+        }
+
+        // we have a grand parent (so the same direction as parent)
+        if (null !== $grandParent) {
+            $node->getParent()->setColor(Module_Node_Model::COLOR_BLACK);
+            $grandParent->setColor(Module_Node_Model::COLOR_RED);
+            $this->rotate($grandParent, -$node->getPosition());
+
+            return $this->insertSort($grandParent);
+        }
+
         return $this;
     }
 
@@ -134,7 +128,7 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
     protected function searchClosestNode(Module_Node_Model $hierarchy, $id) {
         $position = $this->compare($hierarchy->getId(), $id);
 
-        if ($hierarchy->isLeaf() || 0 === $position || !$hierarchy->haveChild($position)) {
+        if (0 === $position || $hierarchy->isLeaf()  || !$hierarchy->haveChild($position)) {
             return $hierarchy;
         }
 
@@ -205,9 +199,9 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
 
             // Else if it's a nil, return false, else recursion
             return $node->isLeaf() ? false : $this->find($keyVal, $node->getChild($position), $searchByKey);
-        } else {
-            return $this->search($searchByKey, $keyVal);
         }
+
+        return $this->search($searchByKey, $keyVal);
     }
 
     /**
@@ -350,29 +344,29 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
                 $tmp = $node->getParent()->getChild(-$direction);
             }
 
-            if ($tmp->haveChild(Module_Node_Model::POSITION_LEFT) && $tmp->getChild(Module_Node_Model::POSITION_LEFT)->getColor() === Module_Node_Model::COLOR_BLACK
-                && $tmp->haveChild(Module_Node_Model::POSITION_RIGHT) && $tmp->getChild(Module_Node_Model::POSITION_RIGHT)->getColor() === Module_Node_Model::COLOR_BLACK
+            if ($tmp->haveChild(Module_Node_Model::POSITION_RIGHT) && $tmp->haveChild(Module_Node_Model::POSITION_LEFT) && $tmp->getChild(Module_Node_Model::POSITION_LEFT)->getColor() === Module_Node_Model::COLOR_BLACK
+                && $tmp->getChild(Module_Node_Model::POSITION_RIGHT)->getColor() === Module_Node_Model::COLOR_BLACK
             ) {
                 $tmp->setColor(Module_Node_Model::COLOR_RED);
                 return $this->deleteSort($node->getParent());
-            } else {
-                if ($tmp->haveChild(-$direction) && $tmp->getChild(-$direction)->getColor() === Module_Node_Model::COLOR_BLACK) {
-                    if ($tmp->haveChild($direction)) {
-                        $tmp->getChild($direction)->setColor(Module_Node_Model::COLOR_BLACK);
-                    }
-                    $tmp->setColor(Module_Node_Model::COLOR_RED);
-                    $this->rotate($tmp, -$direction);
-                    $tmp = $node->getParent()->getChild(-$direction);
-                }
-
-                $tmp->setColor($node->getParent()->getColor());
-                $node->getParent()->setColor(Module_Node_Model::COLOR_BLACK);
-                if ($tmp->getChild(-$direction)) {
-                    $tmp->getChild(-$direction)->setColor(Module_Node_Model::COLOR_BLACK);
-                }
-                $this->rotate($node->getParent(), $direction);
-                $node = $this->root;
             }
+
+            if ($tmp->haveChild(-$direction) && $tmp->getChild(-$direction)->getColor() === Module_Node_Model::COLOR_BLACK) {
+                if ($tmp->haveChild($direction)) {
+                    $tmp->getChild($direction)->setColor(Module_Node_Model::COLOR_BLACK);
+                }
+                $tmp->setColor(Module_Node_Model::COLOR_RED);
+                $this->rotate($tmp, -$direction);
+                $tmp = $node->getParent()->getChild(-$direction);
+            }
+
+            $tmp->setColor($node->getParent()->getColor());
+            $node->getParent()->setColor(Module_Node_Model::COLOR_BLACK);
+            if ($tmp->getChild(-$direction)) {
+                $tmp->getChild(-$direction)->setColor(Module_Node_Model::COLOR_BLACK);
+            }
+            $this->rotate($node->getParent(), $direction);
+            $node = $this->root;
         }
 
         return $this->deleteSort($node->setColor(Module_Node_Model::COLOR_BLACK));
@@ -423,9 +417,10 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
         while (true) {
             // Get next node after $closest
             $nextNode = $this->findRelative($closest, Module_Node_Model::POSITION_RIGHT);
+
             if (null !== $nextNode // Not an end
                 && $this->compare($max, $nextNode->getId()) <= 0 // Must be above
-                && 0 != $this->compare($closest->getId(), $nextNode->getId()) // Not equal, should not happen
+                && 0 !== $this->compare($closest->getId(), $nextNode->getId()) // Not equal, should not happen
             ) {
                 $out[] = $nextNode;
             } else {
@@ -477,5 +472,5 @@ abstract class Module_Tree_Abstract_Model implements Module_Tree_Interface_TreeI
      * @param mixed $idB
      * @return bool
      */
-    protected abstract function compare($idA, $idB);
+    abstract protected function compare($idA, $idB);
 }

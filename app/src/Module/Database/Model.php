@@ -21,7 +21,7 @@ class Module_Database_Model {
     /**
      * @var Module_Tree_Model|null The database data Tree
      */
-    protected $databaseData = null;
+    protected $databaseData;
 
     /**
      * @var string The database file extension
@@ -95,7 +95,7 @@ class Module_Database_Model {
      * @return Module_Tree_Model|null
      */
     public function getDatabaseData() {
-        if (empty($this->databaseData)) {
+        if (null === $this->databaseData) {
             return new Module_Tree_Model();
         }
 
@@ -250,7 +250,7 @@ class Module_Database_Model {
                 continue;
             }
 
-            if (!in_array($column, $this->databaseColumns)) {
+            if (!in_array($column, $this->databaseColumns, true)) {
                 return false;
             }
         }

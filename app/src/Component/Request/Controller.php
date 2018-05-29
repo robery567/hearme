@@ -13,7 +13,7 @@ class Component_Request_Controller extends Prototype_Controller {
     public function indexAction() {
         $Request = new Module_Request_Model($this->app);
 
-        $receivedRequest = file_get_contents("php://input");
+        $receivedRequest = file_get_contents('php://input');
 
         if (!empty($receivedRequest) || !empty($receivedRequest)) {
             $decodedRequest = [];

@@ -39,7 +39,7 @@ abstract class Module_Node_Abstract_Model implements Module_Node_Interface_NodeI
      *
      * @var Module_Node_Model
      */
-    protected $parent = null;
+    protected $parent;
 
     /**
      * @param int $id
@@ -51,29 +51,29 @@ abstract class Module_Node_Abstract_Model implements Module_Node_Interface_NodeI
             ->setValue($value);
     }
 
-    public abstract function __toString();
+    abstract public function __toString();
 
     /**
      * @return mixed
      */
-    public abstract function getId();
+    abstract public function getId();
 
     /**
      * @param mixed $id
      * @return $this
      */
-    public abstract function setId($id);
+    abstract public function setId($id);
 
     /**
      * @return mixed
      */
-    public abstract function getValue();
+    abstract public function getValue();
 
     /**
      * @param mixed $value
      * @return $this
      */
-    public abstract function setValue($value);
+    abstract public function setValue($value);
 
     /**
      * @return boolean

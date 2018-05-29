@@ -52,7 +52,7 @@ $app->extend('twig', function ($twig) {
 $lang = json_decode(file_get_contents(__DIR__ . '/../app/lang/ro.json'), true);
 $app['twig']->addGlobal('text', $lang);
 
-$urlMethodCall = (!empty($_POST)) ? 'post' : 'get';
+$urlMethodCall = !empty($_POST) ? 'post' : 'get';
 
 Component_Settings_Model::getInstance($app)->instantiatePage($urlMethodCall);
 

@@ -4,15 +4,6 @@
  * Class Component_Settings_Model
  */
 class Component_Settings_Model extends Prototype_Model {
-    /**
-     * @var Component_Settings_DataSource
-     */
-    protected $DataSource;
-
-    /**
-     * @var Silex\Application
-     */
-    protected $app;
     protected $twigExtension = '.twig';
     protected $defaultComponent = 'home';
     protected $defaultAction = 'index';
@@ -22,7 +13,7 @@ class Component_Settings_Model extends Prototype_Model {
      * @var array
      */
     private $settings = [
-        'site_name' => "CYF",
+        'site_name' => 'CYF',
         'version' => '1.00',
         'language' => 'en',
     ];
@@ -71,7 +62,7 @@ class Component_Settings_Model extends Prototype_Model {
      * @return false|string
      */
     public function getYear() {
-        return date("Y");
+        return date('Y');
     }
 
     /**
@@ -103,9 +94,7 @@ class Component_Settings_Model extends Prototype_Model {
      * @param string $method GET/POST
      */
     public function instantiatePage($method) {
-        $app = $this->app;
-
-        $this->app->$method($this->getUrlAllParts(), function () use ($app) {
+        $this->app->$method($this->getUrlAllParts(), function () {
             $urlParts = $this->getUrlParts();
 
             $component =  !empty($urlParts[0]) ? $urlParts[0] : $this->defaultComponent;
@@ -129,7 +118,7 @@ class Component_Settings_Model extends Prototype_Model {
                         $defaultActionName = $this->defaultAction . 'Action';
 
                         if (!method_exists($expectedControllerName, $this->defaultAction . 'Action')) {
-                            throw new Exception("No index action defined in controller");
+                            throw new Exception('No index action defined in controller');
                         }
 
                         $response = $Controller->$defaultActionName();
@@ -137,7 +126,7 @@ class Component_Settings_Model extends Prototype_Model {
                 }
 
                 if (empty($response)) {
-                    throw new Exception("No response returned from controller");
+                    throw new Exception('No response returned from controller');
                 }
             } catch (\Exception $e) {
                 return $this->app->redirect('/home?' . http_build_query(['exception' => $e->getMessage()]));

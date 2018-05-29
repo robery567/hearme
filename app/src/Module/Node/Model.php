@@ -12,13 +12,6 @@ class Module_Node_Model extends Module_Node_Abstract_Model {
     }
 
     /**
-     * Parent of the node
-     *
-     * @var Module_Node_Model
-     */
-    protected $parent = null;
-
-    /**
      * @return int
      */
     public function getId() {

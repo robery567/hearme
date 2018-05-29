@@ -10,7 +10,7 @@ class Module_Tree_Model extends Module_Tree_Abstract_Model {
      * @return bool
      */
     protected function compare($idA, $idB) {
-        if ($idA == $idB) {
+        if ($idA === $idB) {
             return 0;
         }
 
