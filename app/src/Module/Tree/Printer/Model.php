@@ -149,6 +149,7 @@ class Module_Tree_Printer_Model {
                                     <li><strong>Gender:</strong> {$userData['gender']}</li>
                                     <li><strong>Friends:</strong>";
 
+        var_dump($userData);
         $this->dataToRender .= $userData['friends'];
 
         $this->dataToRender .= '</li>
