@@ -45,7 +45,7 @@ class Module_Database_Model {
      */
     public function setName($name) {
         if (empty($name)) {
-            throw new Exception('No database name has been specified');
+            throw new Exception_Database('No database name has been specified');
         }
 
         $this->databaseName = $name;
@@ -58,11 +58,11 @@ class Module_Database_Model {
      */
     public function setColumns($columns) {
         if (empty($columns)) {
-            throw new Exception('No column specified');
+            throw new Exception_Database('No column specified');
         }
 
         if (!is_array($columns)) {
-            throw new Exception('Invalid columns format');
+            throw new Exception_Database('Invalid columns format');
         }
 
         foreach ($columns as $column) {
@@ -77,7 +77,7 @@ class Module_Database_Model {
      */
     public function setExtension($extension) {
         if (empty($extension)) {
-            throw new Exception('No extension has been specified');
+            throw new Exception_Database('No extension has been specified');
         }
 
         $this->databaseExtension = $extension;
@@ -115,7 +115,7 @@ class Module_Database_Model {
         $databaseData = $this->readDatabase();
 
         if (($databaseData = json_decode($databaseData, true)) === null) {
-            throw new Exception('The database file is corrupted');
+            throw new Exception_Database('The database file is corrupted');
         }
 
         foreach ($databaseData as $user) {
@@ -139,7 +139,7 @@ class Module_Database_Model {
      */
     public function insert($data) {
         if (!is_array($data)) {
-            throw new Exception('Invalid data to insert into the database');
+            throw new Exception_Database('Invalid data to insert into the database');
         }
 
         if ($this->validateColumns(array_keys($data)) === false) {
@@ -185,7 +185,7 @@ class Module_Database_Model {
             }
 
             if (empty($user[(string)$column])) {
-                throw new Exception('The database columns are corrupted');
+                throw new Exception_Database('The database columns are corrupted');
             }
 
             $userData[$column] = $user[$column];
@@ -287,7 +287,7 @@ class Module_Database_Model {
         $databaseData = $this->readDatabase();
 
         if (($databaseData = json_decode($databaseData, true)) === null) {
-            throw new Exception('The database file is corrupted');
+            throw new Exception_Database('The database file is corrupted');
         }
 
         $lastEntry = end($databaseData);
