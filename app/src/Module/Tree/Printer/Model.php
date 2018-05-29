@@ -150,9 +150,13 @@ class Module_Tree_Printer_Model {
                                     <li><strong>Friends:</strong> <br/>";
 
         foreach ($userData['friends'] as $friend) {
+            if ($friend === '0') {
+                $this->dataToRender .= 'none';
+                break;
+            }
+
             $this->dataToRender .= $friend . '<br/>';
         }
-
 
         $this->dataToRender .= '</li>
                                  </ul>';
