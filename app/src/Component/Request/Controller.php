@@ -15,7 +15,7 @@ class Component_Request_Controller extends Prototype_Controller {
 
         $receivedRequest = file_get_contents('php://input');
 
-        if (!empty($receivedRequest) || !empty($receivedRequest)) {
+        if (!empty($receivedRequest) || !empty($_GET['type'])) {
             if (!empty($receivedRequest)) {
                 $decodedRequest = json_decode(urldecode($receivedRequest), true);
             } else {
