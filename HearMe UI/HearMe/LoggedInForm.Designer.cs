@@ -39,8 +39,7 @@
             this.nameLabel = new System.Windows.Forms.Label();
             this.friendPanel = new System.Windows.Forms.Panel();
             this.changeAvatar = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.chatPanel = new System.Windows.Forms.TabControl();
             ((System.ComponentModel.ISupportInitialize)(this.avatar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -151,32 +150,20 @@
             // 
             this.changeAvatar.AutoSize = true;
             this.changeAvatar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.changeAvatar.Location = new System.Drawing.Point(65, 18);
+            this.changeAvatar.Location = new System.Drawing.Point(64, 18);
             this.changeAvatar.Name = "changeAvatar";
             this.changeAvatar.Size = new System.Drawing.Size(98, 13);
             this.changeAvatar.TabIndex = 36;
             this.changeAvatar.Text = "CHANGE AVATAR";
             this.changeAvatar.Click += new System.EventHandler(this.changeAvatar_Click);
             // 
-            // button1
+            // chatPanel
             // 
-            this.button1.Location = new System.Drawing.Point(282, 238);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 37;
-            this.button1.Text = "record";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(363, 238);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 38;
-            this.button2.Text = "stop";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.chatPanel.Location = new System.Drawing.Point(12, 81);
+            this.chatPanel.Name = "chatPanel";
+            this.chatPanel.SelectedIndex = 0;
+            this.chatPanel.Size = new System.Drawing.Size(644, 482);
+            this.chatPanel.TabIndex = 37;
             // 
             // LoggedinForm
             // 
@@ -184,8 +171,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(960, 575);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.chatPanel);
             this.Controls.Add(this.changeAvatar);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.avatar);
@@ -224,7 +210,6 @@
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Panel friendPanel;
         private System.Windows.Forms.Label changeAvatar;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TabControl chatPanel;
     }
 }
