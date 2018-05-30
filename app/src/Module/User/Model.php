@@ -21,7 +21,7 @@ class Module_User_Model {
     public function __construct() {
         $this->DataSource = new Module_Database_Model();
         $this->DataSource->setName('hearme_db');
-        $this->DataSource->setColumns(['username', 'email', 'password', 'first_name', 'last_name', 'gender', 'avatar', 'online', 'friends']);
+        $this->DataSource->setColumns(['username', 'email', 'password', 'first_name', 'last_name', 'gender', 'avatar', 'online', 'friends', 'messages']);
 
         $this->Tree = $this->DataSource->load();
     }
