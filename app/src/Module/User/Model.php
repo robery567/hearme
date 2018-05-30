@@ -115,9 +115,42 @@ class Module_User_Model {
     }
 
     /**
+     * Adds a message from an email to the destination email into the database
+     * @param string $destinationEmail
+     * @param string $friendEmail
+     * @param string $message
+     * @return bool
+     * @throws Exception
+     */
+    public function addMessage($destinationEmail, $friendEmail, $message) {
+        $friendData = $this->Tree->find($destinationEmail, null, 'email');
+
+        if (null === $friendData) {
+            return false;
+        }
+
+        $foundUser = $this->Tree->find($friendEmail, null, 'email');
+        $userData = $foundUser->getValue();
+
+        if (empty($userData)) {
+            return false;
+        }
+
+        $userData['id'] = $foundUser->getId();
+
+        if (empty($userData['messages'][0])) {
+            $userData['messages'][0] = [$friendEmail => $message];
+        } else {
+            $userData['messages'][] = [$friendEmail => $message];
+        }
+
+        return $this->DataSource->update($userData);
+    }
+
+    /**
      * Updates user avatar
-     * @param $originEmail
-     * @param $avatarUrl
+     * @param string $originEmail
+     * @param string $avatarUrl
      * @return bool
      * @throws Exception
      */

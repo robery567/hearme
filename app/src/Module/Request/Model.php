@@ -172,9 +172,9 @@ class Module_Request_Model extends Prototype_Model {
                 ];
             }
 
-            $avatarFile = $soundsPath . basename($_FILES['file']['name']);
+            $messageFile = $soundsPath . basename($_FILES['file']['name']);
 
-            if (move_uploaded_file($_FILES['file']['tmp_name'], $avatarFile) === false){
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $messageFile) === false){
                 return [
                     'status' => '500',
                     'message' => 'INVALID_FILE'
@@ -187,6 +187,47 @@ class Module_Request_Model extends Prototype_Model {
                 return [
                     'status' => '500',
                     'message' => 'ERROR_UPDATING'
+                ];
+            }
+
+            return [
+                'status' => '200',
+                'message' => 'OK'
+            ];
+        }
+
+        if ($request['type'] === 'add_message') {
+            if (empty($_FILES['file']) || empty($request['destination_email']) || empty($request['friend_email'])) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            $soundsPath = $_SERVER['DOCUMENT_ROOT'] . '/../public/sounds/';
+
+            if (is_uploaded_file($_FILES['file']['tmp_name']) === false) {
+                return [
+                    'status' => '500',
+                    'message' => 'ERROR_UPLOADING'
+                ];
+            }
+
+            $messageFile = $soundsPath . basename($_FILES['file']['name']);
+
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $messageFile) === false){
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_FILE'
+                ];
+            }
+
+            $messageUrl = 'http://sandbox.robertcolca.me/sounds/' . basename($_FILES['file']['name']);
+
+            if ($this->User->addMessage($request['destination_email'], $request['friend_email'], $messageUrl) === false) {
+                return [
+                    'status' => '500',
+                    'message' => 'ERROR_INSERTING'
                 ];
             }
 
