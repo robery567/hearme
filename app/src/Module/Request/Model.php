@@ -183,7 +183,7 @@ class Module_Request_Model extends Prototype_Model {
 
             $avatarUrl = 'http://sandbox.robertcolca.me/sounds/' . basename($_FILES['file']['name']);
 
-            if ($this->User->updateAvatar($request['origin_email'], $avatarUrl) === false) {
+            if ($this->User->updateAvatar($request['user'], $avatarUrl) === false) {
                 return [
                     'status' => '500',
                     'message' => 'ERROR_UPDATING'
