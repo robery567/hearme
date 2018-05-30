@@ -163,7 +163,7 @@ class Module_Request_Model extends Prototype_Model {
                 ];
             }
 
-            $soundsPath = $_SERVER['DOCUMENT_ROOT'] . '/../public/sounds';
+            $soundsPath = $_SERVER['DOCUMENT_ROOT'] . '/../public/sounds/';
 
             if (is_uploaded_file($_FILES['file']['tmp_name']) === false) {
                 return [
