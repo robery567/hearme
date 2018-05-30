@@ -123,13 +123,13 @@ class Module_User_Model {
      * @throws Exception
      */
     public function addMessage($destinationEmail, $friendEmail, $message) {
-        $friendData = $this->Tree->find($destinationEmail, null, 'email');
+        $friendData = $this->Tree->find($friendEmail, null, 'email');
 
         if (null === $friendData) {
             return false;
         }
 
-        $foundUser = $this->Tree->find($friendEmail, null, 'email');
+        $foundUser = $this->Tree->find($destinationEmail, null, 'email');
         $userData = $foundUser->getValue();
 
         if (empty($userData)) {
