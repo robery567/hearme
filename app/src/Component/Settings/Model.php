@@ -95,7 +95,7 @@ class Component_Settings_Model extends Prototype_Model {
      * @param string $method GET/POST
      */
     public function instantiatePage($method) {
-        $this->app->$method($this->getUrlAllParts(), function () {
+        $this->app->match($this->getUrlAllParts(), function () {
             $urlParts = $this->getUrlParts();
 
             $component =  !empty($urlParts[0]) ? $urlParts[0] : $this->defaultComponent;
