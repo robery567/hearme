@@ -86,7 +86,7 @@ class Component_Settings_Model extends Prototype_Model {
             return null;
         }
 
-        return preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']) . '/';
+        return preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']);
     }
 
     /**
