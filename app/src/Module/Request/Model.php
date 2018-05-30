@@ -197,7 +197,7 @@ class Module_Request_Model extends Prototype_Model {
         }
 
         if ($request['type'] === 'add_message') {
-            if (empty($_FILES['file']) || empty($request['destination_email']) || empty($request['friend_email'])) {
+            if (empty($_FILES['file']) || empty($request['destination_email']) || empty($request['origin_email'])) {
                 return [
                     'status' => '500',
                     'message' => 'INVALID_REQUEST'
@@ -224,7 +224,7 @@ class Module_Request_Model extends Prototype_Model {
 
             $messageUrl = 'http://sandbox.robertcolca.me/sounds/' . basename($_FILES['file']['name']);
 
-            if ($this->User->addMessage($request['destination_email'], $request['friend_email'], $messageUrl) === false) {
+            if ($this->User->addMessage($request['destination_email'], $request['origin_email'], $messageUrl) === false) {
                 return [
                     'status' => '500',
                     'message' => 'ERROR_INSERTING'
