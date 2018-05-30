@@ -172,9 +172,9 @@ class Module_Request_Model extends Prototype_Model {
                 ];
             }
 
-            $messageFile = $soundsPath . basename($_FILES['file']['name']);
+            $avatarFile = $soundsPath . basename($_FILES['file']['name']);
 
-            if (move_uploaded_file($_FILES['file']['tmp_name'], $messageFile) === false){
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $avatarFile) === false){
                 return [
                     'status' => '500',
                     'message' => 'INVALID_FILE'
