@@ -18,21 +18,23 @@ namespace HearMe
     class Sound
     {
         private WaveOutEvent outputDevice;
-        private AudioFileReader audioFile;
+        private WaveFileReader waveFileReader;
         private WaveIn waveSource = null;
+        public WaveIn WaveSource { get => waveSource; }
         private WaveFileWriter waveFile = null;
 
         public double GetSoundLength()
         {
-            return audioFile.TotalTime.TotalSeconds;
+            while (waveFileReader == null);
+            return waveFileReader.TotalTime.TotalSeconds;
         }
 
         private void OnPlaybackStopped(string fileName, PictureBox avatar, Thread thread)
         {
             outputDevice.Dispose();
             outputDevice = null;
-            audioFile.Dispose();
-            audioFile = null;
+            waveFileReader.Dispose();
+            waveFileReader = null;
             File.Delete(fileName);
             avatar.Image = (Image)Resources.ResourceManager.GetObject("avatar0");
             thread.Abort();
@@ -55,7 +57,7 @@ namespace HearMe
             var httpClient = new HttpClient();
             httpClient.GetByteArrayAsync(url).ContinueWith(data => {
                 string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-                string localFilename = DateTime.Now.ToString("MMddyyyyhmm") + ".mp3";
+                string localFilename = DateTime.Now.ToString("MMddyyyyhmmssfff") + ".wav";
                 string fileName = Path.Combine(documentsPath, localFilename);
                 File.WriteAllBytes(fileName, data.Result);
                 
@@ -67,10 +69,10 @@ namespace HearMe
                     outputDevice.PlaybackStopped += (sender, e) => OnPlaybackStopped(fileName, avatar, t);
                 }
 
-                if (audioFile == null)
+                if (waveFile == null)
                 {
-                    audioFile = new AudioFileReader(fileName);
-                    outputDevice.Init(audioFile);
+                    waveFileReader = new WaveFileReader(fileName);
+                    outputDevice.Init(waveFileReader);
                 }
 
                 outputDevice.Play();
@@ -89,7 +91,7 @@ namespace HearMe
             waveSource.DataAvailable += new EventHandler<WaveInEventArgs>(waveSource_DataAvailable);
             waveSource.RecordingStopped += new EventHandler<StoppedEventArgs>(waveSource_RecordingStopped);
 
-            waveFile = new WaveFileWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DateTime.Now.ToString("MMddyyyyhmm") + ".mp3"), waveSource.WaveFormat);
+            waveFile = new WaveFileWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DateTime.Now.ToString("MMddyyyyhmmssfff") + ".wav"), waveSource.WaveFormat);
 
             waveSource.StartRecording();
         } 

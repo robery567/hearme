@@ -155,6 +155,47 @@ class Module_Request_Model extends Prototype_Model {
             ];
         }
 
+        if ($request['type'] === 'upload_avatar') {
+            if (empty($_FILES['file']) || empty($request['user'])) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            $soundsPath = $_SERVER['DOCUMENT_ROOT'] . '/../public/sounds';
+
+            if (is_uploaded_file($_FILES['file']['tmp_name']) === false) {
+                return [
+                    'status' => '500',
+                    'message' => 'ERROR_UPLOADING'
+                ];
+            }
+
+            $avatarFile = $soundsPath . basename($_FILES['file']['name']);
+
+            if (move_uploaded_file($_FILES['file']['tmp_name'], $avatarFile) === false){
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_FILE'
+                ];
+            }
+
+            $avatarUrl = 'http://sandbox.robertcolca.me/sounds/' . basename($_FILES['file']['name']);
+
+            if ($this->User->updateAvatar($request['origin_email'], $avatarUrl) === false) {
+                return [
+                    'status' => '500',
+                    'message' => 'ERROR_UPDATING'
+                ];
+            }
+
+            return [
+                'status' => '200',
+                'message' => 'OK'
+            ];
+        }
+
         return [
             'status' => '500',
             'message' => 'INVALID_REQUEST'
