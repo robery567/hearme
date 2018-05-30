@@ -115,6 +115,26 @@ class Module_User_Model {
     }
 
     /**
+     * Updates user avatar
+     * @param $originEmail
+     * @param $avatarUrl
+     * @return bool
+     * @throws Exception
+     */
+    public function updateAvatar($originEmail, $avatarUrl) {
+        $userData = $this->Tree->find($originEmail, null, 'email');
+
+        if (null === $userData) {
+            return false;
+        }
+
+        $userData = $userData->getValue();
+        $userData['avatar'] = $avatarUrl;
+
+        return $this->DataSource->update($userData);
+    }
+
+    /**
      * Search for a friend in the list of someone's friends (Partial/exact search)
      * @param string $originEmail
      * @param string $friendEmail
