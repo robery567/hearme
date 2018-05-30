@@ -54,6 +54,7 @@ namespace HearMe
             string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
             */
             popFriendList(user.friends);
+            
             friendListUpdate = new Thread(() => populateFriendList());
             friendListUpdate.Start();
         }
@@ -101,13 +102,16 @@ namespace HearMe
                 values.Clear();
 
                 Friend actual = new Friend();
-                EventHandler handler = (s, e) => sound.PlaySound(new Uri(friend_user.avatar), actual.avatar);
-                actual.avatar.Click += handler;
+                EventHandler avatarHandler = (s, e) => sound.PlaySound(new Uri(friend_user.avatar), actual.avatar);
+                actual.avatar.Click += avatarHandler;
                 actual.name.Text = friend_user.first_name + " " + friend_user.last_name;
                 actual.email.Text = friend_user.email;
                 actual.email.Location = new Point(50, 33 + i);
+                EventHandler emailHandler = (s, e) => chatPanel.TabPages.Add(friend_user.email);
+                actual.email.Click += emailHandler;
                 actual.name.Location = new Point(48, 8 + i);
                 actual.avatar.Location = new Point(5, 5 + i);
+                actual.avatar.Cursor = actual.email.Cursor = Cursors.Hand;
                 friends.Append(actual);
 
                 i += 45;
@@ -128,7 +132,10 @@ namespace HearMe
             {
                 friendPanel.Invoke((MethodInvoker)delegate
                 {
-                    popFriend();
+                    chatPanel.Invoke((MethodInvoker)delegate
+                    {
+                        popFriend();
+                    });
                 });
             }
             else
@@ -208,20 +215,25 @@ namespace HearMe
             string userFile = getWav.FileName;
 
             System.Net.WebClient Client = new System.Net.WebClient();
-            Client.Headers.Add("Content-Type", "audio/wav");
+            Client.Headers.Add("Content-Type", "binary/octet-stream");
 
-            byte[] result = Client.UploadFile("http://sandbox.robertcolca.me/request.php?type=upload_avatar&user=" + user.email, "POST", userFile);
+            byte[] result = Client.UploadFile("http://sandbox.robertcolca.me/request?type=upload_avatar&user=" + user.email, "POST", userFile);
 
-            string response = Encoding.UTF8.GetString(result, 0, result.Length);
-            MessageBox.Show(response);
+            string result2 = Encoding.UTF8.GetString(result, 0, result.Length);
+            string response = JsonConvert.DeserializeObject<Message>(JsonConvert.DeserializeObject<JsonStatusCut>(result2).response).message;
+            
+            if (response == "OK")
+            {
+                var values = new Dictionary<string, string>();
+                values["status"] = "200";
+                values["type"] = "user";
+                values["email"] = email;
 
-            var values = new Dictionary<string, string>();
-            values["status"] = "200";
-            values["type"] = "user";
-            values["email"] = email;
+                user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
+                values.Clear();
 
-            user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
-            values.Clear();
+                MessageBox.Show("Your avatar was successfully updated!", "Avatar Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
