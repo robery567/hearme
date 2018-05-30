@@ -86,7 +86,7 @@ class Component_Settings_Model extends Prototype_Model {
             return null;
         }
 
-        return preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']);
+        return preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']) . '/';
     }
 
     /**
@@ -94,8 +94,6 @@ class Component_Settings_Model extends Prototype_Model {
      * @param string $method GET/POST
      */
     public function instantiatePage($method) {
-        var_dump($this->getUrlAllParts());
-        exit;
         $this->app->$method($this->getUrlAllParts(), function () {
             $urlParts = $this->getUrlParts();
 
