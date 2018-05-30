@@ -156,7 +156,7 @@ class Module_Request_Model extends Prototype_Model {
         }
 
         if ($request['type'] === 'upload_avatar') {
-            if (empty($_FILES['file']) || empty($request['origin_email'])) {
+            if (empty($_FILES['file']) || empty($request['user'])) {
                 return [
                     'status' => '500',
                     'message' => 'INVALID_REQUEST'
