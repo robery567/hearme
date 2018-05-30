@@ -73,7 +73,8 @@ class Component_Settings_Model extends Prototype_Model {
             return [];
         }
 
-        $returnUrlParts = substr($_SERVER['REQUEST_URI'], 1);
+        $filteredUrl = preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']);
+        $returnUrlParts = substr($filteredUrl, 1);
 
         return explode('/', $returnUrlParts);
     }
