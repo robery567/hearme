@@ -125,12 +125,14 @@ class Module_User_Model {
         $userData = $this->Tree->find($originEmail, null, 'email');
 
         if (null === $userData) {
+            echo "NO_USER " . $originEmail;
             return false;
         }
 
         $userData = $userData->getValue();
         $userData['avatar'] = $avatarUrl;
 
+        var_dump($userData);
         return $this->DataSource->update($userData);
     }
 
