@@ -173,7 +173,11 @@ class Module_User_Model {
         }
 
         foreach ($userData['messages'] as $email => $messages) {
-            if ($email == $friendEmail) {
+            if ($email === $friendEmail) {
+                if (!is_array($messages)) {
+                    return ["0"];
+                }
+
                 foreach ($messages as $message) {
                     $messagesToReturn[] = $message;
 
