@@ -143,6 +143,7 @@ namespace HearMe
             };
             send.Click += sendClick;
             send.Location = new Point(chatPanel.Width - 110, chatPanel.Height - 85);
+            send.Enabled = false;
 
             recorder.Text = "Record";
             recorder.Size = new Size(100, 50);
@@ -170,6 +171,7 @@ namespace HearMe
             EventHandler listBoxDoubleClick = (s, e) =>
             {
                 sound.PlaySound(new Uri(listBox.SelectedItem.ToString()), avatar);
+                listBox.Items.Remove(listBox.SelectedItem);
             };
 
             listBox.DoubleClick += listBoxDoubleClick;

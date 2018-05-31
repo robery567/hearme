@@ -13,3 +13,4 @@ E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.csproj.CoreCompil
 E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.csproj.CopyComplete
 E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.exe
 E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.pdb
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.csprojResolveAssemblyReference.cache
