@@ -1,0 +1,15 @@
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Release\HearMe.exe.config
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Release\HearMe.exe
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Release\HearMe.pdb
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Release\NAudio.dll
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Release\Newtonsoft.Json.dll
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Release\NAudio.xml
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\bin\Release\Newtonsoft.Json.xml
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.LoggedinForm.resources
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.LoginForm.resources
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.Properties.Resources.resources
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.csproj.GenerateResource.cache
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.csproj.CoreCompileInputs.cache
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.csproj.CopyComplete
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.exe
+E:\Documents\GitHub\hearme\HearMe UI\HearMe\obj\Release\HearMe.pdb

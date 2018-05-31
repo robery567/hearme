@@ -31,9 +31,18 @@ namespace HearMe
                         using (StreamReader reader = new StreamReader(responseStream))
                         {
                             string responseFromServer = reader.ReadToEnd();
-                            //MessageBox.Show(responseFromServer);
-                            JsonStatusCut result = JsonConvert.DeserializeObject<JsonStatusCut>(responseFromServer);
-                            //MessageBox.Show(result.response);
+                            JsonStatusCut result = new JsonStatusCut(); ;
+                            try
+                            {
+                                //MessageBox.Show(responseFromServer);
+                                result = JsonConvert.DeserializeObject<JsonStatusCut>(responseFromServer);
+
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(responseFromServer);
+                            }
+
                             return result.response;
                         }
                     }

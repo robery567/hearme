@@ -32,10 +32,12 @@ namespace HearMe
         User user = new User();
         string email = "";
         Thread friendListUpdate;
+        Thread messagesUpdate;
 
         public LoggedinForm(string Email)
         {
             InitializeComponent();
+            
             email = Email;
             var values = new Dictionary<string, string>();
             values["status"] = "200";
@@ -50,6 +52,9 @@ namespace HearMe
             
             friendListUpdate = new Thread(() => populateFriendList());
             friendListUpdate.Start();
+
+            messagesUpdate = new Thread(() => populateMessagesList());
+            messagesUpdate.Start();
         }
 
         private void header_MouseDown(object sender, MouseEventArgs e)
@@ -66,6 +71,7 @@ namespace HearMe
         {
             sound.StopSound();
             friendListUpdate.Abort();
+            messagesUpdate.Abort();
             Close();
         }
         private void minimize_MouseEnter(object sender, EventArgs e) => minimize.Image = (Image)Resources.ResourceManager.GetObject("minimize_hover");
@@ -84,6 +90,34 @@ namespace HearMe
             //MessageBox.Show(result2);
         }
 
+        private void populateMessagesList()
+        {
+            while (true)
+            {
+                if (chatPanel.TabPages.Count != 0)
+                {
+                    chatPanel.Invoke((MethodInvoker)delegate
+                    {
+                        var values = new Dictionary<string, string>();
+                        values["status"] = "200";
+                        values["type"] = "get_messages";
+                        values["origin_email"] = email;
+                        values["friend_email"] = chatPanel.SelectedTab.Text;
+
+                        List<string> messages = JsonConvert.DeserializeObject<List<string>>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
+                        values.Clear();
+                        
+                        if (messages[0] != "0")
+                        foreach (string msg in messages)
+                        {
+                            ((ListBox)chatPanel.SelectedTab.Controls[4]).Items.Add(msg);
+                        }
+                    });
+                }
+                Thread.Sleep(1000);
+            }
+        }
+
         private void makeNewChatPanelTabPage(string friend_email)
         {
             chatPanel.TabPages.Add(friend_email);
@@ -91,6 +125,7 @@ namespace HearMe
             Button recorder = new Button();
             Label recording = new Label();
             PictureBox recordingPicture = new PictureBox();
+            ListBox listBox = new ListBox();
 
             send.Text = "Send";
             send.Size = new Size(100, 50);
@@ -130,7 +165,16 @@ namespace HearMe
             recordingPicture.Location = new Point(recording.Location.X - 55, recorder.Location.Y);
             recordingPicture.Visible = recording.Visible = false;
 
-            recordingPicture.Parent = recording.Parent = recorder.Parent = send.Parent = chatPanel.SelectedTab;
+            listBox.Location = new Point(20, 10);
+            listBox.Size = new Size(chatPanel.Width - 50, chatPanel.Height - 100);
+            EventHandler listBoxDoubleClick = (s, e) =>
+            {
+                sound.PlaySound(new Uri(listBox.SelectedItem.ToString()), avatar);
+            };
+
+            listBox.DoubleClick += listBoxDoubleClick;
+
+            listBox.Parent = recordingPicture.Parent = recording.Parent = recorder.Parent = send.Parent = chatPanel.SelectedTab;
 
         }
 
@@ -140,30 +184,33 @@ namespace HearMe
             LinkedList friends = new LinkedList();
             foreach (string friend in friendsList)
             {
-                User friend_user = new User();
+                if (friend != "0")
+                {
+                    User friend_user = new User();
 
-                var values = new Dictionary<string, string>();
-                values["status"] = "200";
-                values["type"] = "user";
-                values["email"] = friend;
+                    var values = new Dictionary<string, string>();
+                    values["status"] = "200";
+                    values["type"] = "user";
+                    values["email"] = friend;
 
-                friend_user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
-                values.Clear();
+                    friend_user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
+                    values.Clear();
 
-                Friend actual = new Friend();
-                EventHandler avatarHandler = (s, e) => sound.PlaySound(new Uri(friend_user.avatar), actual.avatar);
-                actual.avatar.Click += avatarHandler;
-                actual.name.Text = friend_user.first_name + " " + friend_user.last_name;
-                actual.email.Text = friend_user.email;
-                actual.email.Location = new Point(50, 33 + i);
-                EventHandler emailHandler = (s, e) => { makeNewChatPanelTabPage(friend_user.email); };
-                actual.email.Click += emailHandler;
-                actual.name.Location = new Point(48, 8 + i);
-                actual.avatar.Location = new Point(5, 5 + i);
-                actual.avatar.Cursor = actual.email.Cursor = Cursors.Hand;
-                friends.Append(actual);
+                    Friend actual = new Friend();
+                    EventHandler avatarHandler = (s, e) => sound.PlaySound(new Uri(friend_user.avatar), actual.avatar);
+                    actual.avatar.Click += avatarHandler;
+                    actual.name.Text = friend_user.first_name + " " + friend_user.last_name;
+                    actual.email.Text = friend_user.email;
+                    actual.email.Location = new Point(50, 33 + i);
+                    EventHandler emailHandler = (s, e) => { makeNewChatPanelTabPage(friend_user.email); };
+                    actual.email.Click += emailHandler;
+                    actual.name.Location = new Point(48, 8 + i);
+                    actual.avatar.Location = new Point(5, 5 + i);
+                    actual.avatar.Cursor = actual.email.Cursor = Cursors.Hand;
+                    friends.Append(actual);
 
-                i += 45;
+                    i += 45;
+                }
             }
 
             void popFriend()
@@ -286,6 +333,16 @@ namespace HearMe
 
                 MessageBox.Show("Your avatar was successfully updated!", "Avatar Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            sound.StartRecording();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            sound.WaveSource.StopRecording();
         }
     }
 }
