@@ -168,8 +168,6 @@ class Module_User_Model {
             return false;
         }
 
-        $messagesToReturn = [];
-
         if (!is_array($userData['messages'])) {
             return false;
         }
