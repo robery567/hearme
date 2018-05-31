@@ -45,14 +45,7 @@ namespace HearMe
             user = JsonConvert.DeserializeObject<User>(JsonConvert.DeserializeObject<Message>(hearMe.CallApi(values)).message);
             values.Clear();
             nameLabel.Text = user.first_name + " " + user.last_name;
-            /*
-            var values = new Dictionary<string, string>();
-            values["status"] = "200";
-            values["type"] = "online";
-            values["email"] = email;
-
-            string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));
-            */
+            
             popFriendList(user.friends);
             
             friendListUpdate = new Thread(() => populateFriendList());
@@ -71,12 +64,6 @@ namespace HearMe
         private void exit_MouseLeave(object sender, EventArgs e) => exit.Image = (Image)Resources.ResourceManager.GetObject("exit");
         private void exit_Click(object sender, EventArgs e)
         {
-            /*var values = new Dictionary<string, string> ();
-            values["status"] = "200";
-            values["type"] = "offline";
-            values["email"] = user.email;
-
-            string response = JsonConvert.DeserializeObject<string>(hearMe.CallApi(values));*/
             sound.StopSound();
             friendListUpdate.Abort();
             Close();
@@ -84,6 +71,68 @@ namespace HearMe
         private void minimize_MouseEnter(object sender, EventArgs e) => minimize.Image = (Image)Resources.ResourceManager.GetObject("minimize_hover");
         private void minimize_MouseLeave(object sender, EventArgs e) => minimize.Image = (Image)Resources.ResourceManager.GetObject("minimize");
         private void minimize_Click(object sender, EventArgs e) => WindowState = FormWindowState.Minimized;
+
+        private void sendMessage(string friend_email, string fileName)
+        {
+            System.Net.WebClient Client = new System.Net.WebClient();
+            Client.Headers.Add("Content-Type", "binary/octet-stream");
+
+            byte[] result = Client.UploadFile("http://sandbox.robertcolca.me/request?type=add_message&destination_email=" + friend_email + "&origin_email=" + user.email, "POST", fileName);
+
+            File.Delete(fileName);
+            //string result2 = Encoding.UTF8.GetString(result, 0, result.Length);
+            //MessageBox.Show(result2);
+        }
+
+        private void makeNewChatPanelTabPage(string friend_email)
+        {
+            chatPanel.TabPages.Add(friend_email);
+            Button send = new Button();
+            Button recorder = new Button();
+            Label recording = new Label();
+            PictureBox recordingPicture = new PictureBox();
+
+            send.Text = "Send";
+            send.Size = new Size(100, 50);
+            EventHandler sendClick = (s, e) =>
+            {
+                string fileName = sound.WaveFile.Filename;
+                sound.WaveSource.StopRecording();
+                sound.WaveFile.Dispose();
+
+                sendMessage(friend_email, fileName);
+
+                send.Enabled = false;
+                recorder.Enabled = true;
+                recordingPicture.Visible = recording.Visible = false;
+            };
+            send.Click += sendClick;
+            send.Location = new Point(chatPanel.Width - 110, chatPanel.Height - 85);
+
+            recorder.Text = "Record";
+            recorder.Size = new Size(100, 50);
+            recorder.Location = new Point(send.Location.X - 110, send.Location.Y);
+            EventHandler recorderClick = (s, e) => 
+            {
+                sound.StartRecording();
+                send.Enabled = true;
+                recorder.Enabled = false;
+
+                recordingPicture.Visible = recording.Visible = true;
+            };
+            recorder.Click += recorderClick;
+
+            recording.Text = "Recording";
+            recording.Location = new Point(recorder.Location.X - 55, recorder.Location.Y + 18);
+
+            recordingPicture.Image = (Image)Resources.ResourceManager.GetObject("recording");
+            recordingPicture.Size = new Size(50, 50);
+            recordingPicture.Location = new Point(recording.Location.X - 55, recorder.Location.Y);
+            recordingPicture.Visible = recording.Visible = false;
+
+            recordingPicture.Parent = recording.Parent = recorder.Parent = send.Parent = chatPanel.SelectedTab;
+
+        }
 
         private void popFriendList(List<string> friendsList)
         {
@@ -107,7 +156,7 @@ namespace HearMe
                 actual.name.Text = friend_user.first_name + " " + friend_user.last_name;
                 actual.email.Text = friend_user.email;
                 actual.email.Location = new Point(50, 33 + i);
-                EventHandler emailHandler = (s, e) => chatPanel.TabPages.Add(friend_user.email);
+                EventHandler emailHandler = (s, e) => { makeNewChatPanelTabPage(friend_user.email); };
                 actual.email.Click += emailHandler;
                 actual.name.Location = new Point(48, 8 + i);
                 actual.avatar.Location = new Point(5, 5 + i);
@@ -144,6 +193,7 @@ namespace HearMe
             }
         }
 
+        bool entered_once = false;
         private void populateFriendList()
         {
             while (true)
@@ -162,7 +212,9 @@ namespace HearMe
                         values.Clear();
 
                         popFriendList(friendsAfterCriteria);
+                        entered_once = false;
                     }
+                    else if (!entered_once) { popFriendList(user.friends); entered_once = true; }
                 }
 
                 Thread.Sleep(1000);
@@ -234,16 +286,6 @@ namespace HearMe
 
                 MessageBox.Show("Your avatar was successfully updated!", "Avatar Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            sound.StartRecording();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            sound.WaveSource.StopRecording();
         }
     }
 }
