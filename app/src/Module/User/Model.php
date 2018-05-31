@@ -139,12 +139,52 @@ class Module_User_Model {
         $userData['id'] = $foundUser->getId();
 
         if (empty($userData['messages'][0])) {
-            $userData['messages'][0] = [$friendEmail => $message];
-        } else {
-            $userData['messages'][] = [$friendEmail => $message];
+            unset($userData['messages'][0]);
         }
 
+        $userData['messages'][$friendEmail][] = $message;
+
         return $this->DataSource->update($userData);
+    }
+
+    /**
+     * Gets messages for a specific email from a specific friend
+     * @param $originEmail
+     * @param $friendEmail
+     * @return bool|array
+     * @throws Exception
+     */
+    public function getMessages($originEmail, $friendEmail) {
+        $friendData = $this->Tree->find($friendEmail, null, 'email');
+
+        if (null === $friendData) {
+            return false;
+        }
+
+        $foundUser = $this->Tree->find($originEmail, null, 'email');
+        $userData = $foundUser->getValue();
+
+        if (empty($userData)) {
+            return false;
+        }
+
+        $messagesToReturn = [];
+
+        foreach ($userData['messages'] as $email => $message) {
+            if ($email === $friendEmail) {
+                $messagesToReturn[$email][] = $message;
+
+                unset($userData['messages'][$email]);
+            }
+        }
+
+        if (!empty($messagesToReturn)) {
+            $userData['id'] = $foundUser->getId();
+
+            $this->DataSource->update($userData);
+        }
+
+        return $messagesToReturn;
     }
 
     /**
