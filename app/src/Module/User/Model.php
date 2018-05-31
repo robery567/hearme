@@ -142,7 +142,7 @@ class Module_User_Model {
             unset($userData['messages'][0]);
         }
 
-        $userData['messages'][$destinationEmail][] = $message;
+        $userData['messages'][$friendEmail][] = $message;
 
         return $this->DataSource->update($userData);
     }
