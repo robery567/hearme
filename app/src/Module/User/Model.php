@@ -142,7 +142,7 @@ class Module_User_Model {
             unset($userData['messages'][0]);
         }
 
-        $userData['messages'][$friendEmail][] = $message;
+        $userData['messages'][$destinationEmail][] = $message;
 
         return $this->DataSource->update($userData);
     }
@@ -169,8 +169,7 @@ class Module_User_Model {
         }
 
         $messagesToReturn = [];
-        var_dump($userData['messages']);
-        exit;
+
         foreach ($userData['messages'] as $email => $message) {
             if ($email === $friendEmail) {
                 $messagesToReturn[$email][] = $message;
