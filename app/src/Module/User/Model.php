@@ -234,7 +234,7 @@ class Module_User_Model {
     public function deleteMessage($messageName) {
         $soundsPath = $_SERVER['DOCUMENT_ROOT'] . '/../public/sounds/';
 
-        $messageParts = explode('/', $soundsPath);
+        $messageParts = explode('/', $messageName);
 
         return unlink($soundsPath . end($messageParts));
     }
