@@ -22,6 +22,7 @@ namespace HearMe
         private WaveIn waveSource = null;
         public WaveIn WaveSource { get => waveSource; }
         private WaveFileWriter waveFile = null;
+        public WaveFileWriter WaveFile { get => waveFile; }
 
         public double GetSoundLength()
         {
@@ -92,7 +93,7 @@ namespace HearMe
             waveSource.RecordingStopped += new EventHandler<StoppedEventArgs>(waveSource_RecordingStopped);
 
             waveFile = new WaveFileWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), DateTime.Now.ToString("MMddyyyyhmmssfff") + ".wav"), waveSource.WaveFormat);
-
+            
             waveSource.StartRecording();
         } 
 
