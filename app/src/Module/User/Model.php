@@ -182,6 +182,10 @@ class Module_User_Model {
             }
         }
 
+        if (empty($userData['messages'])) {
+            $userData['messages'] = ["0"];
+        }
+
         if (!empty($messagesToReturn)) {
             $userData['id'] = $foundUser->getId();
 
