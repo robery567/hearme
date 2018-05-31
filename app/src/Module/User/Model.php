@@ -190,7 +190,9 @@ class Module_User_Model {
             $userData['id'] = $foundUser->getId();
 
             $this->DataSource->update($userData);
+        }
 
+        if (empty($messagesToReturn)) {
             return ["0"];
         }
 
