@@ -170,6 +170,10 @@ class Module_User_Model {
 
         $messagesToReturn = [];
 
+        if (!is_array($userData['messages'])) {
+            return false;
+        }
+
         foreach ($userData['messages'] as $email => $message) {
             if ($email === $friendEmail) {
                 $messagesToReturn[$email][] = $message;
