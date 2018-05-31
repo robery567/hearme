@@ -172,13 +172,13 @@ class Module_User_Model {
             return false;
         }
 
-        var_dump($userData['messages']);
-        exit;
-        foreach ($userData['messages'] as $email => $message) {
-            if ($email === $friendEmail) {
-                $messagesToReturn[] = $message;
+        foreach ($userData['messages'] as $email => $messages) {
+            if ($email == $friendEmail) {
+                foreach ($messages as $message) {
+                    $messagesToReturn[] = $message;
 
-                unset($userData['messages'][$email]);
+                    unset($userData['messages'][$email]);
+                }
             }
         }
 
