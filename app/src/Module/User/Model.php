@@ -182,6 +182,8 @@ class Module_User_Model {
             $userData['id'] = $foundUser->getId();
 
             $this->DataSource->update($userData);
+
+            return ["0"];
         }
 
         return $messagesToReturn;
