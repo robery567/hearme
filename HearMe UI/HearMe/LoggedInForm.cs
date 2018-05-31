@@ -121,6 +121,9 @@ namespace HearMe
         private void makeNewChatPanelTabPage(string friend_email)
         {
             chatPanel.TabPages.Add(friend_email);
+            foreach (TabPage tp in chatPanel.TabPages)
+                if (tp.Text == friend_email)
+                    chatPanel.SelectedTab = tp;
             Button send = new Button();
             Button recorder = new Button();
             Label recording = new Label();
