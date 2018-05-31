@@ -260,6 +260,16 @@ class Module_Request_Model extends Prototype_Model {
             ];
         }
 
+        if ($request['type'] === 'delete_message') {
+            if (empty($request['message'])) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            $this->User->deleteMessage($request['message']);
+        }
 
         return [
             'status' => '500',
