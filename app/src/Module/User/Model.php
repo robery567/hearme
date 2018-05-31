@@ -176,7 +176,7 @@ class Module_User_Model {
 
         foreach ($userData['messages'] as $email => $message) {
             if ($email === $friendEmail) {
-                $messagesToReturn[$email][] = $message;
+                $messagesToReturn[] = $message;
 
                 unset($userData['messages'][$email]);
             }
