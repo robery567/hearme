@@ -72,6 +72,7 @@ class Module_User_Model {
         $userData['password'] = md5($userData['password']);
         $userData['friends'] = ['0'];
         $userData['avatar'] = 'http://sandbox.robertcolca.me/sounds/noavatar.mp3';
+        $userData['messages'] = ['0'];
 
         return $this->DataSource->insert($userData);
     }
@@ -223,6 +224,19 @@ class Module_User_Model {
         $userData['avatar'] = $avatarUrl;
 
         return $this->DataSource->update($userData);
+    }
+
+    /**
+     * Deletes a message
+     * @param $messageName
+     * @return bool
+     */
+    public function deleteMessage($messageName) {
+        $soundsPath = $_SERVER['DOCUMENT_ROOT'] . '/../public/sounds/';
+
+        $messageParts = explode('/', $soundsPath);
+
+        return unlink($soundsPath . end($messageParts));
     }
 
     /**
