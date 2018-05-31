@@ -72,6 +72,7 @@ class Module_User_Model {
         $userData['password'] = md5($userData['password']);
         $userData['friends'] = ['0'];
         $userData['avatar'] = 'http://sandbox.robertcolca.me/sounds/noavatar.mp3';
+        $userData['messages'] = ['0'];
 
         return $this->DataSource->insert($userData);
     }
@@ -139,12 +140,68 @@ class Module_User_Model {
         $userData['id'] = $foundUser->getId();
 
         if (empty($userData['messages'][0])) {
-            $userData['messages'][0] = [$friendEmail => $message];
-        } else {
-            $userData['messages'][] = [$friendEmail => $message];
+            unset($userData['messages'][0]);
         }
 
+        $userData['messages'][$friendEmail][] = $message;
+
         return $this->DataSource->update($userData);
+    }
+
+    /**
+     * Gets messages for a specific email from a specific friend
+     * @param $originEmail
+     * @param $friendEmail
+     * @return bool|array
+     * @throws Exception
+     */
+    public function getMessages($originEmail, $friendEmail) {
+        $friendData = $this->Tree->find($friendEmail, null, 'email');
+
+        if (null === $friendData) {
+            return false;
+        }
+
+        $foundUser = $this->Tree->find($originEmail, null, 'email');
+        $userData = $foundUser->getValue();
+
+        if (empty($userData)) {
+            return false;
+        }
+
+        if (!is_array($userData['messages'])) {
+            return false;
+        }
+
+        foreach ($userData['messages'] as $email => $messages) {
+            if ($email === $friendEmail) {
+                if (!is_array($messages)) {
+                    return ["0"];
+                }
+
+                foreach ($messages as $message) {
+                    $messagesToReturn[] = $message;
+
+                    unset($userData['messages'][$email]);
+                }
+            }
+        }
+
+        if (empty($userData['messages'])) {
+            $userData['messages'] = ["0"];
+        }
+
+        if (!empty($messagesToReturn)) {
+            $userData['id'] = $foundUser->getId();
+
+            $this->DataSource->update($userData);
+        }
+
+        if (empty($messagesToReturn)) {
+            return ["0"];
+        }
+
+        return $messagesToReturn;
     }
 
     /**
@@ -167,6 +224,19 @@ class Module_User_Model {
         $userData['avatar'] = $avatarUrl;
 
         return $this->DataSource->update($userData);
+    }
+
+    /**
+     * Deletes a message
+     * @param $messageName
+     * @return bool
+     */
+    public function deleteMessage($messageName) {
+        $soundsPath = $_SERVER['DOCUMENT_ROOT'] . '/../public/sounds/';
+
+        $messageParts = explode('/', $messageName);
+
+        return unlink($soundsPath . end($messageParts));
     }
 
     /**

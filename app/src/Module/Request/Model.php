@@ -237,6 +237,40 @@ class Module_Request_Model extends Prototype_Model {
             ];
         }
 
+        if ($request['type'] === 'get_messages') {
+            if (empty($request['origin_email']) || empty($request['friend_email'])) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            $getMessagesResponse = $this->User->getMessages($request['origin_email'], $request['friend_email']);
+
+            if ($getMessagesResponse === false) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            return [
+                'status' => '200',
+                'message' => stripslashes(json_encode($getMessagesResponse))
+            ];
+        }
+
+        if ($request['type'] === 'delete_message') {
+            if (empty($request['message'])) {
+                return [
+                    'status' => '500',
+                    'message' => 'INVALID_REQUEST'
+                ];
+            }
+
+            $this->User->deleteMessage($request['message']);
+        }
+
         return [
             'status' => '500',
             'message' => 'INVALID_REQUEST'
